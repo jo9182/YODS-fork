@@ -1,0 +1,120 @@
+[gd_scene format=4 uid="uid://d07cm15fc7ttf"]
+
+[ext_resource type="PackedScene" uid="uid://8feogt52ym0j" path="res://Tile Maps/grass_01.tscn" id="1_15dcr"]
+[ext_resource type="Script" uid="uid://baut8tgloa1cq" path="res://Levels/Scripts/level.gd" id="1_6727y"]
+[ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="2_oob3w"]
+[ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_m4h7l"]
+[ext_resource type="PackedScene" uid="uid://dss17ggiq7ghr" path="res://items/item_pickup/item_pickup.tscn" id="5_4cull"]
+[ext_resource type="Resource" uid="uid://cgf13r0jjn525" path="res://items/potion.tres" id="6_v5oxs"]
+[ext_resource type="Resource" uid="uid://bswfgewyq108o" path="res://items/gem.tres" id="7_sq5mn"]
+[ext_resource type="Resource" uid="uid://ntijm35cudc4" path="res://items/stone.tres" id="8_qyank"]
+[ext_resource type="Resource" uid="uid://bmhw47nupyg5r" path="res://items/apple.tres" id="9_v5oxs"]
+[ext_resource type="Resource" uid="uid://bmh5tu51wsk7u" path="res://items/coin.tres" id="10_qe4k5"]
+[ext_resource type="PackedScene" uid="uid://r3xg4dkqjteu" path="res://enemies/slime/slime.tscn" id="10_sq5mn"]
+[ext_resource type="PackedScene" uid="uid://bm3pdj3rlgvso" path="res://NPC's/priest.tscn" id="11_qyank"]
+[ext_resource type="PackedScene" uid="uid://b5ctydrsxayd0" path="res://enemies/vampire.tscn" id="12_8hg2b"]
+[ext_resource type="PackedScene" uid="uid://c7lhadfcg78tw" path="res://Props/flag/flag.tscn" id="14_qocdg"]
+[ext_resource type="PackedScene" uid="uid://gnnwrpnnkvuj" path="res://Props/torch/torch.tscn" id="15_qtx8l"]
+[ext_resource type="PackedScene" uid="uid://bayslgf51lvhb" path="res://Props/flamethrower.tscn" id="16_a0w4r"]
+[ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="17_um170"]
+
+[node name="01" type="Node2D" unique_id=1550365005]
+script = ExtResource("1_6727y")
+
+[node name="Grass01" parent="." unique_id=1728581699 instance=ExtResource("1_15dcr")]
+tile_map_data = PackedByteArray("AAACAAAAAgAAAAYAAAACAAEAAgAAAAYAAAACAAIAAgAAAAYAAAACAAMAAgAAAAYAAAACAAQAAgAAAAYAAAACAAUAAgAAAAYAAAACAAYAAgAAAAYAAAACAAcAAgAAAAYAAAACAAgAAgAAAAYAAAACAAkAAgAAAAYAAAACAAoAAgAAAAoAAAADAAAAAgAIAAYAAAADAAEAAgAIAA4AAAADAAIAAgAIAA4AAAADAAMAAgAIAA4AAAADAAQAAgAIAA4AAAADAAUAAgAIAA4AAAADAAYAAgAIAA4AAAADAAcAAgADAAcAAAADAAgAAgAIAA4AAAADAAkAAgABAAkAAAADAAoAAgABAAoAAAAEAAAAAgAFAAcAAAAEAAEAAgAIAA4AAAAEAAIAAgAJAA4AAAAEAAMAAgAIAA4AAAAEAAQAAgAEAAgAAAAEAAUAAgAIAA4AAAAEAAYAAgAIAA4AAAAEAAcAAgAEAAgAAAAEAAgAAgAIAA4AAAAEAAkAAgAIAA4AAAAEAAoAAgABAAoAAAAFAAAAAgAIAAYAAAAFAAEAAgAIAA4AAAAFAAIAAgAIAA4AAAAFAAMAAgAEAAgAAAAFAAQAAgAFAAgAAAAFAAUAAgAIAA4AAAAFAAYAAgAIAA4AAAAFAAcAAgAFAAgAAAAFAAgAAgAIAA4AAAAFAAkAAgAJAA4AAAAFAAoAAgABAAoAAAAGAAAAAgAHAAYAAAAGAAEAAgAIAA4AAAAGAAIAAgAIAA4AAAAGAAMAAgAEAAgAAAAGAAQAAgAEAAgAAAAGAAUAAgAEAAgAAAAGAAYAAgAEAAgAAAAGAAcAAgAEAAgAAAAGAAgAAgAIAA4AAAAGAAkAAgAEAAkAAAAGAAoAAgAEAAoAAAAHAAAAAgAIAAYAAAAHAAEAAgAIAA4AAAAHAAIAAgAIAA4AAAAHAAMAAgAFAAgAAAAHAAQAAgAFAAgAAAAHAAUAAgAFAAgAAAAHAAYAAgAFAAgAAAAHAAcAAgAFAAgAAAAHAAgAAgAIAA4AAAAHAAkAAgAFAAkAAAAHAAoAAgAFAAoAAAAIAAAAAgAFAAcAAAAIAAEAAgAIAA4AAAAIAAIAAgAIAA4AAAAIAAMAAgAFAAgAAAAIAAQAAgAEAAgAAAAIAAUAAgAEAAgAAAAIAAYAAgAEAAgAAAAIAAcAAgAEAAgAAAAIAAgAAgAIAA4AAAAIAAkAAgAIAA4AAAAIAAoAAgAGAAoAAAAIAAsAAgAAAAoAAAAJAAAAAgABAAYAAAAJAAEAAgAIAA4AAAAJAAIAAgAIAA4AAAAJAAMAAgAFAAgAAAAJAAQAAgAEAAgAAAAJAAUAAgAFAAgAAAAJAAYAAgAFAAgAAAAJAAcAAgAFAAgAAAAJAAgAAgAIAA4AAAAJAAkAAgAIAA4AAAAJAAoAAgAIAA4AAAAJAAsAAgAGAAoAAAAKAAAAAgAEAAYAAAAKAAEAAgAHAAYAAAAKAAIAAgAIAA4AAAAKAAMAAgAIAA4AAAAKAAQAAgAFAAgAAAAKAAUAAgAEAAgAAAAKAAYAAgAEAAgAAAAKAAcAAgAEAAgAAAAKAAgAAgAEAAgAAAAKAAkAAgAIAA4AAAAKAAoAAgAIAA4AAAAKAAsAAgAIAA0AAAALAAAAAgAMAAUAAAALAAEAAgAOAAYAAAALAAIAAgAIAA4AAAALAAMAAgAEAAgAAAALAAQAAgAEAAgAAAALAAUAAgAFAAgAAAALAAYAAgAFAAgAAAALAAcAAgAFAAgAAAALAAgAAgAFAAgAAAALAAkAAgAIAA4AAAALAAoAAgAIAA4AAAALAAsAAgAIAA0AAAAMAAAAAgAMAAUAAAAMAAIAAgAIAA4AAAAMAAMAAgAFAAgAAAAMAAQAAgAEAAgAAAAMAAUAAgAEAAgAAAAMAAYAAgAEAAgAAAAMAAcAAgAEAAgAAAAMAAgAAgAEAAgAAAAMAAkAAgAEAAgAAAAMAAoAAgAIAA4AAAAMAAsAAgAJAAoAAAANAAAAAgAMAAUAAAANAAEAAgAOAAYAAAANAAIAAgAIAA4AAAANAAMAAgAEAAgAAAANAAQAAgAFAAgAAAANAAUAAgAFAAgAAAANAAYAAgAFAAgAAAANAAcAAgAFAAgAAAANAAgAAgAFAAgAAAANAAkAAgAFAAgAAAANAAoAAgAIAA4AAAANAAsAAgADAAoAAAAOAAAAAgAMAAUAAAAOAAEAAgAOAAYAAAAOAAIAAgAIAA4AAAAOAAMAAgAFAAgAAAAOAAQAAgAEAAgAAAAOAAUAAgAIAA4AAAAOAAYAAgAEAAgAAAAOAAcAAgAEAAgAAAAOAAgAAgAEAAgAAAAOAAkAAgAEAAgAAAAOAAoAAgAEAAgAAAAOAAsAAgABAAoAAAAPAAAAAgAMAAUAAAAPAAEAAgAHAAYAAAAPAAIAAgAIAA4AAAAPAAMAAgAIAA4AAAAPAAQAAgAFAAgAAAAPAAUAAgAIAA4AAAAPAAYAAgAFAAgAAAAPAAcAAgAFAAgAAAAPAAgAAgAFAAgAAAAPAAkAAgAFAAgAAAAPAAoAAgAFAAgAAAAPAAsAAgACAAoAAAAQAAAAAgAGAAoAAAAQAAEAAgAGAAsAAAAQAAIAAgAIAA4AAAAQAAMAAgAIAA4AAAAQAAQAAgAIAA4AAAAQAAUAAgAMAAcAAAAQAAYAAgAEAAgAAAAQAAcAAgAEAAgAAAAQAAgAAgAEAAgAAAAQAAkAAgAIAA4AAAAQAAoAAgAIAA4AAAAQAAsAAgADAAoAAAARAAAAAgAHAAsAAAARAAEAAgAIAA0AAAARAAIAAgAIAA4AAAARAAMAAgAIAA4AAAARAAQAAgAIAA4AAAARAAUAAgAIAA4AAAARAAYAAgAFAAgAAAARAAcAAgAFAAgAAAARAAgAAgAFAAgAAAARAAkAAgAIAA4AAAARAAoAAgAIAA4AAAARAAsAAgABAAoAAAASAAAAAgAIAAsAAAASAAEAAgAIAA0AAAASAAIAAgAIAA4AAAASAAMAAgAIAA4AAAASAAQAAgAIAA4AAAASAAUAAgAIAA4AAAASAAYAAgAIAA4AAAASAAcAAgAIAA4AAAASAAgAAgAIAA4AAAASAAkAAgAIAA4AAAASAAoAAgAIAA4AAAASAAsAAgACAAoAAAATAAAAAgAJAAoAAAATAAEAAgAJAAsAAAATAAIAAgAIAA4AAAATAAMAAgAOAAcAAAATAAQAAgAIAA4AAAATAAUAAgAIAA4AAAATAAYAAgAIAA4AAAATAAcAAgAIAA4AAAATAAgAAgAOAAcAAAATAAkAAgAIAA4AAAATAAoAAgAIAA4AAAATAAsAAgADAAoAAAAUAAAAAgAMAAUAAAAUAAEAAgAPAAYAAAAUAAIAAgAPAAcAAAAUAAMAAgAPAAgAAAAUAAQAAgAPAAkAAAAUAAUAAgAPAAcAAAAUAAYAAgAPAAgAAAAUAAcAAgAPAAkAAAAUAAgAAgAPAAcAAAAUAAkAAgAPAAgAAAAUAAoAAgAPAAkAAAAUAAsAAgAEAAoAAAAIAAwAAgANAAsAAAAJAAwAAgAFAAwAAAAKAAwAAgAHAAsAAAALAAwAAgAIAAsAAAAMAAwAAgAKAAwAAAANAAwAAgANAAsAAAAOAAwAAgANAAsAAAAPAAwAAgANAAsAAAAQAAwAAgANAAsAAAARAAwAAgANAAsAAAASAAwAAgANAAsAAAATAAwAAgANAAsAAAAUAAwAAgANAAsAAAAHAAwAAgANAAsAAAAHAAsAAgANAAsAAAAGAAsAAgANAAsAAAAFAAsAAgANAAsAAAAEAAsAAgANAAsAAAADAAsAAgANAAsAAAACAAsAAgANAAsAAAACAAwAAgANAAsAAAADAAwAAgANAAsAAAAEAAwAAgANAAsAAAAFAAwAAgANAAsAAAAGAAwAAgANAAsAAAAMAAEAAgAHAAYAAAA=")
+
+[node name="PlayerSpawn" parent="." unique_id=1661666852 instance=ExtResource("2_oob3w")]
+position = Vector2(368, 328)
+
+[node name="LevelTransition" parent="." unique_id=1785377403 instance=ExtResource("4_m4h7l")]
+position = Vector2(352, 384)
+level = "uid://doh6y6qtcva3n"
+side = 3
+
+[node name="LevelTransition2" parent="." unique_id=1575062253 instance=ExtResource("4_m4h7l")]
+position = Vector2(576, 32)
+level = "uid://byw8tb0skgru6"
+side = 2
+
+[node name="ItemPickup" parent="." unique_id=901252920 instance=ExtResource("5_4cull")]
+position = Vector2(148, 89)
+item_data = ExtResource("6_v5oxs")
+
+[node name="ItemPickup2" parent="." unique_id=1691198711 instance=ExtResource("5_4cull")]
+position = Vector2(144, 48)
+item_data = ExtResource("7_sq5mn")
+
+[node name="ItemPickup3" parent="." unique_id=1696797371 instance=ExtResource("5_4cull")]
+position = Vector2(119, 173)
+item_data = ExtResource("8_qyank")
+
+[node name="ItemPickup4" parent="." unique_id=2146336030 instance=ExtResource("5_4cull")]
+position = Vector2(152, 120)
+item_data = ExtResource("9_v5oxs")
+
+[node name="ItemPickup5" parent="." unique_id=1013704965 instance=ExtResource("5_4cull")]
+position = Vector2(222, 155)
+item_data = ExtResource("10_qe4k5")
+
+[node name="ItemPickup6" parent="." unique_id=389955882 instance=ExtResource("5_4cull")]
+position = Vector2(399, 134)
+item_data = ExtResource("10_qe4k5")
+
+[node name="ItemPickup7" parent="." unique_id=1162026572 instance=ExtResource("5_4cull")]
+position = Vector2(380, 180)
+item_data = ExtResource("10_qe4k5")
+
+[node name="Slime" parent="." unique_id=783996347 instance=ExtResource("10_sq5mn")]
+position = Vector2(408, 224)
+
+[node name="Slime2" parent="." unique_id=1080748113 instance=ExtResource("10_sq5mn")]
+position = Vector2(480, 280)
+
+[node name="Slime3" parent="." unique_id=1638645622 instance=ExtResource("10_sq5mn")]
+position = Vector2(456, 136)
+
+[node name="Slime4" parent="." unique_id=981689219 instance=ExtResource("10_sq5mn")]
+position = Vector2(328, 176)
+
+[node name="Priest" parent="." unique_id=1568609886 instance=ExtResource("11_qyank")]
+position = Vector2(210, 76)
+priest_name = "Carl"
+Sentence = "Lots of vampires in these parts"
+opt1 = "Yep"
+opt2 = "There's a few"
+res1 = "Remeber the deeper you go the stronger they get"
+res2 = "I'm sure you'll be saying that when you come across a red one."
+
+[node name="Vampire" parent="." unique_id=1385293606 instance=ExtResource("12_8hg2b")]
+position = Vector2(287, 98)
+
+[node name="Vampire2" parent="." unique_id=897168978 instance=ExtResource("12_8hg2b")]
+position = Vector2(242, 100)
+
+[node name="Vampire3" parent="." unique_id=864524324 instance=ExtResource("12_8hg2b")]
+position = Vector2(311, 142)
+
+[node name="Vampire4" parent="." unique_id=1348974815 instance=ExtResource("12_8hg2b")]
+position = Vector2(268, 135)
+
+[node name="Vampire5" parent="." unique_id=1713348203 instance=ExtResource("12_8hg2b")]
+position = Vector2(324, 108)
+
+[node name="Flag" parent="." unique_id=1725875048 instance=ExtResource("14_qocdg")]
+position = Vector2(112, 27)
+
+[node name="Flag2" parent="." unique_id=522567385 instance=ExtResource("14_qocdg")]
+position = Vector2(367, 59)
+
+[node name="Torch" parent="." unique_id=1861845618 instance=ExtResource("15_qtx8l")]
+position = Vector2(496, 57)
+
+[node name="Torch2" parent="." unique_id=1444100761 instance=ExtResource("15_qtx8l")]
+position = Vector2(209, 26)
+
+[node name="Flamethrower" parent="." unique_id=1826638244 instance=ExtResource("16_a0w4r")]
+position = Vector2(401, 78)
+
+[node name="Chest" parent="." unique_id=489669578 instance=ExtResource("17_um170")]
+position = Vector2(529, 94)

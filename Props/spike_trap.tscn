@@ -1,0 +1,89 @@
+[gd_scene load_steps=8 format=3 uid="uid://dw8cxbwsb3bqo"]
+
+[ext_resource type="PackedScene" uid="uid://ckhbwy0dyy7gb" path="res://General Nodes/Hurt_Box/hurt_box.tscn" id="1_3vgcn"]
+[ext_resource type="Script" uid="uid://xjrqja6qruy3" path="res://Props/spike_trap.gd" id="1_rer0p"]
+[ext_resource type="Texture2D" uid="uid://wtc5n0htp80g" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/Props.png" id="2_rer0p"]
+
+[sub_resource type="Animation" id="Animation_nv2m3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [80]
+}
+
+[sub_resource type="Animation" id="Animation_o6pti"]
+resource_name = "Stab"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19999999, 0.4, 0.53333336, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [80, 79, 78, 77, 80]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y05ix"]
+_data = {
+&"RESET": SubResource("Animation_nv2m3"),
+&"Stab": SubResource("Animation_o6pti")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nrvv"]
+
+[node name="Spike_Trap" type="Node2D"]
+script = ExtResource("1_rer0p")
+
+[node name="HurtBox" parent="." instance=ExtResource("1_3vgcn")]
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 1
+position = Vector2(0, -1.9073486e-06)
+scale = Vector2(1.980804, 2.0433762)
+texture = ExtResource("2_rer0p")
+hframes = 4
+vframes = 25
+frame = 80
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_y05ix")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_0nrvv")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, -16)
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="Marker2D2" type="Marker2D" parent="."]
+position = Vector2(-16, 0)
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="Marker2D3" type="Marker2D" parent="."]
+position = Vector2(0, 16)
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="Marker2D4" type="Marker2D" parent="."]
+position = Vector2(16, 0)
+scale = Vector2(1.5775708, 1.626413)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

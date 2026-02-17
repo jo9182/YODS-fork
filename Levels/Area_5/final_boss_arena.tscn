@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4wrllfddmuay"]
+
+[ext_resource type="Script" uid="uid://baut8tgloa1cq" path="res://Levels/Scripts/level.gd" id="1_npl6t"]
+[ext_resource type="PackedScene" uid="uid://bfrx8526haqte" path="res://Levels/Area_5/dungeon_05.tscn" id="2_ylmkl"]
+[ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_erwaf"]
+[ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_ab6lf"]
+
+[node name="Final_Boss_Arena" type="Node2D"]
+script = ExtResource("1_npl6t")
+
+[node name="Dungeon05" parent="." instance=ExtResource("2_ylmkl")]
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("3_erwaf")]
+position = Vector2(48, 72)
+
+[node name="LevelTransition" parent="." instance=ExtResource("4_ab6lf")]
+position = Vector2(32, -8)
+level = "uid://bx2xjilcm2k1v"
+side = 2

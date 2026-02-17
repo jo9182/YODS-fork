@@ -1,0 +1,115 @@
+[gd_scene load_steps=8 format=3 uid="uid://t3pk7unv8odb"]
+
+[ext_resource type="Script" uid="uid://bypu5acgn21je" path="res://GUI/inventory_menu/inventory_menu.gd" id="1_sx4t3"]
+[ext_resource type="Texture2D" uid="uid://dqdwh7030ldei" path="res://items/sprites/items.png" id="2_4f0ul"]
+[ext_resource type="Script" uid="uid://dfbv6vbeilpl8" path="res://GUI/inventory_menu/inventory/scripts/inventory_ui.gd" id="3_hfsbx"]
+[ext_resource type="Resource" uid="uid://do1b0o8s1ujin" path="res://GUI/inventory_menu/inventory/player_inventory.tres" id="4_sx4t3"]
+[ext_resource type="PackedScene" uid="uid://cnkvqfg03be83" path="res://GUI/inventory_menu/inventory/inventory_slot.tscn" id="4_ukaca"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewgu5"]
+atlas = ExtResource("2_4f0ul")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sn1ji"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+texture = SubResource("AtlasTexture_ewgu5")
+texture_margin_left = 14.0
+texture_margin_top = 14.0
+texture_margin_right = 14.0
+texture_margin_bottom = 14.0
+
+[node name="inventory_menu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_sx4t3")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.384314, 0.690196, 0.52549)
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -233.0
+offset_top = 6.0
+offset_right = -157.0
+offset_bottom = 29.0
+grow_horizontal = 2
+text = "[ Paused ]"
+
+[node name="Item Description" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -211.0
+offset_top = 175.0
+offset_right = -20.0
+offset_bottom = 198.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 10
+autowrap_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 88.0
+offset_right = 356.0
+offset_bottom = 176.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_sn1ji")
+
+[node name="GridContainer" type="GridContainer" parent="Control/PanelContainer"]
+layout_mode = 2
+columns = 5
+script = ExtResource("3_hfsbx")
+data = ExtResource("4_sx4t3")
+
+[node name="InventorySlot" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+layout_mode = 2
+
+[node name="InventorySlot2" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+layout_mode = 2
+
+[node name="InventorySlot3" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+layout_mode = 2
+
+[node name="InventorySlot4" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+layout_mode = 2
+
+[node name="InventorySlot5" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+layout_mode = 2
+
+[node name="InventorySlot6" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+layout_mode = 2
+
+[node name="InventorySlot7" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+layout_mode = 2
+
+[node name="InventorySlot8" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+layout_mode = 2
+
+[node name="InventorySlot9" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+layout_mode = 2
+
+[node name="InventorySlot10" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+layout_mode = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+max_polyphony = 4

@@ -1,0 +1,82 @@
+[gd_scene load_steps=3 format=3 uid="uid://2cwlikttkpbk"]
+
+[ext_resource type="Script" uid="uid://cwrvjvusutxyr" path="res://GUI/pause_menu/pause_menu.gd" id="1_4w82k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4w82k"]
+font_size = 32
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_4w82k")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.384314, 0.690196, 0.52549)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = 33.0
+offset_right = 79.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button_save" type="Button" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+text = "SAVE"
+
+[node name="Button_load" type="Button" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+text = "LOAD"
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -74.0
+offset_top = 56.0
+offset_right = 77.0
+offset_bottom = 112.0
+grow_horizontal = 2
+text = "[ Paused ]"
+label_settings = SubResource("LabelSettings_4w82k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 208.0
+offset_right = 308.0
+offset_bottom = 239.0
+
+[node name="Button_quit" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "QUIT"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+max_polyphony = 4
+
+[connection signal="pressed" from="Control/VBoxContainer/Button_quit" to="." method="_on_button_quit_pressed"]

@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=3 uid="uid://gnnwrpnnkvuj"]
+
+[ext_resource type="Script" uid="uid://csn3c0ndk6wxv" path="res://Props/torch/torch1.gd" id="1_lpa5x"]
+[ext_resource type="Texture2D" uid="uid://wtc5n0htp80g" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/Props.png" id="2_aqllr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j8v0p"]
+radius = 6.0
+
+[sub_resource type="Animation" id="Animation_y5uky"]
+resource_name = "Burn"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19999999, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [92, 93, 95, 96]
+}
+
+[sub_resource type="Animation" id="Animation_7jjy1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [92]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d8nje"]
+_data = {
+&"Burn": SubResource("Animation_y5uky"),
+&"RESET": SubResource("Animation_7jjy1")
+}
+
+[node name="Torch" type="Node2D"]
+script = ExtResource("1_lpa5x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -10)
+scale = Vector2(2.0776665, 2.0433779)
+texture = ExtResource("2_aqllr")
+hframes = 4
+vframes = 25
+frame = 92
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(0, -10)
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("CircleShape2D_j8v0p")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_d8nje")
+}

@@ -1,0 +1,102 @@
+[gd_scene load_steps=9 format=3 uid="uid://dpi7nc6k811av"]
+
+[ext_resource type="Script" uid="uid://cgsoijh7r4ifk" path="res://Props/mini_box.gd" id="1_xavgw"]
+[ext_resource type="PackedScene" uid="uid://ckhbwy0dyy7gb" path="res://General Nodes/Hurt_Box/hurt_box.tscn" id="2_6e0qb"]
+[ext_resource type="Texture2D" uid="uid://wtc5n0htp80g" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/Props.png" id="3_vyeri"]
+
+[sub_resource type="Animation" id="Animation_o6pti"]
+resource_name = "Open"
+length = 0.35
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [68, 66, 67, 68]
+}
+
+[sub_resource type="Animation" id="Animation_nv2m3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [68]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y05ix"]
+_data = {
+&"Open": SubResource("Animation_o6pti"),
+&"RESET": SubResource("Animation_nv2m3")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bfixx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_73jxi"]
+size = Vector2(24, 4.75)
+
+[node name="Mini_Box" type="Node2D"]
+script = ExtResource("1_xavgw")
+
+[node name="HurtBox" parent="." instance=ExtResource("2_6e0qb")]
+scale = Vector2(1.5775708, 1.626413)
+damage = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -10)
+scale = Vector2(2.357665, 2.0433762)
+texture = ExtResource("3_vyeri")
+hframes = 4
+vframes = 25
+frame = 68
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_y05ix")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-0.22429276, 18.26413)
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_bfixx")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, 2)
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="Marker2D2" type="Marker2D" parent="."]
+position = Vector2(-16.224293, 18.26413)
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="Marker2D3" type="Marker2D" parent="."]
+position = Vector2(-0.22429276, 34.26413)
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="Marker2D4" type="Marker2D" parent="."]
+position = Vector2(16, 18)
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+y_sort_enabled = true
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+y_sort_enabled = true
+position = Vector2(0, -0.625)
+shape = SubResource("RectangleShape2D_73jxi")
+debug_color = Color(0.8849148, 0.33312944, 5.7756904e-07, 0.41960785)

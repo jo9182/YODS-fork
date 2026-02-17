@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://ntijm35cudc4"]
+
+[ext_resource type="Script" uid="uid://d2yna3x2a6wou" path="res://items/scripts/resource_item_data.gd" id="1_becff"]
+[ext_resource type="Script" uid="uid://be7synskoaa18" path="res://items/item_effects/item_effects.gd" id="1_uj5p3"]
+[ext_resource type="Texture2D" uid="uid://dqdwh7030ldei" path="res://items/sprites/items.png" id="2_mwerj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uj5p3"]
+atlas = ExtResource("2_mwerj")
+region = Rect2(64, 0, 32, 32)
+
+[resource]
+script = ExtResource("1_becff")
+name = "Stone"
+description = "A tough stone"
+texture = SubResource("AtlasTexture_uj5p3")
+metadata/_custom_type_script = "uid://d2yna3x2a6wou"

@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://b1wxrfc07mdnm"]
+
+[ext_resource type="Script" uid="uid://cofsoqvxkxbgw" path="res://shop/shop_interact.gd" id="1_w43e4"]
+[ext_resource type="Texture2D" uid="uid://ci7dnlrt83pt3" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/keys/keys_1_1.png" id="2_j7d8m"]
+[ext_resource type="Texture2D" uid="uid://djtqgpo3q010n" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/keys/keys_2_1.png" id="3_oqfv7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fg6lc"]
+size = Vector2(122, 34)
+
+[node name="SHOP_INTERACT" type="Area2D" unique_id=1384501189]
+script = ExtResource("1_w43e4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1111640243]
+position = Vector2(248, 232)
+shape = SubResource("RectangleShape2D_fg6lc")
+debug_color = Color(0.8388056, 0.3853847, 0, 0.41960785)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=44660414]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1299518214]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 208.0
+offset_top = 216.0
+offset_right = 248.0
+offset_bottom = 256.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="CanvasLayer/Control" unique_id=2027659882]
+visible = false
+layout_mode = 0
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 130.0
+offset_bottom = -9.0
+text = "Press To Open Shop"
+
+[node name="ItemList" type="ItemList" parent="CanvasLayer/Control" unique_id=1594476220]
+visible = false
+layout_mode = 0
+offset_left = -40.0
+offset_top = -80.0
+offset_right = 144.0
+offset_bottom = -8.0
+select_mode = 1
+item_count = 2
+item_0/text = "Key 500 Gold"
+item_0/icon = ExtResource("2_j7d8m")
+item_1/text = "Silver Key 250 Gold"
+item_1/icon = ExtResource("3_oqfv7")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="pressed" from="CanvasLayer/Control/Button" to="." method="_on_button_pressed"]
