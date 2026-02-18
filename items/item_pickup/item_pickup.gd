@@ -3,10 +3,6 @@ class_name item_pickup extends Node2D
 
 @export var item_data: ItemData : set = _set_item_data
 
-# if this is set, picking up this item adds to gold instead of inventory
-# drag coin.tres here on any coin pickup in the world
-@export var coin_value: int = 1
-
 @onready var area_2d: Area2D = $Area2D
 @onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -22,9 +18,9 @@ func _ready() -> void:
 func _on_body_entered(b) -> void:
 	if b is Player:
 		if item_data:
-			# if coin_value is set, this pickup adds gold instead of an item
-			if coin_value > 0:
-				PlayerStats.add_gold(coin_value)
+			if item_data.use_on_pickup:
+				# item handles its own effect (e.g. coin adds gold), never enters inventory
+				item_data.use()
 				item_picked_up()
 			elif PlayerManager.INVENTORY_DATA.addItem(item_data) == true:
 				item_picked_up()

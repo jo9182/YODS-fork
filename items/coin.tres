@@ -1,11 +1,16 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bmh5tu51wsk7u"]
 
 [ext_resource type="Script" uid="uid://be7synskoaa18" path="res://items/item_effects/item_effects.gd" id="1_527q1"]
+[ext_resource type="Script" uid="uid://cb5yktqg0derx" path="res://items/item_effects/item_effect_gold.gd" id="2_2k5fi"]
 [ext_resource type="Script" uid="uid://d2yna3x2a6wou" path="res://items/scripts/resource_item_data.gd" id="2_o3dv7"]
 [ext_resource type="Texture2D" uid="uid://bq15n8dray0qb" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/coin/coin_1.png" id="3_o3dv7"]
 [ext_resource type="Texture2D" uid="uid://coy4my6xlgb42" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/coin/coin_2.png" id="4_7mjuv"]
 [ext_resource type="Texture2D" uid="uid://cfy4qqkp0ljg1" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/coin/coin_3.png" id="5_2k5fi"]
 [ext_resource type="Texture2D" uid="uid://yq1eboq8bu7e" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/coin/coin_4.png" id="6_v44pd"]
+
+[sub_resource type="Resource" id="Resource_v44pd"]
+script = ExtResource("2_2k5fi")
+metadata/_custom_type_script = "uid://cb5yktqg0derx"
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_adtt3"]
 frames = 4
@@ -23,4 +28,6 @@ script = ExtResource("2_o3dv7")
 name = "Coin"
 description = "Real shiny! You should get more..."
 texture = SubResource("AnimatedTexture_adtt3")
+use_on_pickup = true
+effects = Array[ExtResource("1_527q1")]([SubResource("Resource_v44pd")])
 metadata/_custom_type_script = "uid://d2yna3x2a6wou"

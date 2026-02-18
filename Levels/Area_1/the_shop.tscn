@@ -26,8 +26,6 @@ opt1 = "Yes"
 opt2 = "No"
 res1 = "Then I suppose ye know how to navigate this here dungeon. "
 res2 = "Ye haven't well then! A few quick tips. WASD for movement E to interact. TABS and I for inventory and ESC to pause the game. Be sure to save frequently."
-is_shop_customer = true
-shop_trigger_option = null
 coin_amount = 102
 
 [node name="PlayerSpawn" parent="." unique_id=1467528744 instance=ExtResource("3_kef53")]
@@ -76,10 +74,10 @@ shop_trigger_option = null
 coin_amount = null
 
 [node name="SHOP_INTERACT" parent="." unique_id=1384501189 instance=ExtResource("7_i2oah")]
-position = Vector2(201, 1)
+position = Vector2(144, 0)
 
 [node name="LevelTransition2" parent="." unique_id=1924225957 instance=ExtResource("2_0epwg")]
-position = Vector2(611, 240)
+position = Vector2(592, 240)
 level = "uid://cmwwq3qmidic7"
 size = 1
 side = 1
