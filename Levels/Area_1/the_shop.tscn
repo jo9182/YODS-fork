@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="2_0epwg"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_kef53"]
 [ext_resource type="PackedScene" uid="uid://bm3pdj3rlgvso" path="res://NPC's/priest.tscn" id="5_kef53"]
+[ext_resource type="Resource" uid="uid://bmh5tu51wsk7u" path="res://items/coin.tres" id="5_t8tbc"]
 [ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="6_qu404"]
 [ext_resource type="PackedScene" uid="uid://b1wxrfc07mdnm" path="res://shop/shop_interact.tscn" id="7_i2oah"]
 
@@ -21,11 +22,14 @@ level = "uid://dc4nkx3tf7kn5"
 [node name="Priest" parent="." unique_id=898869083 instance=ExtResource("5_kef53")]
 position = Vector2(168, 160)
 priest_name = "Doug"
-Sentence = "Have Ye been in this here dungeon before"
+Sentence = "Have Ye been in this here dungeon before?"
 opt1 = "Yes"
 opt2 = "No"
 res1 = "Then I suppose ye know how to navigate this here dungeon. "
 res2 = "Ye haven't well then! A few quick tips. WASD for movement E to interact. TABS and I for inventory and ESC to pause the game. Be sure to save frequently."
+is_shop_customer = true
+coin_amount = 102
+coin_item = ExtResource("5_t8tbc")
 
 [node name="PlayerSpawn" parent="." unique_id=1467528744 instance=ExtResource("3_kef53")]
 position = Vector2(256, 128)
@@ -44,6 +48,9 @@ opt1 = "Yes"
 opt2 = "Not yet"
 res1 = "Finally!"
 res2 = "I've waited this long I can wait a little longer."
+is_shop_customer = true
+shop_trigger_option = 1
+coin_item = ExtResource("5_t8tbc")
 
 [node name="Priest3" parent="." unique_id=1992972371 instance=ExtResource("5_kef53")]
 position = Vector2(360, 128)
@@ -53,6 +60,9 @@ opt1 = "Yes"
 opt2 = "Sort of"
 res1 = "Oh that great I hope your merchandise is up to par with modern shopping standards!"
 res2 = "Oh, grow a spine and then come speak to me!!"
+is_shop_customer = true
+shop_trigger_option = 1
+coin_item = ExtResource("5_t8tbc")
 
 [node name="Priest4" parent="." unique_id=1038674673 instance=ExtResource("5_kef53")]
 position = Vector2(416, 128)
