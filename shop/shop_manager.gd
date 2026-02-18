@@ -1,23 +1,26 @@
-## ShopManager.gd
-## register this as an autoload in Project > Project Settings > Autoload
-## name: ShopManager, path: res://shop/shop_manager.gd
+## registered as autoload: ShopManager
 
 extends Node
 
-# fires whenever something gets listed, delisted, or sold
 signal listings_changed
 
-# true when the player is standing in their shop zone
-# inventory slots use this to know whether to list or use items
 var in_shop_zone: bool = false
-
-# everything currently up for sale
 var listings: Array[ShopListing] = []
 
+# default listing cap -- skill upgrades add to this
+var max_listings: int = 5
 
-# list one unit of an item for sale at the given price
-# stacks quantity if the same item is already listed
+
 func add_listing(item_data: ItemData, price: int) -> bool:
+	# check the cap before adding anything new
+	var total_listed = 0
+	for l in listings:
+		total_listed += l.quantity
+	if total_listed >= max_listings:
+		print("shop is full -- buy more listing slots at the altar")
+		return false
+
+	# stack quantity if the same item is already listed
 	for listing in listings:
 		if listing.item_data == item_data:
 			listing.quantity += 1
@@ -33,7 +36,7 @@ func add_listing(item_data: ItemData, price: int) -> bool:
 	return true
 
 
-# remove one unit of a listing and return the item to the player's inventory
+# remove one unit of a listing and return it to the player's inventory
 func delist(listing: ShopListing, inventory: inventoryData) -> void:
 	inventory.addItem(listing.item_data, 1)
 	listing.quantity -= 1
@@ -43,8 +46,7 @@ func delist(listing: ShopListing, inventory: inventoryData) -> void:
 
 
 # called when an npc buys something
-# removes the item from listings and adds gold to PlayerStats
-# returns how much gold was earned, or -1 if something went wrong
+# removes the item and pays the player in gold
 func sell(listing: ShopListing) -> int:
 	if not listings.has(listing):
 		return -1
@@ -55,7 +57,5 @@ func sell(listing: ShopListing) -> int:
 		listings.erase(listing)
 	listings_changed.emit()
 
-	# just add to the gold int, no more messing with coin inventory
 	PlayerStats.add_gold(gold_earned)
-
 	return gold_earned

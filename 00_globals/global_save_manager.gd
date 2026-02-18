@@ -5,7 +5,6 @@ const SAVE_PATH = "user://"
 signal game_loaded
 signal game_saved
 
-
 var current_save: Dictionary = {
 	scene_path = "",
 	player = {
@@ -14,19 +13,21 @@ var current_save: Dictionary = {
 		pos_x = 0,
 		pos_y = 0
 	},
-	# gold is just a number now, much simpler
 	gold = 0,
+	# list of skill ids the player has bought
+	purchased_skills = [],
 	items = [],
 	persistience = [],
 	quest = [],
 	chests = [],
 }
 
+
 func save_game() -> void:
 	update_player_data()
 	update_scene_path()
-	# grab gold from PlayerStats before writing
 	current_save.gold = PlayerStats.gold
+	current_save.purchased_skills = SkillTreeManager.get_save_data()
 	var file := FileAccess.open(SAVE_PATH + "save.sav", FileAccess.WRITE)
 	var save_json = JSON.stringify(current_save)
 	file.store_line(save_json)
@@ -51,9 +52,13 @@ func load_game() -> void:
 
 	PlayerManager.set_player_position(Vector2(current_save.player.pos_x, current_save.player.pos_y))
 	PlayerManager.set_health(current_save.player.hp, current_save.player.max_hp)
-
-	# restore gold -- default to 0 if the save is old and doesn't have it yet
 	PlayerStats.gold = current_save.get("gold", 0)
+
+	# restore skill purchases and re-apply their effects
+	# we need to find all skills across the scene to pass to the manager
+	# they live on the altar -- grab them from the current scene tree
+	var all_skills = _find_all_skills()
+	SkillTreeManager.load_save_data(current_save.get("purchased_skills", []), all_skills)
 
 	await LevelManager.level_loaded
 	print("load game")
@@ -73,3 +78,15 @@ func update_scene_path() -> void:
 		if c is level:
 			p = c.scene_file_path
 		current_save.scene_path = p
+
+
+# searches the scene tree for an altar_interact node to get all SkillData from
+# this works because SkillTreeData is assigned to the altar in the inspector
+func _find_all_skills() -> Array[SkillData]:
+	for node in get_tree().get_nodes_in_group("altar"):
+		if node.has_method("get") and node.get("skill_tree") != null:
+			return node.skill_tree.skills
+	# fallback -- just return empty if the altar isn't in the current scene
+	# skills will still be marked as purchased, effects just won't re-apply until
+	# the player visits the altar room
+	return []

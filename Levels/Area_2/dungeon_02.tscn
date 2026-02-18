@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bpi4o0cptor0"]
+[gd_scene format=3 uid="uid://bpi4o0cptor0"]
 
 [ext_resource type="Texture2D" uid="uid://bt02t3danyf6v" path="res://Tile Maps/Sprites/ladders.png" id="1_tr4hh"]
 [ext_resource type="Texture2D" uid="uid://buok2anb2eurk" path="res://Pack/2D Pixel Dungeon Asset Pack/Dungeon_Tileset_at.png" id="1_x2e11"]
@@ -520,7 +520,7 @@ sources/3 = SubResource("TileSetAtlasSource_j8jjw")
 sources/4 = SubResource("TileSetAtlasSource_hgg31")
 sources/0 = SubResource("TileSetAtlasSource_gp7r2")
 
-[node name="Dungeon02" type="TileMapLayer"]
+[node name="Dungeon02" type="TileMapLayer" unique_id=469725969]
 z_index = -2
 texture_filter = 1
 tile_set = SubResource("TileSet_cfkpn")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://t3pk7unv8odb"]
+[gd_scene format=3 uid="uid://t3pk7unv8odb"]
 
 [ext_resource type="Script" uid="uid://bypu5acgn21je" path="res://GUI/inventory_menu/inventory_menu.gd" id="1_sx4t3"]
 [ext_resource type="Texture2D" uid="uid://dqdwh7030ldei" path="res://items/sprites/items.png" id="2_4f0ul"]
@@ -21,11 +21,11 @@ texture_margin_top = 14.0
 texture_margin_right = 14.0
 texture_margin_bottom = 14.0
 
-[node name="inventory_menu" type="CanvasLayer"]
+[node name="inventory_menu" type="CanvasLayer" unique_id=1048238508]
 process_mode = 3
 script = ExtResource("1_sx4t3")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=1979745705]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,7 +33,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="Control"]
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=48710996]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -42,7 +42,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.384314, 0.690196, 0.52549)
 
-[node name="Label" type="Label" parent="Control"]
+[node name="Label" type="Label" parent="Control" unique_id=943878118]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -54,7 +54,7 @@ offset_bottom = 29.0
 grow_horizontal = 2
 text = "[ Paused ]"
 
-[node name="Item Description" type="Label" parent="Control"]
+[node name="Item Description" type="Label" parent="Control" unique_id=1202615904]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -67,7 +67,7 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 10
 autowrap_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="Control"]
+[node name="PanelContainer" type="PanelContainer" parent="Control" unique_id=808082434]
 layout_mode = 0
 offset_left = 160.0
 offset_top = 88.0
@@ -75,41 +75,41 @@ offset_right = 356.0
 offset_bottom = 176.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_sn1ji")
 
-[node name="GridContainer" type="GridContainer" parent="Control/PanelContainer"]
+[node name="GridContainer" type="GridContainer" parent="Control/PanelContainer" unique_id=1087850069]
 layout_mode = 2
 columns = 5
 script = ExtResource("3_hfsbx")
 data = ExtResource("4_sx4t3")
 
-[node name="InventorySlot" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+[node name="InventorySlot" parent="Control/PanelContainer/GridContainer" unique_id=2057499504 instance=ExtResource("4_ukaca")]
 layout_mode = 2
 
-[node name="InventorySlot2" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+[node name="InventorySlot2" parent="Control/PanelContainer/GridContainer" unique_id=1896325890 instance=ExtResource("4_ukaca")]
 layout_mode = 2
 
-[node name="InventorySlot3" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+[node name="InventorySlot3" parent="Control/PanelContainer/GridContainer" unique_id=365413909 instance=ExtResource("4_ukaca")]
 layout_mode = 2
 
-[node name="InventorySlot4" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+[node name="InventorySlot4" parent="Control/PanelContainer/GridContainer" unique_id=2023609630 instance=ExtResource("4_ukaca")]
 layout_mode = 2
 
-[node name="InventorySlot5" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+[node name="InventorySlot5" parent="Control/PanelContainer/GridContainer" unique_id=72088123 instance=ExtResource("4_ukaca")]
 layout_mode = 2
 
-[node name="InventorySlot6" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+[node name="InventorySlot6" parent="Control/PanelContainer/GridContainer" unique_id=369490809 instance=ExtResource("4_ukaca")]
 layout_mode = 2
 
-[node name="InventorySlot7" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+[node name="InventorySlot7" parent="Control/PanelContainer/GridContainer" unique_id=2092623622 instance=ExtResource("4_ukaca")]
 layout_mode = 2
 
-[node name="InventorySlot8" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+[node name="InventorySlot8" parent="Control/PanelContainer/GridContainer" unique_id=615196734 instance=ExtResource("4_ukaca")]
 layout_mode = 2
 
-[node name="InventorySlot9" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+[node name="InventorySlot9" parent="Control/PanelContainer/GridContainer" unique_id=930798083 instance=ExtResource("4_ukaca")]
 layout_mode = 2
 
-[node name="InventorySlot10" parent="Control/PanelContainer/GridContainer" instance=ExtResource("4_ukaca")]
+[node name="InventorySlot10" parent="Control/PanelContainer/GridContainer" unique_id=1935734430 instance=ExtResource("4_ukaca")]
 layout_mode = 2
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=179588757]
 max_polyphony = 4

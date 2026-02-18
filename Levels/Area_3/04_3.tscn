@@ -1,26 +1,26 @@
-[gd_scene load_steps=5 format=4 uid="uid://c2sjmp8bfg3cn"]
+[gd_scene format=4 uid="uid://c2sjmp8bfg3cn"]
 
 [ext_resource type="PackedScene" uid="uid://bduuh02qh45x8" path="res://Levels/Area_3/dungeon_03.tscn" id="1_7u7st"]
 [ext_resource type="Script" uid="uid://baut8tgloa1cq" path="res://Levels/Scripts/level.gd" id="1_revuj"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="2_revuj"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="3_7s5v4"]
 
-[node name="04_3" type="Node2D"]
+[node name="04_3" type="Node2D" unique_id=1193653818]
 script = ExtResource("1_revuj")
 
-[node name="Dungeon03" parent="." instance=ExtResource("1_7u7st")]
+[node name="Dungeon03" parent="." unique_id=1270893176 instance=ExtResource("1_7u7st")]
 tile_map_data = PackedByteArray("AAD6//b/AgAHAAYAAAD7//b/AgAHAAYAAAD8//b/AgAHAAYAAAD///b/AgAHAAYAAAAAAPb/AgAHAAYAAAABAPb/AgAHAAYAAAD2//X/AgAMAAwAAAD2//b/AgAMAAwAAAD2//f/AgAMAAwAAAD2//j/AgAMAAwAAAD2//n/AgAMAAwAAAD2//r/AgAMAAwAAAD2//v/AgAMAAwAAAD2//z/AgAMAAwAAAD2//3/AgAMAAwAAAD2//7/AgAMAAwAAAD3//X/AgAMAAwAAAD3//b/AgAMAAwAAAD3//f/AgAMAAwAAAD3//j/AgAMAAwAAAD3//n/AgAMAAwAAAD3//r/AgAMAAwAAAD3//v/AgAMAAwAAAD3//z/AgAMAAwAAAD3//3/AgAMAAwAAAD3//7/AgAMAAwAAAD4//X/AgAMAAwAAAD4//b/AgAMAAwAAAD4//f/AgAMAAwAAAD4//j/AgAMAAwAAAD4//n/AgAMAAwAAAD4//r/AgAMAAwAAAD4//v/AgAMAAwAAAD4//z/AgAMAAwAAAD4//3/AgAMAAwAAAD4//7/AgAMAAwAAAADAPX/AgAMAAwAAAADAPb/AgAMAAwAAAADAPf/AgAMAAwAAAADAPj/AgAMAAwAAAADAPn/AgAMAAwAAAADAPr/AgAMAAwAAAADAPv/AgAMAAwAAAADAPz/AgAMAAwAAAADAP3/AgAMAAwAAAADAP7/AgAMAAwAAAAEAPX/AgAMAAwAAAAEAPb/AgAMAAwAAAAEAPf/AgAMAAwAAAAEAPj/AgAMAAwAAAAEAPn/AgAMAAwAAAAEAPr/AgAMAAwAAAAEAPv/AgAMAAwAAAAEAPz/AgAMAAwAAAAEAP3/AgAMAAwAAAAEAP7/AgAMAAwAAAAFAPX/AgAMAAwAAAAFAPb/AgAMAAwAAAAFAPf/AgAMAAwAAAAFAPj/AgAMAAwAAAAFAPn/AgAMAAwAAAAFAPr/AgAMAAwAAAAFAPv/AgAMAAwAAAAFAPz/AgAMAAwAAAAFAP3/AgAMAAwAAAAFAP7/AgAMAAwAAAD///X/AgAEAAYAAAD8//X/AgALAAYAAAACAPb/AgAPAAYAAAACAPf/AgAPAAcAAAACAPj/AgAPAAgAAAACAPn/AgAPAAkAAAACAPr/AgAPAAYAAAACAPv/AgAPAAcAAAACAPz/AgAPAAgAAAACAP3/AgAPAAoAAAABAP3/AgAOAAoAAAAAAP3/AgAOAAoAAAD///3/AgAKAAkAAAD8//3/AgAFAAkAAAD8//7/AgAAAAgAAAD///7/AgAPAAcAAAD7//3/AgANAAoAAAD6//3/AgANAAoAAAD5//3/AgAAAAoAAAD5//b/AgAAAAcAAAD5//f/AgAAAAgAAAD5//j/AgAAAAkAAAD5//n/AgAAAAYAAAD5//r/AgAAAAcAAAD5//v/AgAAAAgAAAD5//z/AgAAAAkAAAD5//7/AgAMAA0AAAD6//7/AgAMAA0AAAD7//7/AgAMAA0AAAAAAP7/AgAMAA0AAAABAP7/AgAMAA0AAAACAP7/AgAMAA0AAAD5//X/AgAMAA0AAAD6//X/AgAMAA0AAAD7//X/AgAMAA0AAAAAAPX/AgAMAA0AAAABAPX/AgAMAA0AAAACAPX/AgAMAA0AAAD+//7/AgAIAAsAAAD9//X/AgAHAAsAAAD+//X/AgAIAAsAAAD6//f/AgAIAAkAAAD6//j/AgAIAAkAAAD6//n/AgAIAAkAAAD6//r/AgAIAAkAAAD6//v/AgAIAAkAAAD6//z/AgAIAAkAAAD7//f/AgAIAAkAAAD7//j/AgAIAAkAAAD7//n/AgAIAAkAAAD7//r/AgAIAAkAAAD7//v/AgAIAAkAAAD7//z/AgAIAAkAAAD8//f/AgAIAAkAAAD8//j/AgAIAAkAAAD8//n/AgAIAAkAAAD8//r/AgAIAAkAAAD8//v/AgAIAAkAAAD8//z/AgAIAAkAAAD9//f/AgAIAAkAAAD9//j/AgAIAAkAAAD9//n/AgAIAAkAAAD9//r/AgAIAAkAAAD9//v/AgAIAAkAAAD9//z/AgAIAAkAAAD+//f/AgAIAAkAAAD+//j/AgAIAAkAAAD+//n/AgAIAAkAAAD+//r/AgAIAAkAAAD+//v/AgAIAAkAAAD+//z/AgAIAAkAAAD///f/AgAIAAkAAAD///j/AgAIAAkAAAD///n/AgAIAAkAAAD///r/AgAIAAkAAAD///v/AgAIAAkAAAD///z/AgAIAAkAAAAAAPf/AgAIAAkAAAAAAPj/AgAIAAkAAAAAAPn/AgAIAAkAAAAAAPr/AgAIAAkAAAAAAPv/AgAIAAkAAAAAAPz/AgAIAAkAAAABAPf/AgAIAAkAAAABAPj/AgAIAAkAAAABAPn/AgAIAAkAAAABAPr/AgAIAAkAAAABAPv/AgAIAAkAAAABAPz/AgAIAAkAAAD9//b/AgAIAAkAAAD9//3/AgAIAAkAAAD+//b/AgAIAAkAAAD+//3/AgAIAAkAAAD9//7/AgAHAAsAAAA=")
 
-[node name="PlayerSpawn" parent="." instance=ExtResource("2_revuj")]
+[node name="PlayerSpawn" parent="." unique_id=286100358 instance=ExtResource("2_revuj")]
 position = Vector2(-48, -184)
 
-[node name="LevelTransition" parent="." instance=ExtResource("3_7s5v4")]
+[node name="LevelTransition" parent="." unique_id=1156836850 instance=ExtResource("3_7s5v4")]
 position = Vector2(-64, -64)
 level = "uid://2dujw1tv1u2c"
 target_transition_area = "LevelTransition3"
 side = 3
 
-[node name="LevelTransition2" parent="." instance=ExtResource("3_7s5v4")]
+[node name="LevelTransition2" parent="." unique_id=1858976862 instance=ExtResource("3_7s5v4")]
 position = Vector2(-64, -320)
 level = "uid://tdfthv55x5nm"
 side = 2

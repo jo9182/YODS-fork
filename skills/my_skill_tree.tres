@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="SkillTreeData" format=3 uid="uid://bqtj3tj3qprc7"]
+
+[ext_resource type="Script" uid="uid://da2jfsdkb5q8g" path="res://skills/skill_tree_data.gd" id="1_elm48"]
+[ext_resource type="Script" uid="uid://d36xu8j4jk5uc" path="res://skills/skill_data.gd" id="2_yuxyn"]
+[ext_resource type="Texture2D" uid="uid://534fjkbs6yhf" path="res://Pack/2D Pixel Dungeon Asset Pack/interface/arrow_1.png" id="3_yuxyn"]
+[ext_resource type="Resource" uid="uid://buyu4tdc0txhi" path="res://skills/skilldata/wimp.tres" id="4_ubrsm"]
+
+[sub_resource type="Resource" id="Resource_ubrsm"]
+script = ExtResource("2_yuxyn")
+skill_name = "Move It!"
+description = "Move a little bit faster!"
+icon = ExtResource("3_yuxyn")
+tree_column = 1
+id = "2"
+metadata/_custom_type_script = "uid://d36xu8j4jk5uc"
+
+[resource]
+script = ExtResource("1_elm48")
+skills = Array[ExtResource("2_yuxyn")]([SubResource("Resource_ubrsm"), ExtResource("4_ubrsm")])

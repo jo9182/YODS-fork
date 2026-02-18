@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b151g5xtf8si6"]
+[gd_scene format=3 uid="uid://b151g5xtf8si6"]
 
 [ext_resource type="Script" uid="uid://b7jwsnv37r2po" path="res://enemies/Scripts/enemy.gd" id="1_yc2c8"]
 [ext_resource type="Texture2D" uid="uid://o8pckq73hyuu" path="res://player/Sprites/Shadow.png" id="2_5ecos"]
@@ -664,7 +664,7 @@ _data = {
 &"walk_up": SubResource("Animation_083ah")
 }
 
-[node name="Red_Vampire" type="CharacterBody2D"]
+[node name="Red_Vampire" type="CharacterBody2D" unique_id=1003239173]
 modulate = Color(1, 0, 0, 1)
 texture_filter = 1
 collision_layer = 0
@@ -672,31 +672,31 @@ collision_mask = 18
 script = ExtResource("1_yc2c8")
 hp = 50
 
-[node name="shadowSprite2d" type="Sprite2D" parent="."]
+[node name="shadowSprite2d" type="Sprite2D" parent="." unique_id=845982532]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(-3, 5)
 scale = Vector2(0.90625, 0.71875)
 texture = ExtResource("2_5ecos")
 
-[node name="HurtBox" parent="." instance=ExtResource("3_5eign")]
+[node name="HurtBox" parent="." unique_id=429544019 instance=ExtResource("3_5eign")]
 position = Vector2(2, -3)
 damage = 6
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=1592095410]
 position = Vector2(-6, 0)
 shape = SubResource("CircleShape2D_folh5")
 debug_color = Color(1, 1, 0, 0.419608)
 
-[node name="Hitbox" parent="." instance=ExtResource("4_q4itb")]
+[node name="Hitbox" parent="." unique_id=313790355 instance=ExtResource("4_q4itb")]
 position = Vector2(-28, -12)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitbox"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitbox" unique_id=1115453213]
 modulate = Color(0.996078, 0.984314, 0.0117647, 1)
 position = Vector2(22, 5)
 shape = SubResource("CircleShape2D_hrxou")
 debug_color = Color(1, 0, 0, 0.419608)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1221238790]
 texture_filter = 1
 position = Vector2(0, -18)
 scale = Vector2(2.009422, 2.005075)
@@ -704,33 +704,31 @@ texture = ExtResource("5_yldny")
 hframes = 16
 vframes = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1855883054]
 position = Vector2(-6, -4)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_of4ix")
 
-[node name="EnemyStateMachine" type="Node" parent="."]
+[node name="EnemyStateMachine" type="Node" parent="." unique_id=329257851]
 script = ExtResource("6_g56w1")
 
-[node name="idle" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("after_idle_state")]
+[node name="idle" type="Node" parent="EnemyStateMachine" unique_id=1597317578 node_paths=PackedStringArray("after_idle_state")]
 script = ExtResource("7_8dihh")
 after_idle_state = NodePath("../Wander")
 
-[node name="Wander" type="Node" parent="EnemyStateMachine"]
+[node name="Wander" type="Node" parent="EnemyStateMachine" unique_id=110980946]
 script = ExtResource("8_annjm")
 
-[node name="Stun" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("next_state")]
+[node name="Stun" type="Node" parent="EnemyStateMachine" unique_id=565181767 node_paths=PackedStringArray("next_state")]
 script = ExtResource("9_0tog3")
 next_state = NodePath("../idle")
 
-[node name="Destroy" type="Node" parent="EnemyStateMachine"]
+[node name="Destroy" type="Node" parent="EnemyStateMachine" unique_id=585352651]
 script = ExtResource("10_rgaal")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_kag0e")
-}
-autoplay = "idle_down"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1549232261]
+libraries/ = SubResource("AnimationLibrary_kag0e")
+autoplay = &"idle_down"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=2140060540]
 max_polyphony = 4

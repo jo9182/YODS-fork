@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dop7r15gobi7k"]
+[gd_scene format=3 uid="uid://dop7r15gobi7k"]
 
 [ext_resource type="Script" uid="uid://ceo8r8x1vxv5q" path="res://Props/side_flamethrower.gd" id="1_bn6dt"]
 [ext_resource type="PackedScene" uid="uid://ckhbwy0dyy7gb" path="res://General Nodes/Hurt_Box/hurt_box.tscn" id="1_rpgll"]
@@ -43,14 +43,14 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fj1mk"]
 
-[node name="Side_flamethrower" type="Node2D"]
+[node name="Side_flamethrower" type="Node2D" unique_id=341172210]
 script = ExtResource("1_bn6dt")
 
-[node name="HurtBox" parent="." instance=ExtResource("1_rpgll")]
+[node name="HurtBox" parent="." unique_id=515663572 instance=ExtResource("1_rpgll")]
 scale = Vector2(1.5775708, 1.626413)
 damage = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1777162255]
 z_index = -1
 texture_filter = 1
 position = Vector2(0, -1.9073486e-06)
@@ -60,30 +60,28 @@ hframes = 4
 vframes = 25
 frame = 15
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_y05ix")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=960637047]
+libraries/ = SubResource("AnimationLibrary_y05ix")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=2128657781]
 scale = Vector2(1.5775708, 1.626413)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1289980621]
 shape = SubResource("RectangleShape2D_fj1mk")
 
-[node name="Marker2D" type="Marker2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1393176900]
 position = Vector2(0, -16)
 scale = Vector2(1.5775708, 1.626413)
 
-[node name="Marker2D2" type="Marker2D" parent="."]
+[node name="Marker2D2" type="Marker2D" parent="." unique_id=1796366229]
 position = Vector2(-16, 0)
 scale = Vector2(1.5775708, 1.626413)
 
-[node name="Marker2D3" type="Marker2D" parent="."]
+[node name="Marker2D3" type="Marker2D" parent="." unique_id=1254894870]
 position = Vector2(0, 16)
 scale = Vector2(1.5775708, 1.626413)
 
-[node name="Marker2D4" type="Marker2D" parent="."]
+[node name="Marker2D4" type="Marker2D" parent="." unique_id=1352694769]
 position = Vector2(16, 0)
 scale = Vector2(1.5775708, 1.626413)
 

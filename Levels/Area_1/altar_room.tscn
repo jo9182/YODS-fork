@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="3_sjw5c"]
 [ext_resource type="Texture2D" uid="uid://lwy8uk44hwyd" path="res://Pack/altar.png" id="5_8cymy"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="5_44bwe"]
+[ext_resource type="Script" uid="uid://cmjuwdqvv7ee6" path="res://skills/altar_interact.gd" id="6_6cwfx"]
+[ext_resource type="Resource" uid="uid://bqtj3tj3qprc7" path="res://skills/my_skill_tree.tres" id="7_lya7w"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nqgmc"]
 texture = ExtResource("5_8cymy")
@@ -55,13 +57,15 @@ tile_map_data = PackedByteArray("AAD8/wEAAgAAAAYAAAD8/wIAAgAAAAcAAAD8/wMAAgABAAY
 
 [node name="LevelTransition" parent="." unique_id=391341639 instance=ExtResource("3_sjw5c")]
 position = Vector2(-112, 160)
-level = "uid://dc4nkx3tf7kn5"
+level = "uid://bm4r2jlq03ah"
 
 [node name="PlayerSpawn" parent="." unique_id=1467528744 instance=ExtResource("5_44bwe")]
 position = Vector2(-77, 173)
 
-[node name="Area2D" type="Area2D" parent="." unique_id=1537630394]
+[node name="Area2D" type="Area2D" parent="." unique_id=1537630394 groups=["altar"]]
 position = Vector2(19, 145)
+script = ExtResource("6_6cwfx")
+skill_tree = ExtResource("7_lya7w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=839371617]
 position = Vector2(12, 17)

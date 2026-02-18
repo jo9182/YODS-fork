@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://c5mrkr3u0daro"]
+
+[ext_resource type="Texture2D" uid="uid://534fjkbs6yhf" path="res://Pack/2D Pixel Dungeon Asset Pack/interface/arrow_1.png" id="1_47pug"]
+[ext_resource type="Script" uid="uid://d36xu8j4jk5uc" path="res://skills/skill_data.gd" id="1_kdbba"]
+
+[resource]
+script = ExtResource("1_kdbba")
+skill_name = "Move It!"
+description = "Move a little bit faster!"
+icon = ExtResource("1_47pug")
+tree_column = 1
+effect_type = "speed"
+id = "2"
+metadata/_custom_type_script = "uid://d36xu8j4jk5uc"

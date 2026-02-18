@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://gnnwrpnnkvuj"]
+[gd_scene format=3 uid="uid://gnnwrpnnkvuj"]
 
 [ext_resource type="Script" uid="uid://csn3c0ndk6wxv" path="res://Props/torch/torch1.gd" id="1_lpa5x"]
 [ext_resource type="Texture2D" uid="uid://wtc5n0htp80g" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/Props.png" id="2_aqllr"]
@@ -44,10 +44,10 @@ _data = {
 &"RESET": SubResource("Animation_7jjy1")
 }
 
-[node name="Torch" type="Node2D"]
+[node name="Torch" type="Node2D" unique_id=143223774]
 script = ExtResource("1_lpa5x")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1092811228]
 texture_filter = 1
 position = Vector2(0, -10)
 scale = Vector2(2.0776665, 2.0433779)
@@ -56,15 +56,13 @@ hframes = 4
 vframes = 25
 frame = 92
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=211785853]
 position = Vector2(0, -10)
 collision_layer = 16
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1306086839]
 shape = SubResource("CircleShape2D_j8v0p")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_d8nje")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=629327737]
+libraries/ = SubResource("AnimationLibrary_d8nje")

@@ -8,10 +8,6 @@
 
 config_version=5
 
-[animation]
-
-compatibility/default_parent_skeleton_in_mesh_instance_3d=true
-
 [application]
 
 config/name="YODS (4.6)"
@@ -32,6 +28,7 @@ InventoryMenu="*res://GUI/inventory_menu/inventory_menu.tscn"
 GloabalChestManager="*res://00_globals/GloabalChestManager.gd"
 PlayerStats="*uid://bfwhwk362xrtc"
 ShopManager="*uid://cdla1gtlyfti1"
+SkillTreeManager="*uid://3b32ji3bw4lm"
 
 [display]
 
@@ -40,6 +37,10 @@ window/size/viewport_height=270
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="viewport"
+
+[global_group]
+
+altar="Used for the skills stuff"
 
 [input]
 

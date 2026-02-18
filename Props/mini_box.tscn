@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dpi7nc6k811av"]
+[gd_scene format=3 uid="uid://dpi7nc6k811av"]
 
 [ext_resource type="Script" uid="uid://cgsoijh7r4ifk" path="res://Props/mini_box.gd" id="1_xavgw"]
 [ext_resource type="PackedScene" uid="uid://ckhbwy0dyy7gb" path="res://General Nodes/Hurt_Box/hurt_box.tscn" id="2_6e0qb"]
@@ -46,14 +46,14 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_73jxi"]
 size = Vector2(24, 4.75)
 
-[node name="Mini_Box" type="Node2D"]
+[node name="Mini_Box" type="Node2D" unique_id=1338006570]
 script = ExtResource("1_xavgw")
 
-[node name="HurtBox" parent="." instance=ExtResource("2_6e0qb")]
+[node name="HurtBox" parent="." unique_id=1402159549 instance=ExtResource("2_6e0qb")]
 scale = Vector2(1.5775708, 1.626413)
 damage = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=978957615]
 texture_filter = 1
 position = Vector2(0, -10)
 scale = Vector2(2.357665, 2.0433762)
@@ -62,40 +62,38 @@ hframes = 4
 vframes = 25
 frame = 68
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_y05ix")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2145683859]
+libraries/ = SubResource("AnimationLibrary_y05ix")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=880947796]
 position = Vector2(-0.22429276, 18.26413)
 scale = Vector2(1.5775708, 1.626413)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1470485926]
 shape = SubResource("RectangleShape2D_bfixx")
 
-[node name="Marker2D" type="Marker2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1197850733]
 position = Vector2(0, 2)
 scale = Vector2(1.5775708, 1.626413)
 
-[node name="Marker2D2" type="Marker2D" parent="."]
+[node name="Marker2D2" type="Marker2D" parent="." unique_id=1710081433]
 position = Vector2(-16.224293, 18.26413)
 scale = Vector2(1.5775708, 1.626413)
 
-[node name="Marker2D3" type="Marker2D" parent="."]
+[node name="Marker2D3" type="Marker2D" parent="." unique_id=1183001935]
 position = Vector2(-0.22429276, 34.26413)
 scale = Vector2(1.5775708, 1.626413)
 
-[node name="Marker2D4" type="Marker2D" parent="."]
+[node name="Marker2D4" type="Marker2D" parent="." unique_id=1119581234]
 position = Vector2(16, 18)
 scale = Vector2(1.5775708, 1.626413)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=331589643]
 y_sort_enabled = true
 collision_layer = 16
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1715660281]
 y_sort_enabled = true
 position = Vector2(0, -0.625)
 shape = SubResource("RectangleShape2D_73jxi")

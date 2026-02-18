@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://3rljq4466gt5"]
+[gd_scene format=3 uid="uid://3rljq4466gt5"]
 
 [ext_resource type="Texture2D" uid="uid://c5wwj6vghyvwi" path="res://Tile Maps/Sprites/topdown.png" id="1_2q0lq"]
 
@@ -76,5 +76,5 @@ physics_layer_0/collision_layer = 16
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_hmrob")
 
-[node name="River02" type="TileMapLayer"]
+[node name="River02" type="TileMapLayer" unique_id=31834075]
 tile_set = SubResource("TileSet_fl11c")

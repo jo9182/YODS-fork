@@ -79,5 +79,7 @@ coin_amount = null
 position = Vector2(201, 1)
 
 [node name="LevelTransition2" parent="." unique_id=1924225957 instance=ExtResource("2_0epwg")]
-position = Vector2(621, 245)
+position = Vector2(611, 240)
 level = "uid://cmwwq3qmidic7"
+size = 1
+side = 1

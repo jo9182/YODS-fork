@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=4 uid="uid://dpxfthkbdxrca"]
+[gd_scene format=4 uid="uid://dpxfthkbdxrca"]
 
 [ext_resource type="Script" uid="uid://baut8tgloa1cq" path="res://Levels/Scripts/level.gd" id="1_d4rmw"]
 [ext_resource type="PackedScene" uid="uid://bpi4o0cptor0" path="res://Levels/Area_2/dungeon_02.tscn" id="1_dku4v"]
@@ -6,32 +6,32 @@
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="3_fcmkd"]
 [ext_resource type="PackedScene" uid="uid://b5ctydrsxayd0" path="res://enemies/vampire.tscn" id="5_fcmkd"]
 
-[node name="06" type="Node2D"]
+[node name="06" type="Node2D" unique_id=1662094368]
 script = ExtResource("1_d4rmw")
 
-[node name="Dungeon02" parent="." instance=ExtResource("1_dku4v")]
+[node name="Dungeon02" parent="." unique_id=90265405 instance=ExtResource("1_dku4v")]
 tile_map_data = PackedByteArray("AAD3/wYAAgAHAAYAAAD4/wYAAgAIAAYAAAD5/wYAAgAHAAYAAAD6/wYAAgAIAAYAAAD7/wYAAgAHAAYAAAACAAYAAgAHAAYAAAADAAYAAgAIAAYAAAAEAAYAAgAHAAYAAAAFAAYAAgAIAAYAAAAGAAYAAgAHAAYAAAAHAAYAAgAPAAYAAAAHAAcAAgAPAAcAAAAHAAgAAgAPAAgAAAAHAAkAAgAPAAkAAAAHAAoAAgAPAAYAAAAHAAsAAgAPAAcAAAD2/wYAAgAAAAYAAAD2/wcAAgAAAAcAAAD2/wgAAgAAAAgAAAD2/wkAAgAAAAkAAAD2/woAAgAAAAYAAAD2/wsAAgAAAAcAAAD2/wwAAgAAAAoAAAD3/wwAAgABAAoAAAD4/wwAAgAFAAkAAAD7/wwAAgAEAAkAAAD8/wwAAgADAAoAAAAHAAwAAgAPAAoAAAABAAwAAgAMAAoAAAACAAwAAgALAAkAAAAFAAwAAgAKAAkAAAAGAAwAAgAOAAoAAAD8/wYAAgAHAAYAAAD9/wYAAgAIAAYAAAABAAYAAgAIAAYAAAAAAAYAAgAHAAYAAAAAAAUAAgAKAAYAAAD9/wUAAgAFAAYAAAD+/wUAAgAHAAsAAAD//wUAAgAIAAsAAAABAAUAAgAMAA0AAAACAAUAAgAMAA0AAAADAAUAAgAMAA0AAAAEAAUAAgAMAA0AAAAFAAUAAgAMAA0AAAAGAAUAAgAMAA0AAAAHAAUAAgAMAA0AAAD2/wUAAgAMAA0AAAD3/wUAAgAMAA0AAAD4/wUAAgAMAA0AAAD5/wUAAgAMAA0AAAD6/wUAAgAMAA0AAAD7/wUAAgAMAA0AAAD8/wUAAgAMAA0AAAD2/w0AAgAMAA0AAAD3/w0AAgAMAA0AAAD4/w0AAgAAAAcAAAD5/w0AAgAHAAsAAAD6/w0AAgAIAAsAAAD7/w0AAgAPAAkAAAD8/w0AAgAMAA0AAAABAA0AAgAMAA0AAAACAA0AAgAAAAYAAAADAA0AAgAHAAsAAAAEAA0AAgAIAAsAAAAFAA0AAgAPAAYAAAAGAA0AAgAMAA0AAAAHAA0AAgAMAA0AAAD3/wcAAgAIAA0AAAD3/wgAAgAIAA0AAAD3/wkAAgAIAA0AAAD3/woAAgAIAA0AAAD3/wsAAgAIAA0AAAD4/wcAAgAIAA0AAAD4/wgAAgAIAA0AAAD4/wkAAgAIAA0AAAD4/woAAgAIAA0AAAD4/wsAAgAIAA0AAAD5/wcAAgAIAA0AAAD5/wgAAgAIAA0AAAD5/wkAAgAIAA0AAAD5/woAAgAIAA0AAAD5/wsAAgAIAA0AAAD6/wcAAgAIAA0AAAD6/wgAAgAIAA0AAAD6/wkAAgAIAA0AAAD6/woAAgAIAA0AAAD6/wsAAgAIAA0AAAD7/wcAAgAIAA0AAAD7/wgAAgAIAA0AAAD7/wkAAgAIAA0AAAD7/woAAgAIAA0AAAD7/wsAAgAIAA0AAAD8/wcAAgAIAA0AAAD8/wgAAgAIAA0AAAD8/wkAAgAIAA0AAAD8/woAAgAIAA0AAAD8/wsAAgAIAA0AAAD9/wcAAgAIAA0AAAD9/wgAAgAIAA0AAAD9/wkAAgAIAA0AAAD9/woAAgAIAA0AAAD9/wsAAgAIAA0AAAD+/wcAAgAIAA0AAAD+/wgAAgAIAA0AAAD+/wkAAgAIAA0AAAD+/woAAgAIAA0AAAD+/wsAAgAIAA0AAAD//wcAAgAIAA0AAAD//wgAAgAIAA0AAAD//wkAAgAIAA0AAAD//woAAgAIAA0AAAD//wsAAgAIAA0AAAAAAAcAAgAIAA0AAAAAAAgAAgAIAA0AAAAAAAkAAgAIAA0AAAAAAAoAAgAIAA0AAAAAAAsAAgAIAA0AAAABAAcAAgAIAA0AAAABAAgAAgAIAA0AAAABAAkAAgAIAA0AAAABAAoAAgAIAA0AAAABAAsAAgAIAA0AAAACAAcAAgAIAA0AAAACAAgAAgAIAA0AAAACAAkAAgAIAA0AAAACAAoAAgAIAA0AAAACAAsAAgAIAA0AAAADAAcAAgAIAA0AAAADAAgAAgAIAA0AAAADAAkAAgAIAA0AAAADAAoAAgAIAA0AAAADAAsAAgAIAA0AAAAEAAcAAgAIAA0AAAAEAAgAAgAIAA0AAAAEAAkAAgAIAA0AAAAEAAoAAgAIAA0AAAAEAAsAAgAIAA0AAAAFAAcAAgAIAA0AAAAFAAgAAgAIAA0AAAAFAAkAAgAIAA0AAAAFAAoAAgAIAA0AAAAFAAsAAgAIAA0AAAAGAAcAAgAIAA0AAAAGAAgAAgAIAA0AAAAGAAkAAgAIAA0AAAAGAAoAAgAIAA0AAAAGAAsAAgAIAA0AAAD+/wYAAgAIAA0AAAD//wYAAgAIAA0AAAD+/wwAAgANAAoAAAD//wwAAgAOAAoAAAAAAAwAAgAOAAoAAAD9/wwAAgAMAAoAAAADAAwAAgAJAAgAAAAEAAwAAgAJAAgAAAD5/wwAAgAJAAgAAAD6/wwAAgAJAAgAAAD9/w0AAgAMAAwAAAD+/w0AAgAMAAwAAAD//w0AAgAMAAwAAAAAAA0AAgAMAAwAAAA=")
 
-[node name="PlayerSpawn" parent="." instance=ExtResource("2_d4rmw")]
+[node name="PlayerSpawn" parent="." unique_id=1859473280 instance=ExtResource("2_d4rmw")]
 position = Vector2(-200, 304)
 
-[node name="LevelTransition" parent="." instance=ExtResource("3_fcmkd")]
+[node name="LevelTransition" parent="." unique_id=1857313903 instance=ExtResource("3_fcmkd")]
 position = Vector2(-192, 416)
 level = "uid://rsm0c71qnqoe"
 target_transition_area = "LevelTransition2"
 side = 3
 
-[node name="LevelTransition2" parent="." instance=ExtResource("3_fcmkd")]
+[node name="LevelTransition2" parent="." unique_id=293878002 instance=ExtResource("3_fcmkd")]
 position = Vector2(-32, 192)
 level = "uid://c8l1y8q8jv1uu"
 side = 2
 
-[node name="LevelTransition3" parent="." instance=ExtResource("3_fcmkd")]
+[node name="LevelTransition3" parent="." unique_id=713563350 instance=ExtResource("3_fcmkd")]
 position = Vector2(128, 416)
 level = "uid://b1ct4r32xamv"
 target_transition_area = "LevelTransition3"
 side = 3
 
-[node name="Vampire" parent="." instance=ExtResource("5_fcmkd")]
+[node name="Vampire" parent="." unique_id=412410574 instance=ExtResource("5_fcmkd")]
 position = Vector2(-30, 308)
 hp = 7

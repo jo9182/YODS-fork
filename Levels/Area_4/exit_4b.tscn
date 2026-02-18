@@ -1,26 +1,26 @@
-[gd_scene load_steps=5 format=4 uid="uid://4fmrqs2dofbg"]
+[gd_scene format=4 uid="uid://4fmrqs2dofbg"]
 
 [ext_resource type="Script" uid="uid://baut8tgloa1cq" path="res://Levels/Scripts/level.gd" id="1_hydg8"]
 [ext_resource type="PackedScene" uid="uid://b38hdhft262j7" path="res://Levels/Area_4/dungeon_04.tscn" id="2_j822x"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_wgsxo"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_2lvrp"]
 
-[node name="Exit_4B" type="Node2D"]
+[node name="Exit_4B" type="Node2D" unique_id=266985724]
 script = ExtResource("1_hydg8")
 
-[node name="Dungeon04" parent="." instance=ExtResource("2_j822x")]
+[node name="Dungeon04" parent="." unique_id=542928251 instance=ExtResource("2_j822x")]
 tile_map_data = PackedByteArray("AAD3/wQAAgAHAAYAAAD4/wQAAgAEAAYAAAD5/wQAAgAFAAYAAAD6/wQAAgAHAAYAAAD7/wQAAgAHAAYAAAD8/wQAAgAHAAYAAAD9/wQAAgAHAAYAAAD+/wQAAgAHAAYAAAD//wQAAgAHAAYAAAAAAAQAAgAHAAYAAAABAAQAAgAHAAYAAAD4/wUAAgAEAAcAAAD5/wUAAgAFAAcAAAD2/wQAAgAAAAYAAAD2/wUAAgAAAAcAAAD2/wYAAgAAAAgAAAD2/wcAAgAAAAYAAAD3/wUAAgAHAA0AADD2/wgAAgAAAAYAAAD2/wkAAgAAAAcAAAD2/woAAgAAAAoAAAD3/woAAgABAAoAAAD4/woAAgACAAoAAAD5/woAAgAFAAkAAAD6/wsAAgAHAAsAAAD7/wsAAgAIAAsAAAD8/woAAgAEAAkAAAD5/wsAAgAAAAgAAAD8/wsAAgAPAAgAAAD9/woAAgABAAoAAAD+/woAAgACAAoAAAD//woAAgADAAoAAAAAAAoAAgABAAoAAAABAAoAAgACAAoAAAACAAoAAgAPAAoAAAACAAQAAgAPAAYAAAACAAUAAgAPAAcAAAACAAYAAgAPAAgAAAACAAcAAgAPAAkAAAACAAgAAgAPAAYAAAACAAkAAgAPAAcAAAD3/wYAAgAIAAkAAAD3/wcAAgAIAAkAAAD3/wgAAgAIAAkAAAD3/wkAAgAIAAkAAAD4/wYAAgAIAAkAAAD4/wcAAgAIAAkAAAD4/wgAAgAIAAkAAAD4/wkAAgAIAAkAAAD5/wYAAgAIAAkAAAD5/wcAAgAIAAkAAAD5/wgAAgAIAAkAAAD5/wkAAgAIAAkAAAD6/wYAAgAIAAkAAAD6/wcAAgAIAAkAAAD6/wgAAgAIAAkAAAD6/wkAAgAIAAkAAAD7/wYAAgAIAAkAAAD7/wcAAgAIAAkAAAD7/wgAAgAIAAkAAAD7/wkAAgAIAAkAAAD8/wYAAgAIAAkAAAD8/wcAAgAIAAkAAAD8/wgAAgAIAAkAAAD8/wkAAgAIAAkAAAD9/wYAAgAIAAkAAAD9/wcAAgAIAAkAAAD9/wgAAgAIAAkAAAD9/wkAAgAIAAkAAAD+/wYAAgAIAAkAAAD+/wcAAgAIAAkAAAD+/wgAAgAIAAkAAAD+/wkAAgAIAAkAAAD//wYAAgAIAAkAAAD//wcAAgAIAAkAAAD//wgAAgAIAAkAAAD//wkAAgAIAAkAAAAAAAYAAgAIAAkAAAAAAAcAAgAIAAkAAAAAAAgAAgAIAAkAAAAAAAkAAgAIAAkAAAABAAYAAgAIAAkAAAABAAcAAgAIAAkAAAABAAgAAgAIAAkAAAABAAkAAgAIAAkAAAD6/wUAAgAIAAkAAAD7/wUAAgAIAAkAAAD8/wUAAgAIAAkAAAD9/wUAAgAIAAkAAAD+/wUAAgAIAAkAAAD//wUAAgAIAAkAAAAAAAUAAgAIAAkAAAABAAUAAgAIAAkAAAD6/woAAgAIAAkAAAD7/woAAgAIAAkAAAD2/wsAAgAMAAwAAAD3/wsAAgAMAAwAAAD4/wsAAgAMAAwAAAD9/wsAAgAMAAwAAAD+/wsAAgAMAAwAAAD//wsAAgAMAAwAAAAAAAsAAgAMAAwAAAABAAsAAgAMAAwAAAACAAsAAgAMAAwAAAADAAQAAgAMAA0AAAADAAUAAgAMAA0AAAADAAYAAgAMAA0AAAADAAcAAgAMAA0AAAADAAgAAgAMAA0AAAADAAkAAgAMAA0AAAADAAoAAgAMAA0AAAADAAsAAgAMAA0AAAAEAAQAAgAMAA0AAAAEAAUAAgAMAA0AAAAEAAYAAgAMAA0AAAAEAAcAAgAMAA0AAAAEAAgAAgAMAA0AAAAEAAkAAgAMAA0AAAAEAAoAAgAMAA0AAAAEAAsAAgAMAA0AAAD0/wQAAgAMAA0AAAD0/wUAAgAMAA0AAAD0/wYAAgAMAA0AAAD0/wcAAgAMAA0AAAD0/wgAAgAMAA0AAAD0/wkAAgAMAA0AAAD0/woAAgAMAA0AAAD0/wsAAgAMAA0AAAD1/wQAAgAMAA0AAAD1/wUAAgAMAA0AAAD1/wYAAgAMAA0AAAD1/wcAAgAMAA0AAAD1/wgAAgAMAA0AAAD1/wkAAgAMAA0AAAD1/woAAgAMAA0AAAD1/wsAAgAMAA0AAAA=")
 
-[node name="PlayerSpawn" parent="." instance=ExtResource("3_wgsxo")]
+[node name="PlayerSpawn" parent="." unique_id=143715077 instance=ExtResource("3_wgsxo")]
 position = Vector2(-144, 336)
 
-[node name="LevelTransition" parent="." instance=ExtResource("4_2lvrp")]
+[node name="LevelTransition" parent="." unique_id=1641535790 instance=ExtResource("4_2lvrp")]
 position = Vector2(-160, 352)
 level = "uid://byp7lq0am6s1e"
 target_transition_area = "LevelTransition2"
 side = 3
 
-[node name="LevelTransition2" parent="." instance=ExtResource("4_2lvrp")]
+[node name="LevelTransition2" parent="." unique_id=585654951 instance=ExtResource("4_2lvrp")]
 position = Vector2(-272, 192)
 level = "uid://nknhf1daupju"
 target_transition_area = "LevelTransition2"

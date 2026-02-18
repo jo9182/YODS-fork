@@ -1,19 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://dss17ggiq7ghr"]
+[gd_scene format=3 uid="uid://dss17ggiq7ghr"]
 
 [ext_resource type="Script" uid="uid://dd34q50lgfaw1" path="res://items/item_pickup/item_pickup.gd" id="1_0g51u"]
 [ext_resource type="AudioStream" uid="uid://cccd7efxrehpa" path="res://items/item_pickup/item_pickup.wav" id="2_0rscd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0rscd"]
 
-[node name="ItemPickup" type="Node2D"]
+[node name="ItemPickup" type="Node2D" unique_id=208938812]
 script = ExtResource("1_0g51u")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=938166595]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=488965443]
 shape = SubResource("CircleShape2D_0rscd")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=81376585]
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1216506833]
 stream = ExtResource("2_0rscd")

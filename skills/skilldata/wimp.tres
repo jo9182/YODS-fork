@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://buyu4tdc0txhi"]
+
+[ext_resource type="Script" uid="uid://d36xu8j4jk5uc" path="res://skills/skill_data.gd" id="1_851vm"]
+[ext_resource type="Texture2D" uid="uid://yq1eboq8bu7e" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/coin/coin_4.png" id="1_r54v4"]
+
+[resource]
+script = ExtResource("1_851vm")
+skill_name = "wimp"
+description = "weak"
+icon = ExtResource("1_r54v4")
+tree_row = 1
+effect_type = "shop_slots"
+id = "1"
+metadata/_custom_type_script = "uid://d36xu8j4jk5uc"

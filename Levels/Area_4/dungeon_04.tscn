@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b38hdhft262j7"]
+[gd_scene format=3 uid="uid://b38hdhft262j7"]
 
 [ext_resource type="Texture2D" uid="uid://buok2anb2eurk" path="res://Pack/2D Pixel Dungeon Asset Pack/Dungeon_Tileset_at.png" id="1_cv3vc"]
 [ext_resource type="Texture2D" uid="uid://b8dc51d2yvk6h" path="res://Pack/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="2_iautr"]
@@ -512,7 +512,7 @@ sources/2 = SubResource("TileSetAtlasSource_cfkpn")
 sources/3 = SubResource("TileSetAtlasSource_j8jjw")
 sources/4 = SubResource("TileSetAtlasSource_hgg31")
 
-[node name="Dungeon04" type="TileMapLayer"]
+[node name="Dungeon04" type="TileMapLayer" unique_id=1642729155]
 z_index = -2
 texture_filter = 1
 tile_set = SubResource("TileSet_cfkpn")
