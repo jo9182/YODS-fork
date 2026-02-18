@@ -19,12 +19,9 @@ class_name priest extends CharacterBody2D
 # 2 = button 2 (opt2) opens the shop after res2 is shown
 @export_range(0, 2) var shop_trigger_option: int = 0
 
-# how many coins this npc actually has to spend
-# set this in the inspector per npc, some are richer than others
+# how many coins this npc has to spend -- set per npc in the inspector
+# this is their personal budget, not the player's gold
 @export var coin_amount: int = 100
-
-# the coin item resource -- drag coin.tres here
-@export var coin_item: ItemData
 
 # --- node refs, boring but needed ---
 @onready var marker_2d: Marker2D = $Marker2D
@@ -43,16 +40,15 @@ class_name priest extends CharacterBody2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var color_rect: ColorRect = $CanvasLayer/ColorRect
 
-# keeps track of which listing we're showing the npc
+# which listing we're currently showing
 var _shop_index: int = 0
 
-# tracks whether we're in shop browsing mode right now
+# are we in shop browsing mode right now
 var _in_shop_mode: bool = false
 
 
 func _ready() -> void:
 	animation_player.play("idle")
-	# fill in the dialogue from the exported values
 	speech.text = Sentence
 	char_name.text = priest_name
 	button.text = opt1
@@ -60,7 +56,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	# check if player is standing close enough to talk
+	# check if player is close enough to interact
 	var in_range = (
 		PlayerManager.player.global_position.x > marker_2d.global_position.x and
 		PlayerManager.player.global_position.x < marker_2d_3.global_position.x and
@@ -73,7 +69,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		secondary_control.visible = true
 		label.visible = false
 
-		# if no trigger option is set, go straight to shop on interact
+		# skip dialogue entirely and go straight to shop if trigger is 0
 		if is_shop_customer and shop_trigger_option == 0:
 			_enter_shop_mode()
 
@@ -83,7 +79,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
-	# player walked away, reset everything
+	# player walked away, clean everything up
 	control.visible = false
 	secondary_control.visible = false
 	label.visible = true
@@ -106,37 +102,34 @@ func _reset_dialogue() -> void:
 
 
 func _on_button_pressed() -> void:
-	# if we're already in shop mode, this button means "buy"
+	# buy button when in shop mode
 	if _in_shop_mode:
 		_on_shop_buy_pressed()
 		return
 
-	# show the response for option 1
 	speech.text = res1
 	button.visible = false
 	button_2.visible = false
 	exit.visible = true
 
-	# if opt1 is set as the shop trigger, open the shop after showing res1
+	# open shop after opt1 if that's what's configured
 	if is_shop_customer and shop_trigger_option == 1:
-		# small delay so the player can read the response first
 		await get_tree().create_timer(1.2).timeout
 		_enter_shop_mode()
 
 
 func _on_button_2_pressed() -> void:
-	# if we're already in shop mode, this button means "next item"
+	# next item button when in shop mode
 	if _in_shop_mode:
 		_on_shop_next_pressed()
 		return
 
-	# show the response for option 2
 	speech.text = res2
 	button.visible = false
 	button_2.visible = false
 	exit.visible = true
 
-	# same deal but for opt2
+	# same but for opt2
 	if is_shop_customer and shop_trigger_option == 2:
 		await get_tree().create_timer(1.2).timeout
 		_enter_shop_mode()
@@ -146,7 +139,6 @@ func _on_exit_pressed() -> void:
 	control.visible = false
 	secondary_control.visible = false
 	color_rect.visible = false
-	# reset shop state when they leave
 	_in_shop_mode = false
 	_shop_index = 0
 
@@ -163,14 +155,13 @@ func _show_current_listing() -> void:
 	var listings = ShopManager.listings
 
 	if listings.is_empty():
-		# nothing to buy, npc is disappointed
 		speech.text = "Hmm, nothing seems to be for sale right now."
 		button.visible = false
 		button_2.visible = false
 		exit.visible = true
 		return
 
-	# make sure index didn't go out of bounds after a purchase
+	# clamp just in case the list shrank after a purchase
 	_shop_index = clamp(_shop_index, 0, listings.size() - 1)
 	var listing: ShopListing = listings[_shop_index]
 
@@ -185,7 +176,7 @@ func _show_current_listing() -> void:
 	button.text = "Buy"
 	button.visible = true
 
-	# only show next if there's actually more than one thing to look at
+	# no point showing next if there's only one item
 	button_2.visible = total > 1
 	button_2.text = "Next"
 
@@ -199,7 +190,7 @@ func _on_shop_buy_pressed() -> void:
 
 	var listing: ShopListing = listings[_shop_index]
 
-	# check if this npc can even afford it
+	# check the npc's own wallet -- not the player's gold
 	if coin_amount < listing.price:
 		speech.text = "I can't afford this!"
 		button.visible = false
@@ -207,12 +198,11 @@ func _on_shop_buy_pressed() -> void:
 		exit.visible = true
 		return
 
-	# take the coins out of the npc's wallet
-	# ShopManager.sell() handles adding coins to player inventory
+	# deduct from the npc's budget and complete the sale
+	# ShopManager.sell() handles adding gold to PlayerStats
 	coin_amount -= listing.price
-	ShopManager.sell(listing, coin_item)
+	ShopManager.sell(listing)
 
-	# update the shop display after the purchase
 	if ShopManager.listings.is_empty():
 		speech.text = "Thanks for doing business!"
 		button.visible = false
@@ -227,6 +217,6 @@ func _on_shop_next_pressed() -> void:
 	var listings = ShopManager.listings
 	if listings.is_empty():
 		return
-	# wrap around to the start when we reach the end
+	# wrap around to the beginning
 	_shop_index = (_shop_index + 1) % listings.size()
 	_show_current_listing()

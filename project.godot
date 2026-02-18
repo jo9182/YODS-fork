@@ -30,6 +30,7 @@ SaveManager="*res://00_globals/global_save_manager.gd"
 PauseMenu="*res://GUI/pause_menu/pause_menu.tscn"
 InventoryMenu="*res://GUI/inventory_menu/inventory_menu.tscn"
 GloabalChestManager="*res://00_globals/GloabalChestManager.gd"
+PlayerStats="*uid://bfwhwk362xrtc"
 ShopManager="*uid://cdla1gtlyfti1"
 
 [display]

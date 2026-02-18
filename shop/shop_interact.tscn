@@ -3,13 +3,13 @@
 [ext_resource type="Script" uid="uid://cofsoqvxkxbgw" path="res://shop/shop_interact.gd" id="1_w43e4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fg6lc"]
-size = Vector2(122, 34)
+size = Vector2(242, 34)
 
 [node name="SHOP_INTERACT" type="Area2D" unique_id=1384501189]
 script = ExtResource("1_w43e4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1111640243]
-position = Vector2(248, 232)
+position = Vector2(308, 232)
 shape = SubResource("RectangleShape2D_fg6lc")
 debug_color = Color(0.8388056, 0.3853847, 0, 0.41960785)
 

@@ -1,23 +1,23 @@
 ## ShopManager.gd
-## Register this as an autoload in Project > Project Settings > Autoload
-## with the name "ShopManager" and path res://shop/shop_manager.gd
+## register this as an autoload in Project > Project Settings > Autoload
+## name: ShopManager, path: res://shop/shop_manager.gd
 
 extends Node
 
-## Emitted whenever listings are added, removed, or changed
+# fires whenever something gets listed, delisted, or sold
 signal listings_changed
 
-## Whether the player is currently inside their shop zone
+# true when the player is standing in their shop zone
+# inventory slots use this to know whether to list or use items
 var in_shop_zone: bool = false
 
-## All currently listed items
+# everything currently up for sale
 var listings: Array[ShopListing] = []
 
 
-## List one unit of an item for sale at the given price.
-## Returns false if the item couldn't be listed (e.g. not found in inventory).
+# list one unit of an item for sale at the given price
+# stacks quantity if the same item is already listed
 func add_listing(item_data: ItemData, price: int) -> bool:
-	# Stack quantity if the same item is already listed
 	for listing in listings:
 		if listing.item_data == item_data:
 			listing.quantity += 1
@@ -33,9 +33,7 @@ func add_listing(item_data: ItemData, price: int) -> bool:
 	return true
 
 
-## Remove one unit of a listing.
-## If quantity reaches zero the listing is removed entirely.
-## Pass the inventory so the item can be returned to the player.
+# remove one unit of a listing and return the item to the player's inventory
 func delist(listing: ShopListing, inventory: inventoryData) -> void:
 	inventory.addItem(listing.item_data, 1)
 	listing.quantity -= 1
@@ -44,10 +42,10 @@ func delist(listing: ShopListing, inventory: inventoryData) -> void:
 	listings_changed.emit()
 
 
-## Called when an NPC purchases one unit of a listing.
-## Removes the item from the listing and adds coins to the player's inventory.
-## Returns the gold earned, or -1 if the sale failed.
-func sell(listing: ShopListing, coin_item: ItemData) -> int:
+# called when an npc buys something
+# removes the item from listings and adds gold to PlayerStats
+# returns how much gold was earned, or -1 if something went wrong
+func sell(listing: ShopListing) -> int:
 	if not listings.has(listing):
 		return -1
 
@@ -57,7 +55,7 @@ func sell(listing: ShopListing, coin_item: ItemData) -> int:
 		listings.erase(listing)
 	listings_changed.emit()
 
-	# Add coins equal to the sale price into the player's inventory
-	PlayerManager.INVENTORY_DATA.addItem(coin_item, gold_earned)
+	# just add to the gold int, no more messing with coin inventory
+	PlayerStats.add_gold(gold_earned)
 
 	return gold_earned
