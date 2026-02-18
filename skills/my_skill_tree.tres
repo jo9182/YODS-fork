@@ -4,16 +4,17 @@
 [ext_resource type="Script" uid="uid://d36xu8j4jk5uc" path="res://skills/skill_data.gd" id="2_yuxyn"]
 [ext_resource type="Texture2D" uid="uid://534fjkbs6yhf" path="res://Pack/2D Pixel Dungeon Asset Pack/interface/arrow_1.png" id="3_yuxyn"]
 [ext_resource type="Resource" uid="uid://buyu4tdc0txhi" path="res://skills/skilldata/wimp.tres" id="4_ubrsm"]
+[ext_resource type="Resource" uid="uid://ds74gq06n451l" path="res://skills/skilldata/hustle2.tres" id="5_ik27r"]
 
 [sub_resource type="Resource" id="Resource_ubrsm"]
 script = ExtResource("2_yuxyn")
 skill_name = "Move It!"
 description = "Move a little bit faster!"
 icon = ExtResource("3_yuxyn")
-tree_column = 1
-id = "2"
+tree_row = 1
+id = "speed_1"
 metadata/_custom_type_script = "uid://d36xu8j4jk5uc"
 
 [resource]
 script = ExtResource("1_elm48")
-skills = Array[ExtResource("2_yuxyn")]([SubResource("Resource_ubrsm"), ExtResource("4_ubrsm")])
+skills = Array[ExtResource("2_yuxyn")]([SubResource("Resource_ubrsm"), ExtResource("5_ik27r"), ExtResource("4_ubrsm")])

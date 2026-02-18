@@ -20,6 +20,7 @@ func is_purchased(id: String) -> bool:
 func is_unlocked(skill: SkillData) -> bool:
 	for prereq_id in skill.prerequisite_ids:
 		if not is_purchased(prereq_id):
+			print("LOCKED: '%s' requires '%s' -- purchased list: %s" % [skill.id, prereq_id, purchased_skills])
 			return false
 	return true
 
@@ -35,6 +36,7 @@ func try_buy(skill: SkillData) -> bool:
 		return false
 
 	purchased_skills.append(skill.id)
+	print("PURCHASED: '%s' -- full list now: %s" % [skill.id, purchased_skills])
 	_apply_effect(skill)
 	skill_purchased.emit(skill)
 	return true
@@ -64,7 +66,7 @@ func get_save_data() -> Array[String]:
 	return purchased_skills.duplicate()
 
 
-# called on load -- re-applies all purchased skill effects
+# called on load, re-applies all purchased skill effects
 # note: hp_max is skipped here because max_hp is already restored from the save file
 func load_save_data(data: Array, all_skills: Array[SkillData]) -> void:
 	purchased_skills = []
