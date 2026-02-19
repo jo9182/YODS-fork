@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_mus3e"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_3tq68"]
 [ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="5_uv4qr"]
+[ext_resource type="Resource" uid="uid://5toukbxfodon" path="res://loot/loot tables/floor_1_chest.tres" id="6_mus3e"]
 
 [node name="Exit_F1A" type="Node2D" unique_id=2001161236]
 script = ExtResource("1_37bjc")
@@ -30,3 +31,4 @@ side = 3
 
 [node name="Chest" parent="." unique_id=699422758 instance=ExtResource("5_uv4qr")]
 position = Vector2(-80, 248)
+loot_table = ExtResource("6_mus3e")

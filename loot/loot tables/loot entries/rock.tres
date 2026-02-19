@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LootEntry" format=3 uid="uid://bcco5bl5u2iub"]
+
+[ext_resource type="Script" uid="uid://q61qo6sh5yp" path="res://loot/loot_entry.gd" id="1_5fpja"]
+[ext_resource type="Resource" uid="uid://ntijm35cudc4" path="res://items/stone.tres" id="1_lw33p"]
+
+[resource]
+script = ExtResource("1_5fpja")
+item_data = ExtResource("1_lw33p")
+gold_amount = 0
+weight = 10.0
+quantity_min = 2
+quantity_max = 6
+metadata/_custom_type_script = "uid://q61qo6sh5yp"

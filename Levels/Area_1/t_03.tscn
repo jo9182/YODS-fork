@@ -5,8 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_711d6"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_5dgjo"]
 [ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="5_0tcjv"]
+[ext_resource type="Resource" uid="uid://kpdcjijrm0od" path="res://loot/loot tables/valuable_floor_1_chest.tres" id="6_4fn3l"]
 [ext_resource type="PackedScene" uid="uid://dpi7nc6k811av" path="res://Props/mini_box.tscn" id="6_js10i"]
 [ext_resource type="PackedScene" uid="uid://b5ctydrsxayd0" path="res://enemies/vampire.tscn" id="7_js10i"]
+[ext_resource type="Resource" uid="uid://5toukbxfodon" path="res://loot/loot tables/floor_1_chest.tres" id="8_5wqup"]
 
 [node name="T03" type="Node2D" unique_id=1845797385]
 script = ExtResource("1_tkexa")
@@ -25,12 +27,15 @@ side = 3
 
 [node name="Chest" parent="." unique_id=959833546 instance=ExtResource("5_0tcjv")]
 position = Vector2(817, 56)
+loot_table = ExtResource("6_4fn3l")
 
 [node name="Chest2" parent="." unique_id=1909439762 instance=ExtResource("5_0tcjv")]
 position = Vector2(208, 187)
+loot_table = ExtResource("6_4fn3l")
 
 [node name="Mini_Box" parent="." unique_id=946762099 instance=ExtResource("6_js10i")]
 position = Vector2(178, 220)
+loot_table = ExtResource("8_5wqup")
 
 [node name="Vampire" parent="." unique_id=532111083 instance=ExtResource("7_js10i")]
 position = Vector2(305, 147)

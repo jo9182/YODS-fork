@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LootTable" format=3 uid="uid://5toukbxfodon"]
+
+[ext_resource type="Resource" uid="uid://b03xl73k4eo44" path="res://loot/loot tables/loot entries/one_coin.tres" id="1_hk6vi"]
+[ext_resource type="Script" uid="uid://c6x7t1m4i8wt2" path="res://loot/loot_table.gd" id="1_px5o6"]
+[ext_resource type="Resource" uid="uid://ce8or6evtxk3o" path="res://loot/loot tables/loot entries/health_potion.tres" id="2_ht80m"]
+[ext_resource type="Resource" uid="uid://dbujchyaag0t8" path="res://loot/loot tables/loot entries/gem.tres" id="3_18gsk"]
+[ext_resource type="Resource" uid="uid://bcco5bl5u2iub" path="res://loot/loot tables/loot entries/rock.tres" id="4_3vprp"]
+[ext_resource type="Resource" uid="uid://dbtc2yqq54g22" path="res://loot/loot tables/loot entries/apple.tres" id="5_ht80m"]
+
+[resource]
+script = ExtResource("1_px5o6")
+guaranteed = Array[Resource]([ExtResource("1_hk6vi")])
+random_rolls = 2
+random_pool = Array[Resource]([ExtResource("2_ht80m"), ExtResource("3_18gsk"), ExtResource("4_3vprp"), ExtResource("5_ht80m")])
+allow_duplicates = false
+metadata/_custom_type_script = "uid://c6x7t1m4i8wt2"

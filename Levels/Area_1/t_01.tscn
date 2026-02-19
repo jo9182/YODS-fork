@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_hgfai"]
 [ext_resource type="PackedScene" uid="uid://r3xg4dkqjteu" path="res://enemies/slime/slime.tscn" id="5_gb51t"]
 [ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="6_sggne"]
+[ext_resource type="Resource" uid="uid://5toukbxfodon" path="res://loot/loot tables/floor_1_chest.tres" id="7_hgfai"]
 
 [node name="T01" type="Node2D" unique_id=1992493670]
 script = ExtResource("1_ghc4y")
@@ -44,3 +45,4 @@ position = Vector2(465, 267)
 
 [node name="Chest" parent="." unique_id=1417785361 instance=ExtResource("6_sggne")]
 position = Vector2(239, 56)
+loot_table = ExtResource("7_hgfai")

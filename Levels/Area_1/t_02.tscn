@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="3_u6l8v"]
 [ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="5_p66lk"]
 [ext_resource type="PackedScene" uid="uid://dpi7nc6k811av" path="res://Props/mini_box.tscn" id="6_b0gwn"]
+[ext_resource type="Resource" uid="uid://5toukbxfodon" path="res://loot/loot tables/floor_1_chest.tres" id="6_hfcmj"]
+[ext_resource type="Resource" uid="uid://kpdcjijrm0od" path="res://loot/loot tables/valuable_floor_1_chest.tres" id="7_nfg1w"]
 
 [node name="t_02" type="Node2D" unique_id=400705093]
 script = ExtResource("1_stk1v")
@@ -25,16 +27,20 @@ side = 3
 [node name="Chest" parent="." unique_id=1719056552 instance=ExtResource("5_p66lk")]
 position = Vector2(448, 376)
 lava = "uid://dtdtw2xxydr3c"
+loot_table = ExtResource("6_hfcmj")
 
 [node name="Chest2" parent="." unique_id=852651954 instance=ExtResource("5_p66lk")]
 position = Vector2(408, 376)
 lava = "uid://dtdtw2xxydr3c"
 chestName = "chestName2"
+loot_table = ExtResource("6_hfcmj")
 
 [node name="Chest3" parent="." unique_id=1206930262 instance=ExtResource("5_p66lk")]
 position = Vector2(496, 376)
 lava = "uid://dtdtw2xxydr3c"
 chestName = "chestName3"
+loot_table = ExtResource("7_nfg1w")
 
 [node name="Mini_Box" parent="." unique_id=360071262 instance=ExtResource("6_b0gwn")]
 position = Vector2(432, 448)
+loot_table = ExtResource("6_hfcmj")

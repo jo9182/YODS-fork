@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bm3pdj3rlgvso" path="res://NPC's/priest.tscn" id="5_kef53"]
 [ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="6_qu404"]
 [ext_resource type="PackedScene" uid="uid://b1wxrfc07mdnm" path="res://shop/shop_interact.tscn" id="7_i2oah"]
+[ext_resource type="Resource" uid="uid://5toukbxfodon" path="res://loot/loot tables/floor_1_chest.tres" id="7_t8tbc"]
 
 [node name="The shop" type="Node2D" unique_id=1945606149]
 script = ExtResource("1_0epwg")
@@ -33,9 +34,11 @@ position = Vector2(256, 128)
 
 [node name="Chest" parent="." unique_id=75148616 instance=ExtResource("6_qu404")]
 position = Vector2(560, -8)
+loot_table = ExtResource("7_t8tbc")
 
 [node name="Chest2" parent="." unique_id=1707702830 instance=ExtResource("6_qu404")]
 position = Vector2(336, -8)
+loot_table = ExtResource("7_t8tbc")
 
 [node name="Priest2" parent="." unique_id=1924285380 instance=ExtResource("5_kef53")]
 position = Vector2(384, 184)

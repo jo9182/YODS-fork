@@ -2,10 +2,9 @@ class_name chest extends Node2D
 
 @export_file("*.tscn") var lava
 @export var chestName = "chestName"
+@export var loot_table: LootTable
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var area_2d: Area2D = $Area2D
-@onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
 @onready var marker_2d: Marker2D = $Marker2D
 @onready var marker_2d_2: Marker2D = $Marker2D2
 @onready var marker_2d_3: Marker2D = $Marker2D3
@@ -13,7 +12,10 @@ class_name chest extends Node2D
 @onready var hurt_box: HurtBox = $HurtBox
 
 const PICKUP = preload("res://items/item_pickup/item_pickup.tscn")
-const COIN = preload("res://items/coin.tres")
+
+const SPREAD_RADIUS = 18.0
+const ARC_HEIGHT = 20.0
+const POP_DURATION = 0.35
 
 var opened: bool = false
 
@@ -35,15 +37,65 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		opened = true
 		animation_player.play("Open")
-		var coin = PICKUP.instantiate()
-		coin.item_data = COIN
-		add_child(coin)
-		coin.position = Vector2(0, 40)
+		await get_tree().create_timer(0.2).timeout
+		_spawn_loot()
 
 
-func fill_array(myName: String) -> void:
-	pass
+func _spawn_loot() -> void:
+	if not loot_table:
+		return
+
+	var drops = loot_table.roll()
+	var physical_drops: Array = []
+
+	for drop in drops:
+		if drop.has("gold"):
+			PlayerStats.add_gold(drop["gold"])
+		else:
+			var item_data: ItemData = drop["item_data"]
+			var quantity: int = drop["quantity"]
+			for i in quantity:
+				if item_data.use_on_pickup:
+					item_data.use()
+				else:
+					var pickup = PICKUP.instantiate()
+					pickup.item_data = item_data
+					pickup.get_node("Area2D").monitoring = false
+					pickup.get_node("Area2D").monitorable = false
+					add_child(pickup)
+					pickup.position = Vector2.ZERO
+					physical_drops.append(pickup)
+
+	_animate_drops(physical_drops)
 
 
-func _on_area_2d_body_entered(_body: Node2D) -> void:
-	pass
+func _animate_drops(drops: Array) -> void:
+	if drops.is_empty():
+		return
+
+	var count = drops.size()
+	for i in count:
+		var pickup = drops[i]
+
+		# spread items in a downward-facing semicircle so nothing lands
+		# under or behind the chest where it can't be picked up.
+		# angle goes from 0 (right) through PI (left), passing through
+		# PI/2 (straight down toward the player) at the midpoint.
+		var angle = (PI / maxf(count - 1, 1)) * i if count > 1 else PI / 2.0
+		var land_pos = Vector2(cos(angle), sin(angle)) * SPREAD_RADIUS
+
+		var tween = create_tween()
+		tween.set_parallel(true)
+
+		tween.tween_property(pickup, "position:x", land_pos.x, POP_DURATION)\
+			.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+
+		var peak_y = land_pos.y - ARC_HEIGHT
+		tween.tween_property(pickup, "position:y", peak_y, POP_DURATION * 0.45)\
+			.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+		tween.chain().tween_property(pickup, "position:y", land_pos.y, POP_DURATION * 0.55)\
+			.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+
+		tween.chain().tween_callback(func():
+			pickup.get_node("Area2D").monitoring = true
+			pickup.get_node("Area2D").monitorable = true)
