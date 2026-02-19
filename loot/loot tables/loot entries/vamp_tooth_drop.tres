@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="LootEntry" format=3 uid="uid://3u1ukrai0m5n"]
+
+[ext_resource type="Script" uid="uid://q61qo6sh5yp" path="res://loot/loot_entry.gd" id="1_ao1xm"]
+[ext_resource type="Resource" uid="uid://cme3lu3sdwjgh" path="res://items/vamp_tooth.tres" id="1_mshhc"]
+
+[resource]
+script = ExtResource("1_ao1xm")
+item_data = ExtResource("1_mshhc")
+gold_amount = 0
+quantity_max = 4
+metadata/_custom_type_script = "uid://q61qo6sh5yp"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="LootTable" format=3 uid="uid://bhfbvn3yyjyx5"]
+
+[ext_resource type="Script" uid="uid://c6x7t1m4i8wt2" path="res://loot/loot_table.gd" id="1_hg6lq"]
+[ext_resource type="Resource" uid="uid://tg4e0mvntu6w" path="res://loot/loot tables/loot entries/slime_residue_drop.tres" id="1_wksgk"]
+
+[resource]
+script = ExtResource("1_hg6lq")
+guaranteed = Array[Resource]([ExtResource("1_wksgk")])
+metadata/_custom_type_script = "uid://c6x7t1m4i8wt2"

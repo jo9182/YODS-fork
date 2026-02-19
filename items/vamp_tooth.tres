@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cme3lu3sdwjgh"]
+
+[ext_resource type="Script" uid="uid://be7synskoaa18" path="res://items/item_effects/item_effects.gd" id="1_w5hjj"]
+[ext_resource type="Script" uid="uid://d2yna3x2a6wou" path="res://items/scripts/resource_item_data.gd" id="2_v2vlx"]
+[ext_resource type="Texture2D" uid="uid://b0s6waasjt8ha" path="res://Pack/vamp_tooth.png" id="3_v2vlx"]
+
+[resource]
+script = ExtResource("2_v2vlx")
+name = "Vampire Tooth"
+description = "Ewww... it's still wet. It's also still sharp!"
+texture = ExtResource("3_v2vlx")
+metadata/_custom_type_script = "uid://d2yna3x2a6wou"

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://my5t82e2metv"]
+
+[ext_resource type="Script" uid="uid://be7synskoaa18" path="res://items/item_effects/item_effects.gd" id="1_maiv0"]
+[ext_resource type="AudioStream" uid="uid://k13mm8k7138m" path="res://player/Audio/hit_player.wav" id="2_qfhib"]
+[ext_resource type="Script" uid="uid://d2yna3x2a6wou" path="res://items/scripts/resource_item_data.gd" id="2_tc0g2"]
+[ext_resource type="Script" uid="uid://dcs882q8602dc" path="res://items/item_effects/item_effect_heal.gd" id="3_607aj"]
+[ext_resource type="Texture2D" uid="uid://buue74gw8po4b" path="res://Pack/slime_residue.png" id="5_kx0hi"]
+
+[sub_resource type="Resource" id="Resource_8y3r2"]
+script = ExtResource("3_607aj")
+heal_amount = -1
+audio = ExtResource("2_qfhib")
+metadata/_custom_type_script = "uid://dcs882q8602dc"
+
+[resource]
+script = ExtResource("2_tc0g2")
+name = "Slime Residue"
+description = "It is NOT orange flavored!"
+texture = ExtResource("5_kx0hi")
+effects = Array[ExtResource("1_maiv0")]([SubResource("Resource_8y3r2")])
+metadata/_custom_type_script = "uid://d2yna3x2a6wou"

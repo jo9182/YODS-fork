@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="LootTable" format=3 uid="uid://cw84olpw3w3s"]
+
+[ext_resource type="Resource" uid="uid://3u1ukrai0m5n" path="res://loot/loot tables/loot entries/vamp_tooth_drop.tres" id="1_o7non"]
+[ext_resource type="Script" uid="uid://c6x7t1m4i8wt2" path="res://loot/loot_table.gd" id="1_pwxtn"]
+
+[resource]
+script = ExtResource("1_pwxtn")
+guaranteed = Array[Resource]([ExtResource("1_o7non")])
+metadata/_custom_type_script = "uid://c6x7t1m4i8wt2"

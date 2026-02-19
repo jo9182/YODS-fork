@@ -12,8 +12,10 @@
 [ext_resource type="Resource" uid="uid://bmh5tu51wsk7u" path="res://items/coin.tres" id="10_qe4k5"]
 [ext_resource type="PackedScene" uid="uid://r3xg4dkqjteu" path="res://enemies/slime/slime.tscn" id="10_sq5mn"]
 [ext_resource type="PackedScene" uid="uid://bm3pdj3rlgvso" path="res://NPC's/priest.tscn" id="11_qyank"]
+[ext_resource type="Resource" uid="uid://bhfbvn3yyjyx5" path="res://loot/loot tables/slime_loot.tres" id="12_2fd7e"]
 [ext_resource type="PackedScene" uid="uid://b5ctydrsxayd0" path="res://enemies/vampire.tscn" id="12_8hg2b"]
 [ext_resource type="PackedScene" uid="uid://c7lhadfcg78tw" path="res://Props/flag/flag.tscn" id="14_qocdg"]
+[ext_resource type="Resource" uid="uid://cw84olpw3w3s" path="res://loot/loot tables/vamp_loot.tres" id="15_8hdd1"]
 [ext_resource type="PackedScene" uid="uid://gnnwrpnnkvuj" path="res://Props/torch/torch.tscn" id="15_qtx8l"]
 [ext_resource type="PackedScene" uid="uid://bayslgf51lvhb" path="res://Props/flamethrower.tscn" id="16_a0w4r"]
 [ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="17_um170"]
@@ -69,15 +71,19 @@ item_data = ExtResource("10_qe4k5")
 
 [node name="Slime" parent="." unique_id=783996347 instance=ExtResource("10_sq5mn")]
 position = Vector2(408, 224)
+loot_table = ExtResource("12_2fd7e")
 
 [node name="Slime2" parent="." unique_id=1080748113 instance=ExtResource("10_sq5mn")]
 position = Vector2(480, 280)
+loot_table = ExtResource("12_2fd7e")
 
 [node name="Slime3" parent="." unique_id=1638645622 instance=ExtResource("10_sq5mn")]
 position = Vector2(456, 136)
+loot_table = ExtResource("12_2fd7e")
 
 [node name="Slime4" parent="." unique_id=981689219 instance=ExtResource("10_sq5mn")]
 position = Vector2(328, 176)
+loot_table = ExtResource("12_2fd7e")
 
 [node name="Priest" parent="." unique_id=1568609886 instance=ExtResource("11_qyank")]
 position = Vector2(210, 76)
@@ -90,18 +96,23 @@ res2 = "I'm sure you'll be saying that when you come across a red one."
 
 [node name="Vampire" parent="." unique_id=1385293606 instance=ExtResource("12_8hg2b")]
 position = Vector2(287, 98)
+loot_table = ExtResource("15_8hdd1")
 
 [node name="Vampire2" parent="." unique_id=897168978 instance=ExtResource("12_8hg2b")]
 position = Vector2(242, 100)
+loot_table = ExtResource("15_8hdd1")
 
 [node name="Vampire3" parent="." unique_id=864524324 instance=ExtResource("12_8hg2b")]
 position = Vector2(311, 142)
+loot_table = ExtResource("15_8hdd1")
 
 [node name="Vampire4" parent="." unique_id=1348974815 instance=ExtResource("12_8hg2b")]
 position = Vector2(268, 135)
+loot_table = ExtResource("15_8hdd1")
 
 [node name="Vampire5" parent="." unique_id=1713348203 instance=ExtResource("12_8hg2b")]
 position = Vector2(324, 108)
+loot_table = ExtResource("15_8hdd1")
 
 [node name="Flag" parent="." unique_id=1725875048 instance=ExtResource("14_qocdg")]
 position = Vector2(112, 27)
@@ -125,3 +136,4 @@ loot_table = ExtResource("18_qe4k5")
 [node name="Skeleton" parent="." unique_id=1003239173 instance=ExtResource("19_pxypk")]
 position = Vector2(232, 200)
 hp = 10
+loot_table = ExtResource("15_8hdd1")

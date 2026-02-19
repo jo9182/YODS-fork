@@ -51,4 +51,6 @@ func _on_enemy_destroyed(hurtBox : HurtBox) -> void:
 	state_machine.changeState( self )
 	
 func _on_animation_finished( _a : String) -> void:
+	# drop loot before freeing so pickups can be parented correctly
+	enemy.drop_loot()
 	enemy.queue_free()
