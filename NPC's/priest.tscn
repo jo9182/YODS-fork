@@ -108,7 +108,7 @@ visible = false
 offset_left = 91.0
 offset_top = 22.0
 offset_right = 378.0
-offset_bottom = 222.0
+offset_bottom = 260.0
 color = Color(0.1148968, 0.11489681, 0.1148968, 1)
 
 [node name="Control" type="Control" parent="CanvasLayer" unique_id=626708225]
@@ -156,28 +156,29 @@ wrap_mode = 1
 [node name="Button" type="Button" parent="CanvasLayer/Control/Secondary control" unique_id=1375749904]
 layout_mode = 0
 offset_left = -112.0
-offset_top = 120.0
+offset_top = 218.0
 offset_right = -80.0
-offset_bottom = 148.0
+offset_bottom = 246.0
 theme_override_font_sizes/font_size = 14
 text = "No"
 
 [node name="Button2" type="Button" parent="CanvasLayer/Control/Secondary control" unique_id=205489754]
 layout_mode = 0
-offset_left = -112.0
-offset_top = 80.0
-offset_right = -80.0
-offset_bottom = 108.0
+offset_left = -76.0
+offset_top = 218.0
+offset_right = -44.0
+offset_bottom = 246.0
 theme_override_font_sizes/font_size = 14
 text = "Yes"
 
 [node name="Exit" type="Button" parent="CanvasLayer/Control/Secondary control" unique_id=1547425281]
 visible = false
 layout_mode = 0
-offset_left = -112.0
-offset_top = 160.0
-offset_right = -48.0
-offset_bottom = 191.0
+offset_left = -34.0
+offset_top = 218.0
+offset_right = -8.0
+offset_bottom = 246.0
+theme_override_font_sizes/font_size = 14
 text = "Exit"
 
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/Secondary control" unique_id=1591491928]
