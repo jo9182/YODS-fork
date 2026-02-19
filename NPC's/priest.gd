@@ -1,6 +1,5 @@
 class_name priest extends CharacterBody2D
 
-# basic stuff the designer fills in
 @export var priest_name: String = ""
 @export var Sentence: String = ""
 @export var opt1: String = ""
@@ -8,22 +7,10 @@ class_name priest extends CharacterBody2D
 @export var res1: String = ""
 @export var res2: String = ""
 
-# --- shop stuff ---
-
-# tick this if the npc should be able to buy from the player's shop at all
 @export var is_shop_customer: bool = false
-
-# which dialogue button opens the shop?
-# 0 = neither (shop opens immediately on interact)
-# 1 = button 1 (opt1) opens the shop after res1 is shown
-# 2 = button 2 (opt2) opens the shop after res2 is shown
 @export_range(0, 2) var shop_trigger_option: int = 0
-
-# how many coins this npc has to spend -- set per npc in the inspector
-# this is their personal budget, not the player's gold
 @export var coin_amount: int = 100
 
-# --- node refs, boring but needed ---
 @onready var marker_2d: Marker2D = $Marker2D
 @onready var marker_2d_2: Marker2D = $Marker2D2
 @onready var marker_2d_3: Marker2D = $Marker2D3
@@ -40,11 +27,11 @@ class_name priest extends CharacterBody2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var color_rect: ColorRect = $CanvasLayer/ColorRect
 
-# which listing we're currently showing
 var _shop_index: int = 0
-
-# are we in shop browsing mode right now
 var _in_shop_mode: bool = false
+
+# effective budget after reputation multiplier applied
+var _effective_budget: int = 0
 
 
 func _ready() -> void:
@@ -56,7 +43,6 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	# check if player is close enough to interact
 	var in_range = (
 		PlayerManager.player.global_position.x > marker_2d.global_position.x and
 		PlayerManager.player.global_position.x < marker_2d_3.global_position.x and
@@ -69,7 +55,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		secondary_control.visible = true
 		label.visible = false
 
-		# skip dialogue entirely and go straight to shop if trigger is 0
 		if is_shop_customer and shop_trigger_option == 0:
 			_enter_shop_mode()
 
@@ -79,7 +64,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
-	# player walked away, clean everything up
 	control.visible = false
 	secondary_control.visible = false
 	label.visible = true
@@ -102,7 +86,6 @@ func _reset_dialogue() -> void:
 
 
 func _on_button_pressed() -> void:
-	# buy button when in shop mode
 	if _in_shop_mode:
 		_on_shop_buy_pressed()
 		return
@@ -112,14 +95,12 @@ func _on_button_pressed() -> void:
 	button_2.visible = false
 	exit.visible = true
 
-	# open shop after opt1 if that's what's configured
 	if is_shop_customer and shop_trigger_option == 1:
 		await get_tree().create_timer(1.2).timeout
 		_enter_shop_mode()
 
 
 func _on_button_2_pressed() -> void:
-	# next item button when in shop mode
 	if _in_shop_mode:
 		_on_shop_next_pressed()
 		return
@@ -129,7 +110,6 @@ func _on_button_2_pressed() -> void:
 	button_2.visible = false
 	exit.visible = true
 
-	# same but for opt2
 	if is_shop_customer and shop_trigger_option == 2:
 		await get_tree().create_timer(1.2).timeout
 		_enter_shop_mode()
@@ -146,6 +126,19 @@ func _on_exit_pressed() -> void:
 # --- shop customer mode -------------------------------------------------------
 
 func _enter_shop_mode() -> void:
+	var mood = ReputationManager.get_mood()
+
+	# hostile NPCs won't even look
+	if mood == ReputationManager.Mood.HOSTILE:
+		speech.text = _hostile_line()
+		button.visible = false
+		button_2.visible = false
+		exit.visible = true
+		return
+
+	# apply reputation budget multiplier to their wallet for this visit
+	_effective_budget = int(coin_amount * ReputationManager.get_budget_multiplier())
+
 	_in_shop_mode = true
 	_shop_index = 0
 	_show_current_listing()
@@ -161,25 +154,36 @@ func _show_current_listing() -> void:
 		exit.visible = true
 		return
 
-	# clamp just in case the list shrank after a purchase
 	_shop_index = clamp(_shop_index, 0, listings.size() - 1)
 	var listing: ShopListing = listings[_shop_index]
 
+	# check if NPC is willing to consider this price given their mood
+	var tolerance = ReputationManager.get_price_tolerance()
+	var base = listing.item_data.base_value
+	var overpriced = base > 0 and listing.price > base * tolerance
+
 	var total = listings.size()
-	speech.text = "%s\nPrice: %d gold\n(%d of %d)" % [
+	var price_note = ""
+	if overpriced:
+		price_note = "\n(That seems too expensive...)"
+	elif base > 0 and listing.price <= base:
+		price_note = "\n(What a fair price!)"
+
+	speech.text = "%s\nPrice: %d gold\n(%d of %d)%s" % [
 		listing.item_data.name,
 		listing.price,
 		_shop_index + 1,
-		total
+		total,
+		price_note
 	]
 
+	# hide Buy if they won't pay this price or can't afford it
+	var can_buy = not overpriced and _effective_budget >= listing.price
 	button.text = "Buy"
-	button.visible = true
+	button.visible = can_buy
 
-	# no point showing next if there's only one item
 	button_2.visible = total > 1
 	button_2.text = "Next"
-
 	exit.visible = true
 
 
@@ -190,21 +194,19 @@ func _on_shop_buy_pressed() -> void:
 
 	var listing: ShopListing = listings[_shop_index]
 
-	# check the npc's own wallet -- not the player's gold
-	if coin_amount < listing.price:
+	if _effective_budget < listing.price:
 		speech.text = "I can't afford this!"
 		button.visible = false
 		button_2.visible = false
 		exit.visible = true
 		return
 
-	# deduct from the npc's budget and complete the sale
-	# ShopManager.sell() handles adding gold to PlayerStats
+	_effective_budget -= listing.price
 	coin_amount -= listing.price
 	ShopManager.sell(listing)
 
 	if ShopManager.listings.is_empty():
-		speech.text = "Thanks for doing business!"
+		speech.text = _thanks_line()
 		button.visible = false
 		button_2.visible = false
 		exit.visible = true
@@ -217,6 +219,21 @@ func _on_shop_next_pressed() -> void:
 	var listings = ShopManager.listings
 	if listings.is_empty():
 		return
-	# wrap around to the beginning
 	_shop_index = (_shop_index + 1) % listings.size()
 	_show_current_listing()
+
+
+# --- mood-flavoured lines -----------------------------------------------------
+
+func _hostile_line() -> String:
+	return "I've heard how you treat your customers. I won't be shopping here."
+
+
+func _thanks_line() -> String:
+	match ReputationManager.get_mood():
+		ReputationManager.Mood.BELOVED:
+			return "Always a pleasure doing business with you!"
+		ReputationManager.Mood.FRIENDLY:
+			return "Thanks! I'll be back."
+		_:
+			return "Thanks for doing business!"

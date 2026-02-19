@@ -13,4 +13,5 @@ script = ExtResource("1_becff")
 name = "Stone"
 description = "A tough stone"
 texture = SubResource("AtlasTexture_uj5p3")
+base_value = 2
 metadata/_custom_type_script = "uid://d2yna3x2a6wou"

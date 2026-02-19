@@ -28,6 +28,7 @@ script = ExtResource("2_o3dv7")
 name = "Coin"
 description = "Real shiny! You should get more..."
 texture = SubResource("AnimatedTexture_adtt3")
+base_value = 1
 use_on_pickup = true
 effects = Array[ExtResource("1_527q1")]([SubResource("Resource_v44pd")])
 metadata/_custom_type_script = "uid://d2yna3x2a6wou"

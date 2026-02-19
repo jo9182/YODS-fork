@@ -17,5 +17,6 @@ script = ExtResource("2_tc0g2")
 name = "Slime Residue"
 description = "It is NOT orange flavored!"
 texture = ExtResource("5_kx0hi")
+base_value = 5
 effects = Array[ExtResource("1_maiv0")]([SubResource("Resource_8y3r2")])
 metadata/_custom_type_script = "uid://d2yna3x2a6wou"

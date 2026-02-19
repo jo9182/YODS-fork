@@ -13,4 +13,5 @@ script = ExtResource("1_m7x72")
 name = "Gem"
 description = "A valuable gem!"
 texture = SubResource("AtlasTexture_gbvxt")
+base_value = 60
 metadata/_custom_type_script = "uid://d2yna3x2a6wou"

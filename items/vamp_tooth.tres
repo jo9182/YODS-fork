@@ -9,4 +9,5 @@ script = ExtResource("2_v2vlx")
 name = "Vampire Tooth"
 description = "Ewww... it's still wet. It's also still sharp!"
 texture = ExtResource("3_v2vlx")
+base_value = 10
 metadata/_custom_type_script = "uid://d2yna3x2a6wou"
