@@ -4,6 +4,8 @@ class_name shop_interact extends Area2D
 @onready var control: Control = $CanvasLayer/Control
 @onready var button: Button = $CanvasLayer/Control/Button
 @onready var item_list: ItemList = $CanvasLayer/Control/ItemList
+@onready var label: Label = $CanvasLayer/Control/Label
+
 
 # Held so the confirm/cancel callbacks know which listing was clicked
 var _pending_delist: ShopListing = null
@@ -15,17 +17,20 @@ func _ready() -> void:
 
 func _on_body_entered(_body: Node2D) -> void:
 	button.visible = true
+	label.visible = true
 	ShopManager.in_shop_zone = true
 
 
 func _on_body_exited(_body: Node2D) -> void:
 	button.visible = false
+	label.visible = false
 	item_list.visible = false
 	ShopManager.in_shop_zone = false
 
 
 func _on_button_pressed() -> void:
 	button.visible = false
+	label.visble = false
 	_refresh_display()
 	item_list.visible = true
 

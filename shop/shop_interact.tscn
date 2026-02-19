@@ -1,9 +1,15 @@
 [gd_scene format=3 uid="uid://b1wxrfc07mdnm"]
 
 [ext_resource type="Script" uid="uid://cofsoqvxkxbgw" path="res://shop/shop_interact.gd" id="1_w43e4"]
+[ext_resource type="FontFile" uid="uid://5se4m828n1ty" path="res://GUI/fonts/KiwiSoda.ttf" id="2_50yak"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fg6lc"]
 size = Vector2(242, 34)
+
+[sub_resource type="LabelSettings" id="LabelSettings_j7d8m"]
+font = ExtResource("2_50yak")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
 
 [node name="SHOP_INTERACT" type="Area2D" unique_id=1384501189]
 script = ExtResource("1_w43e4")
@@ -31,6 +37,7 @@ offset_left = -32.0
 offset_top = -40.0
 offset_right = 130.0
 offset_bottom = -9.0
+theme_override_fonts/font = ExtResource("2_50yak")
 text = "Press To Open Shop"
 
 [node name="ItemList" type="ItemList" parent="CanvasLayer/Control" unique_id=1594476220]
@@ -41,6 +48,16 @@ offset_top = -103.0
 offset_right = 158.0
 offset_bottom = -10.0
 select_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=169799817]
+visible = false
+layout_mode = 0
+offset_left = -26.0
+offset_top = -66.0
+offset_right = 133.0
+offset_bottom = -43.0
+text = "Press \"I\" to list items!"
+label_settings = SubResource("LabelSettings_j7d8m")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
