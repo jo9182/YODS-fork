@@ -26,7 +26,7 @@ Sentence = "Have Ye been in this here dungeon before?"
 opt1 = "Yes"
 opt2 = "No"
 res1 = "Then I suppose ye know how to navigate this here dungeon. "
-res2 = "Ye haven't well then! A few quick tips. WASD for movement E to interact. TABS and I for inventory and ESC to pause the game. Be sure to save frequently."
+res2 = "Ye haven't?? Well then, a few quick tips. WASD for movement E to interact. TAB and I for inventory and ESC to pause the game. Be sure to save frequently."
 coin_amount = 102
 
 [node name="PlayerSpawn" parent="." unique_id=1467528744 instance=ExtResource("3_kef53")]
@@ -50,7 +50,7 @@ res1 = "Finally!"
 res2 = "I've waited this long I can wait a little longer."
 is_shop_customer = true
 shop_trigger_option = 1
-coin_amount = null
+auto_buy = true
 
 [node name="Priest3" parent="." unique_id=1992972371 instance=ExtResource("5_kef53")]
 position = Vector2(360, 128)
@@ -62,7 +62,6 @@ res1 = "Oh that great I hope your merchandise is up to par with modern shopping 
 res2 = "Oh, grow a spine and then come speak to me!!"
 is_shop_customer = true
 shop_trigger_option = 1
-coin_amount = null
 
 [node name="Priest4" parent="." unique_id=1038674673 instance=ExtResource("5_kef53")]
 position = Vector2(416, 128)
@@ -72,9 +71,6 @@ opt1 = "What?"
 opt2 = "Are you a skeleton in disguise"
 res1 = "NooOooOO"
 res2 = "DefineteLy NoT"
-is_shop_customer = null
-shop_trigger_option = null
-coin_amount = null
 
 [node name="SHOP_INTERACT" parent="." unique_id=1384501189 instance=ExtResource("7_i2oah")]
 position = Vector2(144, 0)

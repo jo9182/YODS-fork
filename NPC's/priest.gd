@@ -11,6 +11,14 @@ class_name priest extends CharacterBody2D
 @export_range(0, 2) var shop_trigger_option: int = 0
 @export var coin_amount: int = 100
 
+# --- auto buy ---
+# if true the NPC will browse the shop on their own and buy
+# what they can afford without the player needing to interact
+@export var auto_buy: bool = false
+
+# seconds between each auto-buy check
+@export var auto_buy_interval: float = 30.0
+
 @onready var marker_2d: Marker2D = $Marker2D
 @onready var marker_2d_2: Marker2D = $Marker2D2
 @onready var marker_2d_3: Marker2D = $Marker2D3
@@ -29,9 +37,8 @@ class_name priest extends CharacterBody2D
 
 var _shop_index: int = 0
 var _in_shop_mode: bool = false
-
-# effective budget after reputation multiplier applied
 var _effective_budget: int = 0
+var _auto_buy_timer: Timer = null
 
 
 func _ready() -> void:
@@ -40,6 +47,13 @@ func _ready() -> void:
 	char_name.text = priest_name
 	button.text = opt1
 	button_2.text = opt2
+
+	if auto_buy and is_shop_customer:
+		_auto_buy_timer = Timer.new()
+		_auto_buy_timer.wait_time = auto_buy_interval
+		_auto_buy_timer.autostart = true
+		_auto_buy_timer.timeout.connect(_run_auto_buy)
+		add_child(_auto_buy_timer)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -123,12 +137,11 @@ func _on_exit_pressed() -> void:
 	_shop_index = 0
 
 
-# --- shop customer mode -------------------------------------------------------
+# --- shop customer mode (manual) ---------------------------------------------
 
 func _enter_shop_mode() -> void:
 	var mood = ReputationManager.get_mood()
 
-	# hostile NPCs won't even look
 	if mood == ReputationManager.Mood.HOSTILE:
 		speech.text = _hostile_line()
 		button.visible = false
@@ -136,9 +149,7 @@ func _enter_shop_mode() -> void:
 		exit.visible = true
 		return
 
-	# apply reputation budget multiplier to their wallet for this visit
 	_effective_budget = int(coin_amount * ReputationManager.get_budget_multiplier())
-
 	_in_shop_mode = true
 	_shop_index = 0
 	_show_current_listing()
@@ -157,7 +168,6 @@ func _show_current_listing() -> void:
 	_shop_index = clamp(_shop_index, 0, listings.size() - 1)
 	var listing: ShopListing = listings[_shop_index]
 
-	# check if NPC is willing to consider this price given their mood
 	var tolerance = ReputationManager.get_price_tolerance()
 	var base = listing.item_data.base_value
 	var overpriced = base > 0 and listing.price > base * tolerance
@@ -177,11 +187,9 @@ func _show_current_listing() -> void:
 		price_note
 	]
 
-	# hide Buy if they won't pay this price or can't afford it
 	var can_buy = not overpriced and _effective_budget >= listing.price
 	button.text = "Buy"
 	button.visible = can_buy
-
 	button_2.visible = total > 1
 	button_2.text = "Next"
 	exit.visible = true
@@ -223,7 +231,65 @@ func _on_shop_next_pressed() -> void:
 	_show_current_listing()
 
 
-# --- mood-flavoured lines -----------------------------------------------------
+# --- auto buy (silent, no UI) ------------------------------------------------
+
+func _run_auto_buy() -> void:
+	if ShopManager.listings.is_empty():
+		return
+
+	var mood = ReputationManager.get_mood()
+	if mood == ReputationManager.Mood.HOSTILE:
+		return
+
+	var budget = int(coin_amount * ReputationManager.get_budget_multiplier())
+	var tolerance = ReputationManager.get_price_tolerance()
+
+	# shuffle a copy so the NPC doesn't always buy the first item listed
+	var listings = ShopManager.listings.duplicate()
+	listings.shuffle()
+
+	for listing in listings:
+		if budget <= 0:
+			break
+
+		var base = listing.item_data.base_value
+		var overpriced = base > 0 and listing.price > base * tolerance
+
+		if overpriced:
+			continue
+		if listing.price > budget:
+			continue
+
+		# buy one unit
+		budget -= listing.price
+		coin_amount -= listing.price
+		ShopManager.sell(listing)
+
+		# small floating label so the player knows something was sold
+		_show_sale_popup(listing.item_data.name, listing.price)
+
+		# small delay between purchases so it doesn't feel instant
+		await get_tree().create_timer(0.4).timeout
+
+
+func _show_sale_popup(item_name: String, price: int) -> void:
+	# spawns a brief label above the NPC that floats up and fades out
+	var lbl = Label.new()
+	lbl.text = "Sold: %s (%dg)" % [item_name, price]
+	lbl.add_theme_color_override("font_color", Color(1, 0.9, 0.2))
+	get_parent().add_child(lbl)
+	lbl.global_position = global_position + Vector2(-30, -40)
+
+	var tween = lbl.create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(lbl, "position:y", lbl.position.y - 30, 1.2)\
+		.set_ease(Tween.EASE_OUT)
+	tween.tween_property(lbl, "modulate:a", 0.0, 1.2)\
+		.set_ease(Tween.EASE_IN)
+	tween.chain().tween_callback(lbl.queue_free)
+
+
+# --- mood flavoured lines ----------------------------------------------------
 
 func _hostile_line() -> String:
 	return "I've heard how you treat your customers. I won't be shopping here."
