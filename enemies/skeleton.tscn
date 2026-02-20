@@ -14,7 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://j63y4o8qaqyg" path="res://enemies/slime/hit_01.wav" id="11_bh701"]
 [ext_resource type="AudioStream" uid="uid://bspydg0dypefh" path="res://enemies/slime/hit_00.wav" id="12_g4b07"]
 [ext_resource type="Script" uid="uid://dbli34f4meev1" path="res://enemies/chasing.gd" id="12_wycd7"]
-[ext_resource type="Script" uid="uid://ccow1ggvnjg0g" path="res://enemies/Scripts/vision.gd" id="15_yqjl1"]
+[ext_resource type="PackedScene" uid="uid://xohmh8v26mpf" path="res://enemies/vision.tscn" id="15_wycd7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_folh5"]
 radius = 11.0
@@ -53,10 +53,10 @@ tracks/1/path = NodePath("Sprite2D/AttackHurtBox:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.43333334, 0.53333336, 0.8333333),
+"times": PackedFloat32Array(0, 0.1, 0.53333336, 0.8333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [Vector2(0, 8.977221), Vector2(0, 8.977221), Vector2(0, 20), Vector2(0, 8.977)]
+"values": [Vector2(0, 8.977221), Vector2(0, 8.977221), Vector2(0, 30), Vector2(0, 8.977)]
 }
 
 [sub_resource type="Animation" id="Animation_2robp"]
@@ -780,15 +780,8 @@ collision_mask = 18
 script = ExtResource("1_bwvbh")
 hp = 5
 
-[node name="shadowSprite2d" type="Sprite2D" parent="." unique_id=955353154]
-modulate = Color(0, 0, 0, 1)
-position = Vector2(-7, 7)
-scale = Vector2(0.90625, 0.71875)
-texture = ExtResource("2_r0est")
-
 [node name="HurtBox" parent="." unique_id=691125302 instance=ExtResource("3_wxif3")]
 position = Vector2(2, -3)
-damage = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=1486656090]
 position = Vector2(-6, 0)
@@ -804,6 +797,12 @@ position = Vector2(22, 5)
 shape = SubResource("CircleShape2D_hrxou")
 debug_color = Color(1, 0, 0, 0.419608)
 
+[node name="shadowSprite2d" type="Sprite2D" parent="." unique_id=955353154]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(-7, 7)
+scale = Vector2(0.90625, 0.71875)
+texture = ExtResource("2_r0est")
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1634033997]
 texture_filter = 1
 position = Vector2(0, -18)
@@ -815,9 +814,10 @@ vframes = 5
 [node name="AttackHurtBox" type="Area2D" parent="Sprite2D" unique_id=538854019]
 position = Vector2(0, 8.977221)
 scale = Vector2(0.49765554, 0.49873447)
+monitoring = false
 monitorable = false
 script = ExtResource("6_wycd7")
-damage = 4
+damage = 2
 metadata/_custom_type_script = "uid://bclxo76rtwvwa"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/AttackHurtBox" unique_id=419804873]
@@ -841,7 +841,7 @@ after_idle_state = NodePath("../Wander")
 script = ExtResource("10_wxif3")
 wander_speed = 30.0
 state_animation_duration = 0.7
-next_state = NodePath("../Chasing")
+next_state = NodePath("../idle")
 
 [node name="Stun" type="Node" parent="EnemyStateMachine" unique_id=1516901632 node_paths=PackedStringArray("next_state")]
 script = ExtResource("9_joajk")
@@ -852,9 +852,9 @@ script = ExtResource("10_84nt2")
 
 [node name="Chasing" type="Node" parent="EnemyStateMachine" unique_id=582129486 node_paths=PackedStringArray("myvision", "attack_target_area", "next_state")]
 script = ExtResource("12_wycd7")
-attack_speed = 40.0
+attack_speed = 60.0
 state_agro_duration = 5.0
-myvision = NodePath("../../vision")
+myvision = NodePath("../../Vision")
 attack_target_area = NodePath("../../Sprite2D/AttackHurtBox")
 next_state = NodePath("../idle")
 
@@ -865,10 +865,8 @@ autoplay = &"idle_down"
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=634265590]
 max_polyphony = 4
 
-[node name="vision" type="Area2D" parent="." unique_id=724114754]
-script = ExtResource("15_yqjl1")
-metadata/_custom_type_script = "uid://ccow1ggvnjg0g"
+[node name="Vision" parent="." unique_id=161422571 instance=ExtResource("15_wycd7")]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="vision" unique_id=1307018097]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Vision" unique_id=1307018097]
 position = Vector2(-8, 0)
 polygon = PackedVector2Array(-16, 0, 16, 0, 256, 256, -256, 256)

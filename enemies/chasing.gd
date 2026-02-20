@@ -5,7 +5,7 @@ class_name EnemyStateChasing extends EnemyState
 @export var turn_rate : float = 0.25
 
 @export_category("AI")
-@export var state_agro_duration : float = 0.5
+@export var state_agro_duration : float = 1.0
 @export var myvision : vision
 @export var attack_target_area : HurtBox
 @export var next_state : EnemyState
@@ -16,28 +16,28 @@ var _direction : Vector2
 var see_player : bool = false
 
 func _ready():
+	myvision.playerarrive.connect(_on_player_entered)
+	myvision.playerarrive.connect(_on_player_exited)
+	
 	pass
 	
 ## What happens when you initalize this state
 func init() -> void:
 	if myvision:
-		myvision.playerarrive.connect(_on_player_entered)
-		myvision.playerarrive.connect(_on_player_exited)
-	pass
+		pass
 	
 ## what happens when the player enters this state
 func enter() -> void:
 	_timer = state_agro_duration
-	
 	enemy.updateAnimation(anim_name)
-	if myvision:
-		myvision.monitoring = true
+	if attack_target_area:
+		attack_target_area.monitoring = true
 	pass
 	
 ## what happens when the player exits this state
 func exit() -> void:
-	if myvision:
-		myvision.monitoring = false
+	if attack_target_area:
+		attack_target_area.monitoring = false
 	see_player = false
 	pass
 	
@@ -46,7 +46,7 @@ func process(_delta):
 	var new_dir : Vector2 = enemy.global_position.direction_to(PlayerManager.player.global_position)
 	_direction = lerp(_direction, new_dir,turn_rate)
 	enemy.velocity = _direction * attack_speed
-	if enemy.setDirection(_direction):
+	if enemy.setDirection( _direction ):
 		enemy.updateAnimation(anim_name)
 	
 	if see_player == false:
