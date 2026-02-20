@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://hamsro6mjplh"]
+
+[ext_resource type="Script" uid="uid://d36xu8j4jk5uc" path="res://skills/skill_data.gd" id="1_ik5ea"]
+[ext_resource type="Texture2D" uid="uid://b0s6waasjt8ha" path="res://Pack/vamp_tooth.png" id="1_t8ap6"]
+
+[resource]
+script = ExtResource("1_ik5ea")
+skill_name = "Damage Bonus 1"
+description = "Hit a little harder."
+icon = ExtResource("1_t8ap6")
+tree_column = 1
+prerequisite_ids = Array[String](["speed_1"])
+effect_type = "damage"
+effect_value = 565.105
+id = "damage_1"
+metadata/_custom_type_script = "uid://d36xu8j4jk5uc"

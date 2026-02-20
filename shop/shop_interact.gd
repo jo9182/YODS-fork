@@ -30,7 +30,7 @@ func _on_body_exited(_body: Node2D) -> void:
 
 func _on_button_pressed() -> void:
 	button.visible = false
-	label.visble = false
+	label.visible = false
 	_refresh_display()
 	item_list.visible = true
 

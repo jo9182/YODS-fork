@@ -68,7 +68,7 @@ position = Vector2(416, 128)
 priest_name = "Jester"
 Sentence = "WelL WElL wElL LoOk WhaT ThE Cat DRagGed In A gObLin ShopKEEpeR"
 opt1 = "What?"
-opt2 = "Are you a skeleton in disguise"
+opt2 = "Be ye a skeleton in disguise?"
 res1 = "NooOooOO"
 res2 = "DefineteLy NoT"
 

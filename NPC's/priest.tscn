@@ -156,18 +156,18 @@ wrap_mode = 1
 [node name="Button" type="Button" parent="CanvasLayer/Control/Secondary control" unique_id=1375749904]
 layout_mode = 0
 offset_left = -112.0
-offset_top = 218.0
+offset_top = 209.0
 offset_right = -80.0
-offset_bottom = 246.0
+offset_bottom = 237.0
 theme_override_font_sizes/font_size = 14
 text = "No"
 
 [node name="Button2" type="Button" parent="CanvasLayer/Control/Secondary control" unique_id=205489754]
 layout_mode = 0
-offset_left = -76.0
-offset_top = 218.0
-offset_right = -44.0
-offset_bottom = 246.0
+offset_left = -73.0
+offset_top = 209.0
+offset_right = -41.0
+offset_bottom = 237.0
 theme_override_font_sizes/font_size = 14
 text = "Yes"
 
@@ -175,9 +175,9 @@ text = "Yes"
 visible = false
 layout_mode = 0
 offset_left = -34.0
-offset_top = 218.0
-offset_right = -8.0
-offset_bottom = 246.0
+offset_top = 209.0
+offset_right = -1.0
+offset_bottom = 237.0
 theme_override_font_sizes/font_size = 14
 text = "Exit"
 
