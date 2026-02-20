@@ -88,7 +88,7 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	_reset_dialogue()
 
 
-# --- normal dialogue
+# --- normal dialogue ----------------------------------------------------------
 
 func _reset_dialogue() -> void:
 	speech.text = Sentence
@@ -137,7 +137,7 @@ func _on_exit_pressed() -> void:
 	_shop_index = 0
 
 
-# --- shop customer mode
+# --- shop customer mode (manual) ---------------------------------------------
 
 func _enter_shop_mode() -> void:
 	var mood = ReputationManager.get_mood()
@@ -211,7 +211,7 @@ func _on_shop_buy_pressed() -> void:
 
 	_effective_budget -= listing.price
 	coin_amount -= listing.price
-	ShopManager.sell(listing)
+	ShopManager.sell(listing, priest_name)
 
 	if ShopManager.listings.is_empty():
 		speech.text = _thanks_line()
@@ -231,7 +231,7 @@ func _on_shop_next_pressed() -> void:
 	_show_current_listing()
 
 
-# --- auto buy 
+# --- auto buy (silent, no UI) ------------------------------------------------
 
 func _run_auto_buy() -> void:
 	if ShopManager.listings.is_empty():
@@ -263,7 +263,7 @@ func _run_auto_buy() -> void:
 		# buy one unit
 		budget -= listing.price
 		coin_amount -= listing.price
-		ShopManager.sell(listing)
+		ShopManager.sell(listing, priest_name)
 
 		# small floating label so the player knows something was sold
 		_show_sale_popup(listing.item_data.name, listing.price)

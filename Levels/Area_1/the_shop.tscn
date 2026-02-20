@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="6_qu404"]
 [ext_resource type="PackedScene" uid="uid://b1wxrfc07mdnm" path="res://shop/shop_interact.tscn" id="7_i2oah"]
 [ext_resource type="Resource" uid="uid://5toukbxfodon" path="res://loot/loot tables/floor_1_chest.tres" id="7_t8tbc"]
+[ext_resource type="PackedScene" uid="uid://cxowdbytx83t6" path="res://shop/shop_log_menu.tscn" id="9_qpm6l"]
 
 [node name="The shop" type="Node2D" unique_id=1945606149]
 script = ExtResource("1_0epwg")
@@ -80,3 +81,5 @@ position = Vector2(592, 240)
 level = "uid://cmwwq3qmidic7"
 size = 1
 side = 1
+
+[node name="ShopLogMenu" parent="." unique_id=2067004874 instance=ExtResource("9_qpm6l")]

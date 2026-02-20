@@ -41,14 +41,15 @@ func delist(listing: ShopListing, inventory: inventoryData) -> void:
 	listings_changed.emit()
 
 
-func sell(listing: ShopListing) -> int:
+# buyer_name is shown in the shop log, pass the NPC's priest_name
+func sell(listing: ShopListing, buyer_name: String = "Unknown") -> int:
 	if not listings.has(listing):
 		return -1
 
 	var gold_earned = listing.price
 
-	# tell reputation manager how this sale was priced
 	ReputationManager.record_sale(listing.price, listing.item_data.base_value)
+	ShopLog.record(listing.item_data.name, gold_earned, buyer_name)
 
 	listing.quantity -= 1
 	if listing.quantity <= 0:

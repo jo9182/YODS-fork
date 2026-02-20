@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://cxowdbytx83t6"]
+
+[ext_resource type="Script" uid="uid://d0elmxjf2ug5g" path="res://shop/shop_log_menu.gd" id="1_w35ap"]
+[ext_resource type="FontFile" uid="uid://5se4m828n1ty" path="res://GUI/fonts/KiwiSoda.ttf" id="2_8e0jl"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_w35ap"]
+font = ExtResource("2_8e0jl")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_w35ap"]
+default_font = ExtResource("2_8e0jl")
+
+[sub_resource type="LabelSettings" id="LabelSettings_07vur"]
+font = ExtResource("2_8e0jl")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_8xiv3"]
+default_font = ExtResource("2_8e0jl")
+
+[node name="ShopLogMenu" type="CanvasLayer" unique_id=2067004874]
+process_mode = 3
+script = ExtResource("1_w35ap")
+
+[node name="Panel" type="Panel" parent="." unique_id=214295729]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=698950757]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer" unique_id=1534959613]
+layout_mode = 2
+text = "Shop Log"
+label_settings = SubResource("LabelSettings_w35ap")
+
+[node name="EntriesLabel" type="RichTextLabel" parent="Panel/VBoxContainer" unique_id=103842828]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_w35ap")
+
+[node name="TotalLabel" type="Label" parent="Panel/VBoxContainer" unique_id=1926212239]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_07vur")
+
+[node name="CloseButton" type="Button" parent="Panel/VBoxContainer" unique_id=198155243]
+layout_mode = 2
+theme = SubResource("Theme_8xiv3")
+text = "Close"

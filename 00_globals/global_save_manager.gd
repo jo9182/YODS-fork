@@ -29,6 +29,7 @@ func save_game() -> void:
 	current_save.gold = PlayerStats.gold
 	current_save.purchased_skills = SkillTreeManager.get_save_data()
 	current_save.reputation = ReputationManager.get_save_data()
+	current_save.shop_log = ShopLog.get_save_data()
 	var file := FileAccess.open(SAVE_PATH + "save.sav", FileAccess.WRITE)
 	var save_json = JSON.stringify(current_save)
 	file.store_line(save_json)
@@ -55,6 +56,7 @@ func load_game() -> void:
 	PlayerManager.set_health(current_save.player.hp, current_save.player.max_hp)
 	PlayerStats.gold = current_save.get("gold", 0)
 	ReputationManager.load_save_data(current_save.get("reputation", {}))
+	ShopLog.load_save_data(current_save.get("shop_log", []))
 
 	# restore skill purchases and re-apply their effects
 	# we need to find all skills across the scene to pass to the manager
