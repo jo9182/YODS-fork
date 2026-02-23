@@ -14,8 +14,8 @@ const POP_DURATION = 0.3
 @export var hp: int = 3
 @export var loot_table: LootTable
 
-var direction: Vector2 = Vector2.ZERO
 var cardinalDirection: Vector2 = Vector2.DOWN
+var direction: Vector2 = Vector2.ZERO
 var player: Player
 var invunerable: bool = false
 
@@ -98,9 +98,14 @@ func _animate_drops(drops: Array) -> void:
 
 
 func setDirection(_NewDirection: Vector2) -> bool:
+	direction = _NewDirection
 	if direction == Vector2.ZERO:
 		return false
-	var directionID: int = int(round((direction + cardinalDirection * 0.1).angle() / TAU * DIR_4.size()))
+	var directionID: int = int(round(
+		(direction + cardinalDirection * 0.1).angle() 
+		/ TAU * DIR_4.size()
+	))
+	
 	var newDirection = DIR_4[directionID]
 	if newDirection == cardinalDirection:
 		return false

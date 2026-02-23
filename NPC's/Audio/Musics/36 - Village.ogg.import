@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b881rkkq1b6gt"
+path="res://.godot/imported/36 - Village.ogg-def25d5406971cd4bf0e20da2369da1d.oggvorbisstr"
+
+[deps]
+
+source_file="res://NPC's/Audio/Musics/36 - Village.ogg"
+dest_files=["res://.godot/imported/36 - Village.ogg-def25d5406971cd4bf0e20da2369da1d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

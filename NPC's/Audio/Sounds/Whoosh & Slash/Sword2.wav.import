@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bbpqsx04dm53v"
+path="res://.godot/imported/Sword2.wav-52a5cd05322bcb7e126c120609bd31ea.sample"
+
+[deps]
+
+source_file="res://NPC's/Audio/Sounds/Whoosh & Slash/Sword2.wav"
+dest_files=["res://.godot/imported/Sword2.wav-52a5cd05322bcb7e126c120609bd31ea.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

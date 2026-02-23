@@ -16,14 +16,15 @@ var _direction : Vector2
 var see_player : bool = false
 
 func _ready():
-	myvision.playerarrive.connect(_on_player_entered)
-	myvision.playerarrive.connect(_on_player_exited)
+	
 	
 	pass
 	
 ## What happens when you initalize this state
 func init() -> void:
 	if myvision:
+		myvision.playerarrive.connect(_on_player_entered)
+		myvision.playerarrive.connect(_on_player_exited)
 		pass
 	
 ## what happens when the player enters this state
@@ -64,7 +65,10 @@ func physics(_delta : float) -> EnemyState:
 	
 func _on_player_entered() -> void:
 	see_player = true
-	if state_machine.currentState is EnemyStateStun:
+	if (
+		state_machine.currentState is EnemyStateStun
+		or state_machine.currentState is EnemyStateDestroy
+		):
 		return
 	state_machine.changeState(self)
 

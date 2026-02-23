@@ -11,6 +11,6 @@ icon = ExtResource("1_t8ap6")
 tree_column = 1
 prerequisite_ids = Array[String](["speed_1"])
 effect_type = "damage"
-effect_value = 565.105
+effect_value = 0.5
 id = "damage_1"
 metadata/_custom_type_script = "uid://d36xu8j4jk5uc"

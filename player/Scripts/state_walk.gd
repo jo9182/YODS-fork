@@ -1,14 +1,16 @@
 class_name State_walk extends State
 
-# base movement speed -- skills add on top of this via PlayerStats.speed_bonus
 @export var moveSpeed: float = 115.0
 
+@onready var animation_player: AnimationPlayer = $"../../AnimationPlayer"
 @onready var attack: State = $"../attack"
 @onready var idle: State = $"../idle"
+@onready var ranged: State = $"../ranged"
 
 
 func enter() -> void:
-	player.updateAnimation("walk")
+	# play once, walk_side loops so it keeps going until another state exits
+	animation_player.play("walk_side")
 
 
 func exit() -> void:
@@ -19,11 +21,11 @@ func process(_delta: float) -> State:
 	if player.direction == Vector2.ZERO:
 		return idle
 
-	# add the skill bonus on top of base speed
 	player.velocity = player.direction * (moveSpeed + PlayerStats.speed_bonus)
 
-	if player.setDirection():
-		player.updateAnimation("walk")
+	# keep cardinalDirection updated for attacks/ranged, but never touch the animation
+	player.setDirection()
+
 	return null
 
 
@@ -34,4 +36,6 @@ func physics(_delta: float) -> State:
 func handleInput(_event: InputEvent) -> State:
 	if _event.is_action_pressed("Attack"):
 		return attack
+	if _event.is_action_pressed("ranged"):
+		return ranged
 	return null

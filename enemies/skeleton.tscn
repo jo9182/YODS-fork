@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://j63y4o8qaqyg" path="res://enemies/slime/hit_01.wav" id="11_bh701"]
 [ext_resource type="AudioStream" uid="uid://bspydg0dypefh" path="res://enemies/slime/hit_00.wav" id="12_g4b07"]
 [ext_resource type="Script" uid="uid://dbli34f4meev1" path="res://enemies/chasing.gd" id="12_wycd7"]
+[ext_resource type="AudioStream" uid="uid://cjwl3gefy0nxy" path="res://NPC's/Audio/Sounds/Whoosh & Slash/Slash.wav" id="13_yqjl1"]
 [ext_resource type="PackedScene" uid="uid://xohmh8v26mpf" path="res://enemies/vision.tscn" id="15_wycd7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_folh5"]
@@ -56,8 +57,23 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.53333336, 0.8333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [Vector2(0, 8.977221), Vector2(0, 8.977221), Vector2(0, 30), Vector2(0, 8.977)]
+"values": [Vector2(0, 8.977221), Vector2(0, 8.977221), Vector2(0, 45), Vector2(0, 8.977)]
 }
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("13_yqjl1")
+}],
+"times": PackedFloat32Array(0.6333333)
+}
+tracks/2/use_blend = true
 
 [sub_resource type="Animation" id="Animation_2robp"]
 resource_name = "Attack_side"
@@ -85,8 +101,23 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.43333334, 0.53333336, 0.8333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [Vector2(0, 8.977221), Vector2(0, 8.977221), Vector2(10, 8.977), Vector2(0, 8.977)]
+"values": [Vector2(0, 8.977221), Vector2(0, 8.977221), Vector2(23, 8.977), Vector2(0, 8.977)]
 }
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("13_yqjl1")
+}],
+"times": PackedFloat32Array(0.56666666)
+}
+tracks/2/use_blend = true
 
 [sub_resource type="Animation" id="Animation_yqjl1"]
 resource_name = "Attack_up"
@@ -116,6 +147,21 @@ tracks/1/keys = {
 "update": 1,
 "values": [Vector2(0, 8.977221), Vector2(0, 8.977221), Vector2(0, -4), Vector2(0, 8.977)]
 }
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("13_yqjl1")
+}],
+"times": PackedFloat32Array(0.56666666)
+}
+tracks/2/use_blend = true
 
 [sub_resource type="Animation" id="Animation_6326o"]
 length = 0.001
@@ -775,7 +821,7 @@ _data = {
 
 [node name="Skeleton" type="CharacterBody2D" unique_id=1824911057]
 texture_filter = 1
-collision_layer = 0
+collision_layer = 256
 collision_mask = 18
 script = ExtResource("1_bwvbh")
 hp = 5
@@ -797,16 +843,9 @@ position = Vector2(22, 5)
 shape = SubResource("CircleShape2D_hrxou")
 debug_color = Color(1, 0, 0, 0.419608)
 
-[node name="shadowSprite2d" type="Sprite2D" parent="." unique_id=955353154]
-modulate = Color(0, 0, 0, 1)
-position = Vector2(-7, 7)
-scale = Vector2(0.90625, 0.71875)
-texture = ExtResource("2_r0est")
-
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1634033997]
 texture_filter = 1
 position = Vector2(0, -18)
-scale = Vector2(2.009422, 2.005075)
 texture = ExtResource("5_r0est")
 hframes = 17
 vframes = 5
@@ -814,16 +853,25 @@ vframes = 5
 [node name="AttackHurtBox" type="Area2D" parent="Sprite2D" unique_id=538854019]
 position = Vector2(0, 8.977221)
 scale = Vector2(0.49765554, 0.49873447)
+collision_layer = 256
+collision_mask = 2
 monitoring = false
 monitorable = false
 script = ExtResource("6_wycd7")
-damage = 2
+damage = 3
 metadata/_custom_type_script = "uid://bclxo76rtwvwa"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/AttackHurtBox" unique_id=419804873]
 position = Vector2(-5, -7.9995594)
 shape = SubResource("CapsuleShape2D_wycd7")
 debug_color = Color(0.9550229, 4.813075e-07, 0.5479201, 0.41960785)
+
+[node name="shadowSprite2d" type="Sprite2D" parent="Sprite2D" unique_id=955353154]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+position = Vector2(-7, 25)
+scale = Vector2(0.90625, 0.71875)
+texture = ExtResource("2_r0est")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1287349885]
 position = Vector2(-6, -4)
@@ -852,7 +900,7 @@ script = ExtResource("10_84nt2")
 
 [node name="Chasing" type="Node" parent="EnemyStateMachine" unique_id=582129486 node_paths=PackedStringArray("myvision", "attack_target_area", "next_state")]
 script = ExtResource("12_wycd7")
-attack_speed = 60.0
+attack_speed = 40.0
 state_agro_duration = 5.0
 myvision = NodePath("../../Vision")
 attack_target_area = NodePath("../../Sprite2D/AttackHurtBox")

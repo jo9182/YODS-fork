@@ -12,12 +12,13 @@ var direction : Vector2 = Vector2.ZERO
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var state_machine: PlayerStateMachine = $StateMachine
-@onready var hitbox: HitBox = $Hitbox
+@onready var hitbox: HitBox = $Sprite2D/Hitbox
+
 @onready var effect_animation_player: AnimationPlayer = $EffectAnimationPlayer
 
 var invulnarable : bool = false
-var hp : int = 6
-var max_hp : int = 6
+var hp : int = 10
+var max_hp : int = 10
 
 func _ready():
 	PlayerManager.player = self
@@ -96,12 +97,17 @@ func _take_damage( hurtBox : HurtBox) -> void:
 	if hp > 0:
 		player_damaged.emit(hurtBox)
 	else:
+		animation_player.play("death")
+		invulnarable = true
+		await get_tree().create_timer(.54).timeout
 		if SaveManager.get_save_file() != null:
 			SaveManager.load_game()
+			invulnarable = false
 		else:
-			update_hp(6)
+			update_hp(max_hp)
 			SaveManager.save_game()
 			SaveManager.load_game()
+			invulnarable = false
 	pass
 	
 func update_hp( delta : int) -> void:
