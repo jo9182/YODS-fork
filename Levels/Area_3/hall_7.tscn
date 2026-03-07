@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bduuh02qh45x8" path="res://Levels/Area_3/dungeon_03.tscn" id="2_lstkg"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_2p1jg"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_filvh"]
+[ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="5_lstkg"]
 
 [node name="Hall_7" type="Node2D" unique_id=707528272]
 script = ExtResource("1_j1oxo")
@@ -24,3 +25,7 @@ side = 2
 position = Vector2(-224, 416)
 level = "uid://bmvqoavi28hng"
 side = 3
+
+[node name="Skeleton" parent="." unique_id=1824911057 instance=ExtResource("5_lstkg")]
+position = Vector2(-272, 288)
+hp = 7

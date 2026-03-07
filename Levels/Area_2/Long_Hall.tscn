@@ -45,15 +45,20 @@ side = 3
 
 [node name="Vampire" parent="." unique_id=571777751 instance=ExtResource("5_lpc3q")]
 position = Vector2(3120, -64)
+hp = 7
 
 [node name="Vampire2" parent="." unique_id=922182388 instance=ExtResource("5_lpc3q")]
 position = Vector2(2448, -72)
+hp = 7
 
 [node name="Vampire3" parent="." unique_id=76158655 instance=ExtResource("5_lpc3q")]
 position = Vector2(1672, -64)
+hp = 7
 
 [node name="Vampire4" parent="." unique_id=394991258 instance=ExtResource("5_lpc3q")]
 position = Vector2(800, -72)
+hp = 7
 
 [node name="Vampire5" parent="." unique_id=54191474 instance=ExtResource("5_lpc3q")]
 position = Vector2(8, -64)
+hp = 7

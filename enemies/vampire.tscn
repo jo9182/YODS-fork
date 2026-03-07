@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b7jwsnv37r2po" path="res://enemies/Scripts/enemy.gd" id="1_2rocu"]
 [ext_resource type="PackedScene" uid="uid://ckhbwy0dyy7gb" path="res://General Nodes/Hurt_Box/hurt_box.tscn" id="2_gh020"]
+[ext_resource type="Resource" uid="uid://cw84olpw3w3s" path="res://loot/loot tables/vamp_loot.tres" id="2_nbjy0"]
 [ext_resource type="Texture2D" uid="uid://o8pckq73hyuu" path="res://player/Sprites/Shadow.png" id="3_0h64s"]
 [ext_resource type="PackedScene" uid="uid://dlecjw8jjrpbm" path="res://General Nodes/Hitbox/Hitbox.tscn" id="3_xb02a"]
 [ext_resource type="Script" uid="uid://b1ia4kvymrbwm" path="res://enemies/Scripts/EnemyStateMachine.gd" id="5_hrxou"]
@@ -16,11 +17,11 @@
 [ext_resource type="AudioStream" uid="uid://cjwl3gefy0nxy" path="res://NPC's/Audio/Sounds/Whoosh & Slash/Slash.wav" id="12_nbjy0"]
 [ext_resource type="PackedScene" uid="uid://xohmh8v26mpf" path="res://enemies/vision.tscn" id="14_6lfwj"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_folh5"]
-radius = 11.0
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_hrxou"]
 radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_folh5"]
+radius = 11.0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6lfwj"]
 load_path = "res://.godot/imported/spritesheet (2).png-eec0fec409d9359a3d4d0da03e7a990b.ctex"
@@ -67,7 +68,7 @@ tracks/2/path = NodePath("Sprite2D/AttackHurtbox:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.42, 0.61),
+"times": PackedFloat32Array(0, 0.49, 0.61),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [Vector2(0, 12), Vector2(0, 35), Vector2(0, 12)]
@@ -79,7 +80,7 @@ tracks/3/path = NodePath("Sprite2D/AttackHurtbox:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.42, 0.61),
+"times": PackedFloat32Array(0.48, 0.61),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [-1.5707963267948966, 0.0]
@@ -139,7 +140,7 @@ tracks/2/path = NodePath("Sprite2D/AttackHurtbox:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.42, 0.61),
+"times": PackedFloat32Array(0, 0.49, 0.61),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [Vector2(0, 12), Vector2(35, 12), Vector2(0, 12)]
@@ -199,7 +200,7 @@ tracks/2/path = NodePath("Sprite2D/AttackHurtbox:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.42, 0.61),
+"times": PackedFloat32Array(0, 0.49, 0.61),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [Vector2(0, 12), Vector2(0, -25), Vector2(0, 12)]
@@ -211,7 +212,7 @@ tracks/3/path = NodePath("Sprite2D/AttackHurtbox:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.42, 0.61),
+"times": PackedFloat32Array(0.48, 0.61),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [-1.5707963267948966, 0.0]
@@ -910,14 +911,7 @@ collision_layer = 0
 collision_mask = 18
 script = ExtResource("1_2rocu")
 hp = 5
-
-[node name="HurtBox" parent="." unique_id=691125302 instance=ExtResource("2_gh020")]
-position = Vector2(2, -3)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=1486656090]
-position = Vector2(-6, 0)
-shape = SubResource("CircleShape2D_folh5")
-debug_color = Color(1, 1, 0, 0.419608)
+loot_table = ExtResource("2_nbjy0")
 
 [node name="Hitbox" parent="." unique_id=1725392380 instance=ExtResource("3_xb02a")]
 position = Vector2(-28, -12)
@@ -927,6 +921,14 @@ modulate = Color(0.996078, 0.984314, 0.0117647, 1)
 position = Vector2(22, 5)
 shape = SubResource("CircleShape2D_hrxou")
 debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="HurtBox" parent="." unique_id=691125302 instance=ExtResource("2_gh020")]
+position = Vector2(2, -3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=1486656090]
+position = Vector2(-6, 0)
+shape = SubResource("CircleShape2D_folh5")
+debug_color = Color(1, 1, 0, 0.419608)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1634033997]
 texture_filter = 1
@@ -947,7 +949,7 @@ debug_color = Color(1, 1, 0, 0.419608)
 [node name="shadowSprite2d" type="Sprite2D" parent="Sprite2D" unique_id=955353154]
 modulate = Color(0, 0, 0, 1)
 z_index = -1
-position = Vector2(-3, 23)
+position = Vector2(-6, 25)
 scale = Vector2(0.90625, 0.71875)
 texture = ExtResource("3_0h64s")
 

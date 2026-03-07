@@ -4,6 +4,9 @@
 [ext_resource type="Script" uid="uid://baut8tgloa1cq" path="res://Levels/Scripts/level.gd" id="1_bm35v"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="2_bm35v"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="3_gfl3h"]
+[ext_resource type="PackedScene" uid="uid://dw8cxbwsb3bqo" path="res://Props/spike_trap.tscn" id="5_wq873"]
+[ext_resource type="PackedScene" uid="uid://cd4w0i5ngsxmb" path="res://Props/gold_spike_trap.tscn" id="6_1dv4w"]
+[ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="7_a3jp2"]
 
 [node name="09" type="Node2D" unique_id=303598323]
 script = ExtResource("1_bm35v")
@@ -38,3 +41,45 @@ side = 3
 position = Vector2(-160, 320)
 level = "uid://bjuxhhritt0xb"
 side = 3
+
+[node name="Spike_Trap" parent="." unique_id=576005909 instance=ExtResource("5_wq873")]
+position = Vector2(-48, 144)
+
+[node name="Gold_Spike_Trap" parent="." unique_id=1944753478 instance=ExtResource("6_1dv4w")]
+position = Vector2(304, 176)
+
+[node name="Spike_Trap2" parent="." unique_id=878638362 instance=ExtResource("5_wq873")]
+position = Vector2(-112, -16)
+
+[node name="Gold_Spike_Trap2" parent="." unique_id=1288120079 instance=ExtResource("6_1dv4w")]
+position = Vector2(-16, 48)
+
+[node name="Spike_Trap3" parent="." unique_id=1202873812 instance=ExtResource("5_wq873")]
+position = Vector2(208, 176)
+
+[node name="Gold_Spike_Trap3" parent="." unique_id=1869144237 instance=ExtResource("6_1dv4w")]
+position = Vector2(176, 48)
+
+[node name="Spike_Trap4" parent="." unique_id=1547849320 instance=ExtResource("5_wq873")]
+position = Vector2(80, 112)
+
+[node name="Gold_Spike_Trap4" parent="." unique_id=158423901 instance=ExtResource("6_1dv4w")]
+position = Vector2(304, 80)
+
+[node name="Spike_Trap5" parent="." unique_id=1761378087 instance=ExtResource("5_wq873")]
+position = Vector2(80, -16)
+
+[node name="Gold_Spike_Trap5" parent="." unique_id=1835107988 instance=ExtResource("6_1dv4w")]
+position = Vector2(16, 208)
+
+[node name="Skeleton" parent="." unique_id=1824911057 instance=ExtResource("7_a3jp2")]
+position = Vector2(-16, -24)
+hp = 7
+
+[node name="Skeleton2" parent="." unique_id=1209124935 instance=ExtResource("7_a3jp2")]
+position = Vector2(264, 208)
+hp = 7
+
+[node name="Skeleton3" parent="." unique_id=821173005 instance=ExtResource("7_a3jp2")]
+position = Vector2(-144, 64)
+hp = 7

@@ -4,6 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://bduuh02qh45x8" path="res://Levels/Area_3/dungeon_03.tscn" id="2_wsmbx"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_moqpa"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_seudm"]
+[ext_resource type="PackedScene" uid="uid://b5ctydrsxayd0" path="res://enemies/vampire.tscn" id="5_seudm"]
+[ext_resource type="PackedScene" uid="uid://b151g5xtf8si6" path="res://enemies/red_vampire.tscn" id="6_x5gaj"]
+[ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="7_4538q"]
 
 [node name="17" type="Node2D" unique_id=1328075571]
 script = ExtResource("1_nc4x2")
@@ -29,3 +32,139 @@ side = 2
 position = Vector2(416, -160)
 level = "uid://c2sjmp8bfg3cn"
 side = 2
+
+[node name="Vampire" parent="." unique_id=1824911057 instance=ExtResource("5_seudm")]
+position = Vector2(-200, 248)
+hp = 9
+
+[node name="Vampire2" parent="." unique_id=1919551301 instance=ExtResource("5_seudm")]
+position = Vector2(-88, 264)
+hp = 9
+
+[node name="Vampire3" parent="." unique_id=1327846130 instance=ExtResource("5_seudm")]
+position = Vector2(-144, 256)
+hp = 9
+
+[node name="Vampire4" parent="." unique_id=334735821 instance=ExtResource("5_seudm")]
+position = Vector2(96, 176)
+hp = 9
+
+[node name="Vampire5" parent="." unique_id=2087349492 instance=ExtResource("5_seudm")]
+position = Vector2(128, 248)
+hp = 9
+
+[node name="Vampire6" parent="." unique_id=1169640333 instance=ExtResource("5_seudm")]
+position = Vector2(80, 240)
+hp = 9
+
+[node name="Vampire7" parent="." unique_id=1861707786 instance=ExtResource("5_seudm")]
+position = Vector2(312, 16)
+hp = 9
+
+[node name="Vampire8" parent="." unique_id=317864093 instance=ExtResource("5_seudm")]
+position = Vector2(264, 64)
+hp = 9
+
+[node name="Vampire9" parent="." unique_id=1411871595 instance=ExtResource("5_seudm")]
+position = Vector2(328, 80)
+hp = 9
+
+[node name="Vampire10" parent="." unique_id=1559757218 instance=ExtResource("5_seudm")]
+position = Vector2(-128, 32)
+hp = 9
+
+[node name="Vampire11" parent="." unique_id=162426669 instance=ExtResource("5_seudm")]
+position = Vector2(-80, 64)
+hp = 9
+
+[node name="Vampire12" parent="." unique_id=619955117 instance=ExtResource("5_seudm")]
+position = Vector2(-184, 48)
+hp = 9
+
+[node name="Vampire13" parent="." unique_id=562829249 instance=ExtResource("5_seudm")]
+position = Vector2(528, 40)
+hp = 9
+
+[node name="Vampire14" parent="." unique_id=1684843395 instance=ExtResource("5_seudm")]
+position = Vector2(480, -40)
+hp = 9
+
+[node name="Vampire15" parent="." unique_id=1527716583 instance=ExtResource("5_seudm")]
+position = Vector2(536, -48)
+hp = 9
+
+[node name="Vampire16" parent="." unique_id=1591782094 instance=ExtResource("5_seudm")]
+position = Vector2(520, 184)
+hp = 9
+
+[node name="Vampire17" parent="." unique_id=1684506887 instance=ExtResource("5_seudm")]
+position = Vector2(552, 224)
+hp = 9
+
+[node name="Vampire18" parent="." unique_id=449688055 instance=ExtResource("5_seudm")]
+position = Vector2(496, 232)
+hp = 9
+
+[node name="Vampire19" parent="." unique_id=57683350 instance=ExtResource("5_seudm")]
+position = Vector2(0, -48)
+hp = 9
+
+[node name="Vampire20" parent="." unique_id=1928285768 instance=ExtResource("5_seudm")]
+position = Vector2(-424, 288)
+hp = 9
+
+[node name="Vampire21" parent="." unique_id=1366143684 instance=ExtResource("5_seudm")]
+position = Vector2(-456, 208)
+hp = 9
+
+[node name="Vampire22" parent="." unique_id=1409316620 instance=ExtResource("5_seudm")]
+position = Vector2(-392, 216)
+hp = 9
+
+[node name="Vampire23" parent="." unique_id=2130519505 instance=ExtResource("5_seudm")]
+position = Vector2(48, -56)
+hp = 9
+
+[node name="Vampire24" parent="." unique_id=2040576529 instance=ExtResource("5_seudm")]
+position = Vector2(64, 16)
+hp = 9
+
+[node name="Red_Vampire" parent="." unique_id=1003239173 instance=ExtResource("6_x5gaj")]
+position = Vector2(112, -40)
+hp = 30
+
+[node name="Red_Vampire2" parent="." unique_id=1499104600 instance=ExtResource("6_x5gaj")]
+position = Vector2(40, 224)
+hp = 30
+
+[node name="Red_Vampire3" parent="." unique_id=1465535297 instance=ExtResource("6_x5gaj")]
+position = Vector2(-136, 216)
+hp = 30
+
+[node name="Red_Vampire4" parent="." unique_id=1690587920 instance=ExtResource("6_x5gaj")]
+position = Vector2(-168, -8)
+hp = 30
+
+[node name="Red_Vampire5" parent="." unique_id=1562284459 instance=ExtResource("6_x5gaj")]
+position = Vector2(464, 208)
+hp = 30
+
+[node name="Red_Vampire6" parent="." unique_id=1160248774 instance=ExtResource("6_x5gaj")]
+position = Vector2(472, 24)
+hp = 30
+
+[node name="Red_Vampire7" parent="." unique_id=1586859270 instance=ExtResource("6_x5gaj")]
+position = Vector2(264, 16)
+hp = 30
+
+[node name="Red_Vampire8" parent="." unique_id=1396955434 instance=ExtResource("6_x5gaj")]
+position = Vector2(-424, 184)
+hp = 30
+
+[node name="Skeleton" parent="." unique_id=1021108936 instance=ExtResource("7_4538q")]
+position = Vector2(296, 216)
+hp = 7
+
+[node name="Skeleton2" parent="." unique_id=99505130 instance=ExtResource("7_4538q")]
+position = Vector2(-296, -64)
+hp = 7

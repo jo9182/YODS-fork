@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dw8cxbwsb3bqo" path="res://Props/spike_trap.tscn" id="6_wgoks"]
 [ext_resource type="PackedScene" uid="uid://dop7r15gobi7k" path="res://Props/side_flamethrower.tscn" id="7_yp5k8"]
 [ext_resource type="PackedScene" uid="uid://mq17hdywfnaf" path="res://Props/arrow_trap.tscn" id="8_0bc3o"]
+[ext_resource type="PackedScene" uid="uid://cd4w0i5ngsxmb" path="res://Props/gold_spike_trap.tscn" id="9_4lq8l"]
 
 [node name="Trap_Hall" type="Node2D" unique_id=1256860746]
 script = ExtResource("1_ggiy6")
@@ -73,3 +74,6 @@ position = Vector2(498, -92)
 
 [node name="Arrow_trap3" parent="." unique_id=1596312778 instance=ExtResource("8_0bc3o")]
 position = Vector2(112, -92)
+
+[node name="Gold_Spike_Trap2" parent="." unique_id=24926615 instance=ExtResource("9_4lq8l")]
+position = Vector2(273, 102)

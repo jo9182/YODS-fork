@@ -35,3 +35,4 @@ position = Vector2(112, 160)
 
 [node name="Vampire" parent="." unique_id=16579564 instance=ExtResource("7_qggu3")]
 position = Vector2(480, 248)
+hp = 7

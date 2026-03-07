@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://cd4w0i5ngsxmb"]
+
+[ext_resource type="Script" uid="uid://d1gfrcbqcl8t2" path="res://gold_spike_trap.gd" id="1_24qam"]
+[ext_resource type="PackedScene" uid="uid://ckhbwy0dyy7gb" path="res://General Nodes/Hurt_Box/hurt_box.tscn" id="2_hd7jr"]
+[ext_resource type="Texture2D" uid="uid://wtc5n0htp80g" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/Props.png" id="3_6wext"]
+
+[sub_resource type="Animation" id="Animation_nv2m3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [80]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0.07450981)]
+}
+
+[sub_resource type="Animation" id="Animation_o6pti"]
+resource_name = "Stab"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19999999, 0.4, 0.53333336, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [80, 79, 78, 77, 80]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.033333335, 0.16666667, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0.7058824, 0, 0.7607843, 0.05490196), Color(0.6313726, 0.11764706, 0.7294118, 1), Color(0.7058824, 0, 0.7607843, 0.05490196)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y05ix"]
+_data = {
+&"RESET": SubResource("Animation_nv2m3"),
+&"Stab": SubResource("Animation_o6pti")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nrvv"]
+
+[node name="Gold_Spike_Trap" type="Node2D" unique_id=576005909]
+z_index = 1
+script = ExtResource("1_24qam")
+
+[node name="HurtBox" parent="." unique_id=1956669057 instance=ExtResource("2_hd7jr")]
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=53552569]
+modulate = Color(1, 0, 0, 0.07450981)
+z_index = -1
+texture_filter = 1
+position = Vector2(0, -1.9073486e-06)
+scale = Vector2(1.980804, 2.0433762)
+texture = ExtResource("3_6wext")
+hframes = 4
+vframes = 25
+frame = 80
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=547208412]
+libraries/ = SubResource("AnimationLibrary_y05ix")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=191449248]
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1491243026]
+shape = SubResource("RectangleShape2D_0nrvv")
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1757793011]
+position = Vector2(0, -16)
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="Marker2D2" type="Marker2D" parent="." unique_id=1840600116]
+position = Vector2(-16, 0)
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="Marker2D3" type="Marker2D" parent="." unique_id=1427861270]
+position = Vector2(0, 16)
+scale = Vector2(1.5775708, 1.626413)
+
+[node name="Marker2D4" type="Marker2D" parent="." unique_id=1165426308]
+position = Vector2(16, 0)
+scale = Vector2(1.5775708, 1.626413)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

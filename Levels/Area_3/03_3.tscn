@@ -4,6 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://bduuh02qh45x8" path="res://Levels/Area_3/dungeon_03.tscn" id="2_7sm4f"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_7tfsy"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_4d12b"]
+[ext_resource type="PackedScene" uid="uid://b5ctydrsxayd0" path="res://enemies/vampire.tscn" id="5_4d12b"]
+[ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="6_8rgxx"]
+[ext_resource type="PackedScene" uid="uid://dw8cxbwsb3bqo" path="res://Props/spike_trap.tscn" id="7_7oshm"]
 
 [node name="03_3" type="Node2D" unique_id=2062023600]
 script = ExtResource("1_s8oec")
@@ -25,3 +28,39 @@ side = 2
 position = Vector2(-160, 384)
 level = "uid://cbk4f1n3dllan"
 side = 3
+
+[node name="Vampire" parent="." unique_id=1824911057 instance=ExtResource("5_4d12b")]
+position = Vector2(-208, 184)
+hp = 9
+
+[node name="Vampire2" parent="." unique_id=2043684451 instance=ExtResource("5_4d12b")]
+position = Vector2(-104, 152)
+hp = 9
+
+[node name="Vampire3" parent="." unique_id=913528044 instance=ExtResource("5_4d12b")]
+position = Vector2(24, 240)
+hp = 9
+
+[node name="Vampire4" parent="." unique_id=765522057 instance=ExtResource("5_4d12b")]
+position = Vector2(-224, 280)
+hp = 9
+
+[node name="Skeleton" parent="." unique_id=2085678459 instance=ExtResource("6_8rgxx")]
+position = Vector2(-288, 120)
+hp = 7
+
+[node name="Skeleton2" parent="." unique_id=131414983 instance=ExtResource("6_8rgxx")]
+position = Vector2(-48, 312)
+hp = 7
+
+[node name="Spike_Trap" parent="." unique_id=576005909 instance=ExtResource("7_7oshm")]
+position = Vector2(-144, 208)
+
+[node name="Spike_Trap2" parent="." unique_id=1647388081 instance=ExtResource("7_7oshm")]
+position = Vector2(-144, 240)
+
+[node name="Spike_Trap3" parent="." unique_id=294951345 instance=ExtResource("7_7oshm")]
+position = Vector2(-112, 208)
+
+[node name="Spike_Trap4" parent="." unique_id=1636354091 instance=ExtResource("7_7oshm")]
+position = Vector2(-112, 240)

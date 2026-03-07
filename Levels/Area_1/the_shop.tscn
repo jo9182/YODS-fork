@@ -33,7 +33,7 @@ Sentence = "Have Ye been in this here dungeon before?"
 opt1 = "Yes"
 opt2 = "No"
 res1 = "Then I suppose ye know how to navigate this here dungeon. "
-res2 = "Ye haven't?? Well then, a few quick tips. WASD for movement E to interact. TAB and I for inventory and ESC to pause the game. P to attack all the enemies and be sure to save frequently."
+res2 = "Ye haven't?? Well then, a few quick tips. WASD for movement E to interact. TAB and I for inventory and ESC to pause the game. P to attack all the enemies with your sword and R to attack with any rocks you find. Be sure to save frequently."
 coin_amount = 102
 
 [node name="PlayerSpawn" parent="." unique_id=1467528744 instance=ExtResource("3_kef53")]
@@ -79,6 +79,15 @@ opt2 = "Be ye a skeleton in disguise?"
 res1 = "NooOooOO"
 res2 = "DefineteLy NoT"
 
+[node name="Priest5" parent="." unique_id=125616866 instance=ExtResource("5_kef53")]
+position = Vector2(264, 248)
+priest_name = "Marvin"
+Sentence = "Would you like some advice in basic shopkeeping?"
+opt1 = "Yes"
+opt2 = "No"
+res1 = "Remember to go behind your counter and press I if you want to sell anything. Click on your item that you want to sell. Make sure to price it fairly or no one will buy that item. You can also press L to check your shop log."
+res2 = "A proffesional I see well I expect great things from your shop!"
+
 [node name="SHOP_INTERACT" parent="." unique_id=1384501189 instance=ExtResource("7_i2oah")]
 position = Vector2(144, 0)
 
@@ -96,5 +105,14 @@ offset_left = 140.0
 offset_top = 104.0
 offset_right = 201.0
 offset_bottom = 127.0
+text = "Tutorial"
+label_settings = SubResource("LabelSettings_vd8wv")
+
+[node name="Label2" type="Label" parent="." unique_id=556457571]
+z_index = 8
+offset_left = 240.0
+offset_top = 192.0
+offset_right = 301.0
+offset_bottom = 215.0
 text = "Tutorial"
 label_settings = SubResource("LabelSettings_vd8wv")

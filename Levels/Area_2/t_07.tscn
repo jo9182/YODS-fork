@@ -33,6 +33,8 @@ position = Vector2(464, 88)
 
 [node name="Vampire" parent="." unique_id=1384271250 instance=ExtResource("6_unh37")]
 position = Vector2(24, 200)
+hp = 7
 
 [node name="Vampire2" parent="." unique_id=1769359710 instance=ExtResource("6_unh37")]
 position = Vector2(424, 192)
+hp = 7

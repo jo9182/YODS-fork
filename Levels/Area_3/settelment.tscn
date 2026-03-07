@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bduuh02qh45x8" path="res://Levels/Area_3/dungeon_03.tscn" id="2_md3j5"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_ix77e"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_ovrls"]
+[ext_resource type="PackedScene" uid="uid://bm3pdj3rlgvso" path="res://NPC's/priest.tscn" id="5_ix77e"]
+[ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="6_ovrls"]
 
 [node name="Settelment" type="Node2D" unique_id=611995251]
 script = ExtResource("1_0m4mt")
@@ -19,3 +21,59 @@ position = Vector2(576, 0)
 level = "uid://dpcp81tbl05bl"
 target_transition_area = "LevelTransition2"
 side = 2
+
+[node name="Priest" parent="." unique_id=1924285380 instance=ExtResource("5_ix77e")]
+position = Vector2(504, 248)
+priest_name = "Nick"
+
+[node name="Priest2" parent="." unique_id=2133814252 instance=ExtResource("5_ix77e")]
+position = Vector2(288, 432)
+priest_name = "Hugo"
+
+[node name="Priest3" parent="." unique_id=2051517955 instance=ExtResource("5_ix77e")]
+position = Vector2(272, 296)
+priest_name = "Jeremy"
+
+[node name="Priest4" parent="." unique_id=870187090 instance=ExtResource("5_ix77e")]
+position = Vector2(336, 352)
+priest_name = "Thomas"
+
+[node name="Priest5" parent="." unique_id=294711301 instance=ExtResource("5_ix77e")]
+position = Vector2(800, 176)
+priest_name = "Oliver"
+Sentence = "I got a suggestion for you, do you want to hear it?"
+opt1 = "Yes"
+opt2 = "No"
+res1 = "Soon you will face a larger test down in the deepest depths of the dungeon. There are no chest down there so make sure to bring lots of supplies with you."
+res2 = "Go ahead be unprepared for what lies ahead."
+
+[node name="Priest6" parent="." unique_id=863965084 instance=ExtResource("5_ix77e")]
+position = Vector2(96, 160)
+
+[node name="Priest7" parent="." unique_id=1266734531 instance=ExtResource("5_ix77e")]
+position = Vector2(48, 104)
+priest_name = "Jessie"
+
+[node name="Priest8" parent="." unique_id=1348198182 instance=ExtResource("5_ix77e")]
+position = Vector2(-8, 144)
+priest_name = "Walter"
+
+[node name="Priest9" parent="." unique_id=42516752 instance=ExtResource("5_ix77e")]
+position = Vector2(480, 176)
+priest_name = "Malone"
+
+[node name="Priest10" parent="." unique_id=696363900 instance=ExtResource("5_ix77e")]
+position = Vector2(560, 208)
+priest_name = "Wetzel"
+
+[node name="Chest" parent="." unique_id=618167068 instance=ExtResource("6_ovrls")]
+position = Vector2(880, 56)
+
+[node name="Chest2" parent="." unique_id=1439836086 instance=ExtResource("6_ovrls")]
+position = Vector2(752, 56)
+
+[node name="Chest3" parent="." unique_id=1566900658 instance=ExtResource("6_ovrls")]
+position = Vector2(112, 56)
+
+[node name="Chest4" parent="." unique_id=1957589194 instance=ExtResource("6_ovrls")]
+position = Vector2(-16, 56)

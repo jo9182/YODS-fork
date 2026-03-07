@@ -4,6 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://bduuh02qh45x8" path="res://Levels/Area_3/dungeon_03.tscn" id="1_sqdtv"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="2_mcahf"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="3_2jlrj"]
+[ext_resource type="PackedScene" uid="uid://cd4w0i5ngsxmb" path="res://Props/gold_spike_trap.tscn" id="5_1r1fe"]
+[ext_resource type="PackedScene" uid="uid://b5ctydrsxayd0" path="res://enemies/vampire.tscn" id="6_kg71l"]
+[ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="7_cmoo7"]
 
 [node name="06_3" type="Node2D" unique_id=1001342769]
 script = ExtResource("1_mcahf")
@@ -30,3 +33,31 @@ side = 3
 position = Vector2(96, 416)
 level = "uid://cdrsqel2h0er3"
 side = 3
+
+[node name="Gold_Spike_Trap" parent="." unique_id=576005909 instance=ExtResource("5_1r1fe")]
+position = Vector2(-112, 304)
+
+[node name="Gold_Spike_Trap2" parent="." unique_id=2145210387 instance=ExtResource("5_1r1fe")]
+position = Vector2(-144, 272)
+
+[node name="Gold_Spike_Trap3" parent="." unique_id=343218680 instance=ExtResource("5_1r1fe")]
+position = Vector2(-176, 304)
+
+[node name="Gold_Spike_Trap4" parent="." unique_id=423742579 instance=ExtResource("5_1r1fe")]
+position = Vector2(-80, 272)
+
+[node name="Vampire" parent="." unique_id=1824911057 instance=ExtResource("6_kg71l")]
+position = Vector2(88, 296)
+hp = 9
+
+[node name="Vampire2" parent="." unique_id=678738563 instance=ExtResource("6_kg71l")]
+position = Vector2(-320, 256)
+hp = 9
+
+[node name="Vampire3" parent="." unique_id=61873991 instance=ExtResource("6_kg71l")]
+position = Vector2(-224, 248)
+hp = 9
+
+[node name="Skeleton" parent="." unique_id=1960017441 instance=ExtResource("7_cmoo7")]
+position = Vector2(8, 224)
+hp = 7

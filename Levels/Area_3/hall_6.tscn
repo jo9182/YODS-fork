@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bduuh02qh45x8" path="res://Levels/Area_3/dungeon_03.tscn" id="2_86j5w"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_on04m"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_0max0"]
+[ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="5_on04m"]
+[ext_resource type="PackedScene" uid="uid://b151g5xtf8si6" path="res://enemies/red_vampire.tscn" id="6_0max0"]
 
 [node name="Hall_6" type="Node2D" unique_id=1030364010]
 script = ExtResource("1_s5ld6")
@@ -24,3 +26,15 @@ side = 2
 position = Vector2(-704, 32)
 level = "uid://2dujw1tv1u2c"
 side = 2
+
+[node name="Skeleton" parent="." unique_id=1824911057 instance=ExtResource("5_on04m")]
+position = Vector2(-376, 288)
+hp = 7
+
+[node name="Skeleton2" parent="." unique_id=1599587941 instance=ExtResource("5_on04m")]
+position = Vector2(-680, 296)
+hp = 7
+
+[node name="Red_Vampire" parent="." unique_id=1003239173 instance=ExtResource("6_0max0")]
+position = Vector2(-536, 288)
+hp = 30

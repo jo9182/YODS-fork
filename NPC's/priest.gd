@@ -34,6 +34,8 @@ class_name priest extends CharacterBody2D
 @onready var char_name: Label = $"CanvasLayer/Control/Secondary control/Char_Name"
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var color_rect: ColorRect = $CanvasLayer/ColorRect
+@onready var area_2d: Area2D = $Area2D
+@onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
 
 var _shop_index: int = 0
 var _in_shop_mode: bool = false
@@ -135,8 +137,19 @@ func _on_exit_pressed() -> void:
 	color_rect.visible = false
 	_in_shop_mode = false
 	_shop_index = 0
+	reset()
 
-
+func reset() -> void:
+	button.visible = true
+	button_2.visible = true
+	exit.visible = false
+	speech.visible = true
+	secondary_control.visible = false
+	_reset_dialogue()
+	control.visible = true
+	label.visible = true
+	color_rect.visible = false
+	
 # --- shop customer mode (manual) ---------------------------------------------
 
 func _enter_shop_mode() -> void:
