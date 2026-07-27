@@ -1,0 +1,30 @@
+[gd_scene format=4 uid="uid://ds3xk1a4p2ocn"]
+
+[ext_resource type="Script" uid="uid://cs2xk1a3p1ncm" path="res://shop/customer_manager.gd" id="1_mgr"]
+[ext_resource type="Resource" uid="uid://dbk1x1c1q0rf1" path="res://shop/customer_types/blacksmith.tres" id="2_bs"]
+[ext_resource type="Resource" uid="uid://dbk1x1c1q0rf2" path="res://shop/customer_types/alchemist.tres" id="3_al"]
+[ext_resource type="Resource" uid="uid://dbk1x1c1q0rf3" path="res://shop/customer_types/peasant.tres" id="4_pe"]
+[ext_resource type="Resource" uid="uid://dbk1x1c1q0rf4" path="res://shop/customer_types/noble.tres" id="5_no"]
+[ext_resource type="Resource" uid="uid://dbk1x1c1q0rf5" path="res://shop/customer_types/adventurer.tres" id="6_ad"]
+
+[node name="CustomerManager" type="Node2D"]
+script = ExtResource("1_mgr")
+customer_types = Array[ExtResource("2_bs")]([ExtResource("2_bs"), ExtResource("3_al"), ExtResource("4_pe"), ExtResource("5_no"), ExtResource("6_ad")])
+
+[node name="EntryPoint" type="Marker2D" parent="."]
+position = Vector2(-80, 184)
+
+[node name="ExitPoint" type="Marker2D" parent="."]
+position = Vector2(-80, 184)
+
+[node name="BrowseSpot1" type="Marker2D" parent="."]
+position = Vector2(272, 160)
+
+[node name="BrowseSpot2" type="Marker2D" parent="."]
+position = Vector2(336, 144)
+
+[node name="BrowseSpot3" type="Marker2D" parent="."]
+position = Vector2(336, 176)
+
+[node name="BrowseSpot4" type="Marker2D" parent="."]
+position = Vector2(400, 160)

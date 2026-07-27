@@ -31,6 +31,7 @@ PlayerStats="*uid://bfwhwk362xrtc"
 ShopManager="*uid://cdla1gtlyfti1"
 SkillTreeManager="*uid://3b32ji3bw4lm"
 ShopLog="*uid://ddcrf4qkd1ff7"
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 
@@ -39,6 +40,10 @@ window/size/viewport_height=270
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg")
 
 [global_group]
 

@@ -277,13 +277,29 @@ text = "New Game"
 metadata/_edit_use_anchors_ = true
 
 [node name="ButtonContinue" type="Button" parent="CanvasLayer/Control" unique_id=1314701048]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.1037037
+anchor_bottom = 0.1037037
 offset_left = 208.0
 offset_top = 165.0
 offset_right = 281.0
 offset_bottom = 189.0
 theme = SubResource("Theme_peo7x")
 text = "Continue"
+metadata/_edit_use_anchors_ = true
+
+[node name="ButtonOptions" type="Button" parent="CanvasLayer/Control" unique_id=424418074]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.11111111
+anchor_bottom = -0.11111111
+offset_left = 208.0
+offset_top = 194.0
+offset_right = 281.0
+offset_bottom = 218.0
+theme = SubResource("Theme_peo7x")
+text = "Options"
 metadata/_edit_use_anchors_ = true
 
 [node name="PlayerSpawn" parent="." unique_id=163098939 instance=ExtResource("6_5lm31")]

@@ -40,7 +40,7 @@ func exit() -> void:
 ## what happens during the process in this state
 func process(_delta):
 	enemy.velocity -= enemy.velocity * decelerate_speed * _delta
-	pass
+	return null
 	
 ## what happens during the physics process in this state
 func physics(_delta : float) -> EnemyState:

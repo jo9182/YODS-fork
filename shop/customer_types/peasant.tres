@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CustomerData" load_steps=3 format=3 uid="uid://dbk1x1c1q0rf3"]
+
+[ext_resource type="Script" uid="uid://dm5xk9c1q0rfg" path="res://shop/customer_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://NPC's/Puny-Characters/Human-Worker-Cyan.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+customer_name = "Peasant"
+texture = ExtResource("2")
+hframes = 24
+vframes = 8
+anim_frames = 3
+sprite_scale = Vector2(2.0, 2.0)
+min_budget = 15
+max_budget = 50
+preferred_item_names = ["apple"]
+preferred_price_multiplier = 1.2
+visit_duration = 18.0
+spawn_weight = 2.0
+walk_speed = 65.0
+greeting = "Just looking for something to eat..."

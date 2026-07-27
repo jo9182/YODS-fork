@@ -1,0 +1,101 @@
+[gd_scene format=4 uid="uid://b3y6dt7tr6o"]
+
+[ext_resource type="Script" uid="uid://bc3xj7m2p0qwf" path="res://GUI/start_menu/options_menu.gd" id="1_opts"]
+[ext_resource type="FontFile" uid="uid://5se4m828n1ty" path="res://GUI/fonts/KiwiSoda.ttf" id="2_font"]
+
+[sub_resource type="Theme" id="Theme_opts"]
+default_font = ExtResource("2_font")
+
+[node name="OptionsMenu" type="CanvasLayer"]
+layer = 10
+process_mode = 3
+script = ExtResource("1_opts")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.4)
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -95.0
+offset_right = 120.0
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_opts")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="TitleLabel" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Options"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ResolutionContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/ResolutionContainer"]
+layout_mode = 2
+text = "Window Size"
+horizontal_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="Panel/VBoxContainer/ResolutionContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+
+[node name="FullscreenContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/FullscreenContainer"]
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="CheckButton" type="CheckButton" parent="Panel/VBoxContainer/FullscreenContainer"]
+layout_mode = 2
+
+[node name="VolumeContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/VolumeContainer"]
+layout_mode = 2
+text = "Volume"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/VolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+min_value = 0.0
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Back"

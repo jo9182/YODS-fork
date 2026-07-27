@@ -1,6 +1,7 @@
 extends Node2D
 
 const START_LEVEL : String = "res://Levels/Area_1/the_shop.tscn"
+const OPTIONS_MENU : PackedScene = preload("res://GUI/start_menu/options_menu.tscn")
 
 
 @export var music : AudioStream
@@ -9,11 +10,14 @@ const START_LEVEL : String = "res://Levels/Area_1/the_shop.tscn"
 
 @onready var button_new: Button = $CanvasLayer/Control/ButtonNew
 @onready var button_continue: Button = $CanvasLayer/Control/ButtonContinue
+@onready var button_options: Button = $CanvasLayer/Control/ButtonOptions
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 
 
 func _ready() -> void:
+	OptionsMenu.load_and_apply_settings()
+
 	get_tree().paused = true
 	PlayerManager.player.visible = false
 	
@@ -33,15 +37,34 @@ func _ready() -> void:
 
 
 func setup_title_screen() -> void:
-	# 
 	button_new.pressed.connect( start_game )
 	button_continue.pressed.connect( load_game )
+	button_options.pressed.connect( open_options )
 	button_new.grab_focus()
 	
 	button_new.focus_entered.connect( play_audio.bind( button_focus_audio ) )
 	button_continue.focus_entered.connect( play_audio.bind( button_focus_audio ) )
+	button_options.focus_entered.connect( play_audio.bind( button_focus_audio ) )
 	pass
 
+
+func open_options() -> void:
+	play_audio( button_press_audio )
+	var options_instance := OPTIONS_MENU.instantiate()
+	add_child(options_instance)
+	options_instance.options_closed.connect(_on_options_closed)
+	_set_menu_buttons_disabled(true)
+
+
+func _on_options_closed() -> void:
+	_set_menu_buttons_disabled(false)
+	button_options.grab_focus()
+
+
+func _set_menu_buttons_disabled(disabled: bool) -> void:
+	button_new.disabled = disabled
+	button_continue.disabled = disabled
+	button_options.disabled = disabled
 
 
 func start_game() -> void:

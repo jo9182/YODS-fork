@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://cf1xk8b3p0nwh"]
+
+[ext_resource type="Script" uid="uid://cs2xk1a3p0mnh" path="res://shop/customer.gd" id="1_cust"]
+[ext_resource type="Texture2D" uid="uid://o8pckq73hyuu" path="res://player/Sprites/Shadow.png" id="2_shdw"]
+[ext_resource type="Texture2D" uid="uid://cftkom6j5ecag" path="res://NPC's/Puny-Characters/Human-Soldier-Cyan.png" id="3_nldqa"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cust"]
+radius = 7.0
+height = 14.0
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_walk_down"]
+resource_name = "walk_down"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_walk_left"]
+resource_name = "walk_left"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [24, 25, 26, 27]
+}
+
+[sub_resource type="Animation" id="Animation_walk_right"]
+resource_name = "walk_right"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [48, 49, 50, 51]
+}
+
+[sub_resource type="Animation" id="Animation_walk_up"]
+resource_name = "walk_up"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [72, 73, 74, 75]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cust"]
+_data = {
+&"idle": SubResource("Animation_idle"),
+&"walk_down": SubResource("Animation_walk_down"),
+&"walk_left": SubResource("Animation_walk_left"),
+&"walk_right": SubResource("Animation_walk_right"),
+&"walk_up": SubResource("Animation_walk_up")
+}
+
+[node name="Customer" type="CharacterBody2D" unique_id=816638659]
+y_sort_enabled = true
+collision_layer = 16
+script = ExtResource("1_cust")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2007635073]
+position = Vector2(-2, -9)
+shape = SubResource("CapsuleShape2D_cust")
+
+[node name="ShadowSprite" type="Sprite2D" parent="." unique_id=368579673]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+y_sort_enabled = true
+position = Vector2(-1, -4)
+scale = Vector2(0.9, 0.72)
+texture = ExtResource("2_shdw")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=218489761]
+y_sort_enabled = true
+texture_filter = 1
+position = Vector2(0, -18)
+scale = Vector2(2, 2)
+texture = ExtResource("3_nldqa")
+hframes = 24
+vframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=412389123]
+libraries/ = SubResource("AnimationLibrary_cust")
+
+[node name="NameLabel" type="Label" parent="." unique_id=1097289959]
+y_sort_enabled = true
+offset_left = -30.0
+offset_top = -36.0
+offset_right = -30.0
+offset_bottom = -36.0
+theme_override_font_sizes/font_size = 8
+horizontal_alignment = 1
+
+[node name="VisitTimer" type="Timer" parent="." unique_id=92141918]
+one_shot = true
+
+[node name="BuyTimer" type="Timer" parent="." unique_id=1551002333]
+wait_time = 4.0

@@ -44,7 +44,7 @@ func process(_delta):
 	if _animation_finished == true:
 		return next_state
 	enemy.velocity -= enemy.velocity * decelerate_speed * _delta
-	pass
+	return null
 	
 ## what happens during the physics process in this state
 func physics(_delta : float) -> EnemyState:
