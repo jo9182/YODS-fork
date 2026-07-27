@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="CustomerData" load_steps=3 format=3 uid="uid://dbk1x1c1q0rf5"]
+[gd_resource type="Resource" script_class="CustomerData" format=3 uid="uid://dbk1x1c1q0rf5"]
 
-[ext_resource type="Script" uid="uid://dm5xk9c1q0rfg" path="res://shop/customer_data.gd" id="1"]
-[ext_resource type="Texture2D" path="res://NPC's/Puny-Characters/Warrior-Red.png" id="2"]
+[ext_resource type="Script" uid="uid://dm5xlac1q0rfg" path="res://shop/customer_data.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://dg4ntfd0dfnbu" path="res://NPC's/Puny-Characters/Warrior-Red.png" id="2"]
 
 [resource]
 script = ExtResource("1")
@@ -9,11 +9,8 @@ customer_name = "Adventurer"
 texture = ExtResource("2")
 hframes = 24
 vframes = 8
-anim_frames = 3
-sprite_scale = Vector2(2.0, 2.0)
-min_budget = 50
 max_budget = 140
-preferred_item_names = ["Potion", "Stone"]
+preferred_item_names = Array[String](["Potion", "Stone"])
 preferred_price_multiplier = 1.4
 visit_duration = 22.0
 spawn_weight = 1.5

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dcuuk7wvekdps"]
 
 [ext_resource type="Script" uid="uid://b7jwsnv37r2po" path="res://enemies/Scripts/enemy.gd" id="1_bwvbh"]
+[ext_resource type="Resource" uid="uid://5toukbxfodon" path="res://loot/loot tables/floor_1_chest.tres" id="2_aytkr"]
 [ext_resource type="Texture2D" uid="uid://o8pckq73hyuu" path="res://player/Sprites/Shadow.png" id="2_r0est"]
 [ext_resource type="PackedScene" uid="uid://ckhbwy0dyy7gb" path="res://General Nodes/Hurt_Box/hurt_box.tscn" id="3_wxif3"]
 [ext_resource type="PackedScene" uid="uid://dlecjw8jjrpbm" path="res://General Nodes/Hitbox/Hitbox.tscn" id="4_wycd7"]
@@ -825,6 +826,7 @@ collision_layer = 256
 collision_mask = 18
 script = ExtResource("1_bwvbh")
 hp = 5
+loot_table = ExtResource("2_aytkr")
 
 [node name="HurtBox" parent="." unique_id=691125302 instance=ExtResource("3_wxif3")]
 position = Vector2(2, -3)
