@@ -5,6 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_mcnfu"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_7tp15"]
 [ext_resource type="PackedScene" uid="uid://c7lhadfcg78tw" path="res://Props/flag/flag.tscn" id="5_fc8t8"]
+[ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="6_aeado"]
+[ext_resource type="PackedScene" uid="uid://dpi7nc6k811av" path="res://Props/mini_box.tscn" id="7_hghts"]
+[ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="8_jhr2j"]
 
 [node name="Armory" type="Node2D" unique_id=1971095872]
 script = ExtResource("1_dk1xq")
@@ -40,3 +43,69 @@ position = Vector2(-432, 792)
 
 [node name="Flag3" parent="." unique_id=1718543824 instance=ExtResource("5_fc8t8")]
 position = Vector2(-80, 792)
+
+[node name="Chest" parent="." unique_id=618167068 instance=ExtResource("6_aeado")]
+position = Vector2(-536, 1056)
+
+[node name="Chest6" parent="." unique_id=1334178669 instance=ExtResource("6_aeado")]
+position = Vector2(-480, 1240)
+
+[node name="Chest7" parent="." unique_id=617291636 instance=ExtResource("6_aeado")]
+position = Vector2(-80, 872)
+
+[node name="Chest2" parent="." unique_id=1746479651 instance=ExtResource("6_aeado")]
+position = Vector2(-568, 1224)
+
+[node name="Chest3" parent="." unique_id=1768349391 instance=ExtResource("6_aeado")]
+position = Vector2(-64, 1272)
+
+[node name="Chest4" parent="." unique_id=716561249 instance=ExtResource("6_aeado")]
+position = Vector2(-584, 984)
+
+[node name="Chest5" parent="." unique_id=1031653190 instance=ExtResource("6_aeado")]
+position = Vector2(24, 944)
+
+[node name="Mini_Box" parent="." unique_id=1338006570 instance=ExtResource("7_hghts")]
+position = Vector2(-120, 1264)
+
+[node name="Mini_Box2" parent="." unique_id=347995059 instance=ExtResource("7_hghts")]
+position = Vector2(-168, 1096)
+
+[node name="Mini_Box3" parent="." unique_id=771525183 instance=ExtResource("7_hghts")]
+position = Vector2(-416, 1048)
+
+[node name="Mini_Box4" parent="." unique_id=437584742 instance=ExtResource("7_hghts")]
+position = Vector2(-216, 880)
+
+[node name="Mini_Box5" parent="." unique_id=1830287074 instance=ExtResource("7_hghts")]
+position = Vector2(-360, 888)
+
+[node name="Skeleton" parent="." unique_id=1824911057 instance=ExtResource("8_jhr2j")]
+position = Vector2(-40, 832)
+
+[node name="Skeleton2" parent="." unique_id=805643124 instance=ExtResource("8_jhr2j")]
+position = Vector2(-328, 1160)
+
+[node name="Skeleton3" parent="." unique_id=1711364735 instance=ExtResource("8_jhr2j")]
+position = Vector2(-200, 1240)
+
+[node name="Skeleton4" parent="." unique_id=853385552 instance=ExtResource("8_jhr2j")]
+position = Vector2(-528, 888)
+
+[node name="Skeleton5" parent="." unique_id=1347788787 instance=ExtResource("8_jhr2j")]
+position = Vector2(-296, 1056)
+
+[node name="Skeleton6" parent="." unique_id=1202550363 instance=ExtResource("8_jhr2j")]
+position = Vector2(-16, 1304)
+
+[node name="Skeleton7" parent="." unique_id=370729556 instance=ExtResource("8_jhr2j")]
+position = Vector2(-520, 1288)
+
+[node name="Skeleton8" parent="." unique_id=64588555 instance=ExtResource("8_jhr2j")]
+position = Vector2(-400, 1208)
+
+[node name="Skeleton9" parent="." unique_id=123486337 instance=ExtResource("8_jhr2j")]
+position = Vector2(-272, 1008)
+
+[node name="Skeleton10" parent="." unique_id=587225686 instance=ExtResource("8_jhr2j")]
+position = Vector2(-400, 896)

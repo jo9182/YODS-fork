@@ -4,6 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://b38hdhft262j7" path="res://Levels/Area_4/dungeon_04.tscn" id="2_mlcmo"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_lbftr"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_21e4w"]
+[ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="5_gusrj"]
+[ext_resource type="PackedScene" uid="uid://dpi7nc6k811av" path="res://Props/mini_box.tscn" id="6_qvyv5"]
+[ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="7_7mp6w"]
+[ext_resource type="PackedScene" uid="uid://b5ctydrsxayd0" path="res://enemies/vampire.tscn" id="8_onpeh"]
 
 [node name="15" type="Node2D" unique_id=850230624]
 script = ExtResource("1_6mdkr")
@@ -24,3 +28,42 @@ side = 3
 position = Vector2(384, 32)
 level = "uid://nk7vwef7lo1o"
 side = 2
+
+[node name="Chest" parent="." unique_id=618167068 instance=ExtResource("5_gusrj")]
+position = Vector2(136, 280)
+
+[node name="Chest2" parent="." unique_id=2082448471 instance=ExtResource("5_gusrj")]
+position = Vector2(568, 416)
+
+[node name="Mini_Box" parent="." unique_id=1338006570 instance=ExtResource("6_qvyv5")]
+position = Vector2(648, 408)
+
+[node name="Mini_Box2" parent="." unique_id=1244603445 instance=ExtResource("6_qvyv5")]
+position = Vector2(8, 528)
+
+[node name="Skeleton" parent="." unique_id=1824911057 instance=ExtResource("7_7mp6w")]
+position = Vector2(464, 480)
+
+[node name="Skeleton2" parent="." unique_id=1645072284 instance=ExtResource("7_7mp6w")]
+position = Vector2(328, 440)
+
+[node name="Skeleton3" parent="." unique_id=790837001 instance=ExtResource("7_7mp6w")]
+position = Vector2(368, 384)
+
+[node name="Skeleton4" parent="." unique_id=1843851988 instance=ExtResource("7_7mp6w")]
+position = Vector2(192, 384)
+
+[node name="Skeleton5" parent="." unique_id=1127526764 instance=ExtResource("7_7mp6w")]
+position = Vector2(352, 192)
+
+[node name="Skeleton6" parent="." unique_id=2030853608 instance=ExtResource("7_7mp6w")]
+position = Vector2(384, 272)
+
+[node name="Skeleton7" parent="." unique_id=1235070932 instance=ExtResource("7_7mp6w")]
+position = Vector2(288, 272)
+
+[node name="Vampire" parent="." unique_id=744520928 instance=ExtResource("8_onpeh")]
+position = Vector2(576, 504)
+
+[node name="Vampire2" parent="." unique_id=1304378337 instance=ExtResource("8_onpeh")]
+position = Vector2(112, 512)

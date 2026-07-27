@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://dqi17ey8tbyws"]
+
+[ext_resource type="Script" uid="uid://dldfg6c2g0fmg" path="res://map.gd" id="1_x1d7o"]
+
+[node name="Map" type="CanvasLayer" unique_id=971038249]
+script = ExtResource("1_x1d7o")
+
+[node name="Control" type="Control" parent="." unique_id=2051695698]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 440.0
+offset_bottom = 248.0
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=2069061539]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.095
+anchor_bottom = 1.097
+offset_right = 0.19998169
+offset_bottom = 1.9440002
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.9372549, 0.56078434, 1)
+
+[node name="Lvl1" type="Button" parent="Control" unique_id=14584483]
+texture_filter = 1
+layout_mode = 0
+offset_left = 32.0
+offset_top = 112.0
+offset_right = 94.0
+offset_bottom = 144.0
+text = "Level 1"
+
+[node name="Lvl2" type="Button" parent="Control" unique_id=880634581]
+texture_filter = 1
+layout_mode = 0
+offset_left = 120.0
+offset_top = 112.0
+offset_right = 182.0
+offset_bottom = 144.0
+text = "Level 2"
+
+[node name="Lvl3" type="Button" parent="Control" unique_id=1400438817]
+texture_filter = 1
+layout_mode = 0
+offset_left = 208.0
+offset_top = 112.0
+offset_right = 270.0
+offset_bottom = 144.0
+text = "Level 3"
+
+[node name="Lvl4" type="Button" parent="Control" unique_id=1364596003]
+texture_filter = 1
+layout_mode = 0
+offset_left = 296.0
+offset_top = 112.0
+offset_right = 358.0
+offset_bottom = 144.0
+text = "Level 4"
+
+[node name="Lvl5" type="Button" parent="Control" unique_id=1614768265]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0910001
+anchor_bottom = 1.097
+offset_left = 384.0
+offset_top = 112.0
+offset_right = -34.04004
+offset_bottom = -128.056
+text = "Level 5"
+
+[node name="exit" type="Button" parent="Control" unique_id=885620711]
+visible = false
+layout_mode = 0
+offset_left = 200.0
+offset_top = 208.0
+offset_right = 272.0
+offset_bottom = 240.0
+text = "Exit"
+
+[connection signal="pressed" from="Control/Lvl1" to="." method="_on_lvl_1_pressed"]
+[connection signal="pressed" from="Control/Lvl2" to="." method="_on_lvl_2_pressed"]
+[connection signal="pressed" from="Control/Lvl3" to="." method="_on_lvl_3_pressed"]
+[connection signal="pressed" from="Control/Lvl4" to="." method="_on_lvl_4_pressed"]
+[connection signal="pressed" from="Control/Lvl5" to="." method="_on_lvl_5_pressed"]
+[connection signal="pressed" from="Control/exit" to="." method="_on_exit_pressed"]

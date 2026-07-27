@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b38hdhft262j7" path="res://Levels/Area_4/dungeon_04.tscn" id="2_ia4q5"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_h1mi8"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_vmtas"]
+[ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="5_ia4q5"]
 
 [node name="04_4" type="Node2D" unique_id=14544596]
 script = ExtResource("1_h0dvn")
@@ -24,3 +25,9 @@ side = 3
 position = Vector2(-96, 128)
 level = "uid://duuk6v5dq15s3"
 side = 2
+
+[node name="Chest" parent="." unique_id=618167068 instance=ExtResource("5_ia4q5")]
+position = Vector2(8, 184)
+
+[node name="Chest2" parent="." unique_id=575106826 instance=ExtResource("5_ia4q5")]
+position = Vector2(-200, 184)

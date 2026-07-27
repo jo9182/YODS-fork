@@ -6,6 +6,7 @@ signal hidden
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 @onready var button_save: Button = $Control/HBoxContainer/Button_save
 @onready var button_load: Button = $Control/HBoxContainer/Button_load
+@onready var mymap: map = $Map
 
 var is_paused : bool = false
 
@@ -24,6 +25,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			hide_pause_menu()
 			InventoryMenu.process_mode = Node.PROCESS_MODE_ALWAYS
 		get_viewport().set_input_as_handled()
+	if event.is_action_pressed("map"):
+		mymap.visible = true
 		
 func show_pause_menu() -> void:
 	get_tree().paused = true

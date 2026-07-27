@@ -2,7 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://ckhbwy0dyy7gb" path="res://General Nodes/Hurt_Box/hurt_box.tscn" id="1_2wljv"]
 [ext_resource type="Script" uid="uid://c8mgywt8mfpdw" path="res://Props/chest.gd" id="1_ihhu3"]
+[ext_resource type="Resource" uid="uid://5toukbxfodon" path="res://loot/loot tables/floor_1_chest.tres" id="2_gmb6o"]
 [ext_resource type="Texture2D" uid="uid://wtc5n0htp80g" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/Props.png" id="2_ihhu3"]
+[ext_resource type="PackedScene" uid="uid://1sfalb5vr6nh" path="res://General Nodes/Persistence/Persistence.tscn" id="4_ilfaf"]
+
+[sub_resource type="Animation" id="Animation_ilfaf"]
+resource_name = "Closed"
 
 [sub_resource type="Animation" id="Animation_o6pti"]
 resource_name = "Open"
@@ -18,6 +23,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [55, 56, 57, 58, 54, 53, 59, 60]
+}
+
+[sub_resource type="Animation" id="Animation_gmb6o"]
+resource_name = "Opened"
+length = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [60]
 }
 
 [sub_resource type="Animation" id="Animation_nv2m3"]
@@ -37,7 +58,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y05ix"]
 _data = {
+&"Closed": SubResource("Animation_ilfaf"),
 &"Open": SubResource("Animation_o6pti"),
+&"Opened": SubResource("Animation_gmb6o"),
 &"RESET": SubResource("Animation_nv2m3")
 }
 
@@ -47,9 +70,12 @@ _data = {
 size = Vector2(32, 7.5)
 
 [node name="Chest" type="Node2D" unique_id=618167068]
+process_mode = 3
 y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_ihhu3")
+chestName = null
+loot_table = ExtResource("2_gmb6o")
 
 [node name="HurtBox" parent="." unique_id=562410440 instance=ExtResource("1_2wljv")]
 scale = Vector2(1.5775708, 1.626413)
@@ -100,5 +126,7 @@ y_sort_enabled = true
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_ihhu3")
 debug_color = Color(0.8849148, 0.33312944, 5.7756904e-07, 0.41960785)
+
+[node name="Persistence" parent="." unique_id=805672445 instance=ExtResource("4_ilfaf")]
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

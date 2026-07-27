@@ -1,2 +1,2 @@
 extends Node
-var chestArray : Array[chest]
+#ar chestArray : Array[chest]

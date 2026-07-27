@@ -4,6 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://b38hdhft262j7" path="res://Levels/Area_4/dungeon_04.tscn" id="2_4e5rt"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_5ah4j"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_oaorf"]
+[ext_resource type="PackedScene" uid="uid://cd4w0i5ngsxmb" path="res://Props/gold_spike_trap.tscn" id="5_4e5rt"]
+[ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="6_5ah4j"]
+[ext_resource type="PackedScene" uid="uid://b5ctydrsxayd0" path="res://enemies/vampire.tscn" id="7_qycbp"]
+[ext_resource type="PackedScene" uid="uid://bayslgf51lvhb" path="res://Props/flamethrower.tscn" id="8_swctj"]
+[ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="9_wg5u4"]
 
 [node name="10" type="Node2D" unique_id=180007055]
 script = ExtResource("1_pdnjn")
@@ -23,3 +28,39 @@ side = 2
 position = Vector2(-96, 448)
 level = "uid://h1r5ofj6kqhq"
 side = 2
+
+[node name="Gold_Spike_Trap" parent="." unique_id=576005909 instance=ExtResource("5_4e5rt")]
+position = Vector2(-344, 616)
+
+[node name="Gold_Spike_Trap2" parent="." unique_id=287654093 instance=ExtResource("5_4e5rt")]
+position = Vector2(-480, 536)
+
+[node name="Gold_Spike_Trap3" parent="." unique_id=2069895153 instance=ExtResource("5_4e5rt")]
+position = Vector2(-392, 584)
+
+[node name="Gold_Spike_Trap4" parent="." unique_id=1527995668 instance=ExtResource("5_4e5rt")]
+position = Vector2(-320, 544)
+
+[node name="Chest" parent="." unique_id=618167068 instance=ExtResource("6_5ah4j")]
+position = Vector2(-480, 576)
+
+[node name="Vampire" parent="." unique_id=1824911057 instance=ExtResource("7_qycbp")]
+position = Vector2(-536, 592)
+
+[node name="Vampire2" parent="." unique_id=1957101021 instance=ExtResource("7_qycbp")]
+position = Vector2(-264, 576)
+
+[node name="Flamethrower" parent="." unique_id=1062716358 instance=ExtResource("8_swctj")]
+position = Vector2(-272, 496)
+
+[node name="Skeleton" parent="." unique_id=153141061 instance=ExtResource("9_wg5u4")]
+position = Vector2(-176, 616)
+
+[node name="Skeleton2" parent="." unique_id=268967605 instance=ExtResource("9_wg5u4")]
+position = Vector2(-216, 536)
+
+[node name="Skeleton3" parent="." unique_id=1013164309 instance=ExtResource("9_wg5u4")]
+position = Vector2(-48, 576)
+
+[node name="Chest2" parent="." unique_id=1570583945 instance=ExtResource("6_5ah4j")]
+position = Vector2(-16, 536)

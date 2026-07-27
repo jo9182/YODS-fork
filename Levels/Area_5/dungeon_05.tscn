@@ -1,9 +1,18 @@
 [gd_scene format=3 uid="uid://bfrx8526haqte"]
 
 [ext_resource type="Texture2D" uid="uid://buok2anb2eurk" path="res://Pack/2D Pixel Dungeon Asset Pack/Dungeon_Tileset_at.png" id="1_1x7bb"]
+[ext_resource type="Texture2D" uid="uid://bt02t3danyf6v" path="res://Tile Maps/Sprites/ladders.png" id="1_ktyxq"]
 [ext_resource type="Texture2D" uid="uid://b8dc51d2yvk6h" path="res://Pack/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="2_ktyxq"]
 [ext_resource type="Texture2D" uid="uid://4nsx1nbewdo0" path="res://Pack/2D Pixel Dungeon Asset Pack/character and tileset/demonstration.png" id="3_pymgc"]
 [ext_resource type="Script" uid="uid://q7g3q5t6aq4f" path="res://Tile Maps/levelTileMap.gd" id="4_th37o"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pymgc"]
+texture = ExtResource("1_ktyxq")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cfkpn"]
 texture = ExtResource("1_1x7bb")
@@ -511,6 +520,7 @@ terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/2 = SubResource("TileSetAtlasSource_cfkpn")
 sources/3 = SubResource("TileSetAtlasSource_j8jjw")
 sources/4 = SubResource("TileSetAtlasSource_hgg31")
+sources/0 = SubResource("TileSetAtlasSource_pymgc")
 
 [node name="Dungeon05" type="TileMapLayer" unique_id=165459901]
 z_index = -2

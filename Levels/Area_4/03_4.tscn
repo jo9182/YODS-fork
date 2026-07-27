@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://baut8tgloa1cq" path="res://Levels/Scripts/level.gd" id="1_govql"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="2_govql"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="3_5hg3d"]
+[ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="5_aqj3i"]
+[ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="6_lpr11"]
 
 [node name="03_4" type="Node2D" unique_id=1283011003]
 script = ExtResource("1_govql")
@@ -24,3 +26,27 @@ side = 3
 position = Vector2(-128, 224)
 level = "uid://byp7lq0am6s1e"
 side = 2
+
+[node name="Chest" parent="." unique_id=618167068 instance=ExtResource("5_aqj3i")]
+position = Vector2(0, 296)
+
+[node name="Chest2" parent="." unique_id=2118634819 instance=ExtResource("5_aqj3i")]
+position = Vector2(64, 296)
+
+[node name="Chest3" parent="." unique_id=209766514 instance=ExtResource("5_aqj3i")]
+position = Vector2(-304, 296)
+
+[node name="Skeleton" parent="." unique_id=1824911057 instance=ExtResource("6_lpr11")]
+position = Vector2(-112, 344)
+
+[node name="Skeleton2" parent="." unique_id=588366683 instance=ExtResource("6_lpr11")]
+position = Vector2(16, 432)
+
+[node name="Skeleton3" parent="." unique_id=1993920186 instance=ExtResource("6_lpr11")]
+position = Vector2(-240, 408)
+
+[node name="Skeleton4" parent="." unique_id=1221998360 instance=ExtResource("6_lpr11")]
+position = Vector2(-104, 512)
+
+[node name="Chest4" parent="." unique_id=785509227 instance=ExtResource("5_aqj3i")]
+position = Vector2(128, 384)

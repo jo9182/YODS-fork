@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cgsoijh7r4ifk" path="res://Props/mini_box.gd" id="1_xavgw"]
 [ext_resource type="PackedScene" uid="uid://ckhbwy0dyy7gb" path="res://General Nodes/Hurt_Box/hurt_box.tscn" id="2_6e0qb"]
+[ext_resource type="Resource" uid="uid://5toukbxfodon" path="res://loot/loot tables/floor_1_chest.tres" id="2_vyeri"]
 [ext_resource type="Texture2D" uid="uid://wtc5n0htp80g" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/Props.png" id="3_vyeri"]
+[ext_resource type="PackedScene" uid="uid://1sfalb5vr6nh" path="res://General Nodes/Persistence/Persistence.tscn" id="4_6e0qb"]
 
 [sub_resource type="Animation" id="Animation_o6pti"]
 resource_name = "Open"
@@ -48,6 +50,7 @@ size = Vector2(24, 4.75)
 
 [node name="Mini_Box" type="Node2D" unique_id=1338006570]
 script = ExtResource("1_xavgw")
+loot_table = ExtResource("2_vyeri")
 
 [node name="HurtBox" parent="." unique_id=1402159549 instance=ExtResource("2_6e0qb")]
 scale = Vector2(1.5775708, 1.626413)
@@ -98,3 +101,5 @@ y_sort_enabled = true
 position = Vector2(0, -0.625)
 shape = SubResource("RectangleShape2D_73jxi")
 debug_color = Color(0.8849148, 0.33312944, 5.7756904e-07, 0.41960785)
+
+[node name="Persistence" parent="." unique_id=805672445 instance=ExtResource("4_6e0qb")]

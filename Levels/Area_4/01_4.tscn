@@ -4,6 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://b38hdhft262j7" path="res://Levels/Area_4/dungeon_04.tscn" id="2_1cqn8"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_dn37t"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_gq3f1"]
+[ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="5_1cqn8"]
+[ext_resource type="PackedScene" uid="uid://b5ctydrsxayd0" path="res://enemies/vampire.tscn" id="6_gq3f1"]
+[ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="7_mi84p"]
 
 [node name="01_4" type="Node2D" unique_id=2062262361]
 script = ExtResource("1_s68lu")
@@ -24,3 +27,21 @@ side = 3
 position = Vector2(32, 192)
 level = "uid://c2tw1wkfintgn"
 side = 2
+
+[node name="Skeleton" parent="." unique_id=1824911057 instance=ExtResource("5_1cqn8")]
+position = Vector2(-256, 472)
+
+[node name="Skeleton2" parent="." unique_id=1396430286 instance=ExtResource("5_1cqn8")]
+position = Vector2(-104, 360)
+
+[node name="Skeleton3" parent="." unique_id=1017135963 instance=ExtResource("5_1cqn8")]
+position = Vector2(104, 328)
+
+[node name="Skeleton4" parent="." unique_id=607224112 instance=ExtResource("5_1cqn8")]
+position = Vector2(-280, 264)
+
+[node name="Vampire" parent="." unique_id=1721031109 instance=ExtResource("6_gq3f1")]
+position = Vector2(-160, 272)
+
+[node name="Chest" parent="." unique_id=618167068 instance=ExtResource("7_mi84p")]
+position = Vector2(-48, 256)

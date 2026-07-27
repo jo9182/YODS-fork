@@ -10,6 +10,7 @@ class_name chest extends Node2D
 @onready var marker_2d_3: Marker2D = $Marker2D3
 @onready var marker_2d_4: Marker2D = $Marker2D4
 @onready var hurt_box: HurtBox = $HurtBox
+@onready var mypersistence: persistence = $Persistence
 
 const PICKUP = preload("res://items/item_pickup/item_pickup.tscn")
 
@@ -21,9 +22,18 @@ var opened: bool = false
 
 
 func _ready():
+	mypersistence.data_loaded.connect(_set_chest_state)
+	_set_chest_state()
 	pass
 
-
+func _set_chest_state() -> void:
+	opened = mypersistence.value
+	if opened:
+		animation_player.play("Opened")
+	else:
+		animation_player.play("Closed")
+	pass
+	
 func _unhandled_input(event: InputEvent) -> void:
 	var in_range = (
 		PlayerManager.player.global_position.x > marker_2d_2.global_position.x and
@@ -36,6 +46,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if opened:
 			return
 		opened = true
+		mypersistence.setValue()
 		animation_player.play("Open")
 		await get_tree().create_timer(0.2).timeout
 		_spawn_loot()

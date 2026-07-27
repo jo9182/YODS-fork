@@ -4,6 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://b38hdhft262j7" path="res://Levels/Area_4/dungeon_04.tscn" id="2_4tkf0"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_wiovp"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_tkhal"]
+[ext_resource type="PackedScene" uid="uid://bayslgf51lvhb" path="res://Props/flamethrower.tscn" id="5_a4wtc"]
+[ext_resource type="PackedScene" uid="uid://dw8cxbwsb3bqo" path="res://Props/spike_trap.tscn" id="6_2jbty"]
+[ext_resource type="PackedScene" uid="uid://b5ctydrsxayd0" path="res://enemies/vampire.tscn" id="7_46xd5"]
+[ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="8_1hlpl"]
 
 [node name="Hall_5" type="Node2D" unique_id=1373372913]
 script = ExtResource("1_bqxhu")
@@ -23,3 +27,84 @@ side = 2
 position = Vector2(-256, 192)
 level = "uid://wix3rr3qyqra"
 side = 2
+
+[node name="Flamethrower" parent="." unique_id=1062716358 instance=ExtResource("5_a4wtc")]
+position = Vector2(-48, 336)
+
+[node name="Flamethrower2" parent="." unique_id=832412688 instance=ExtResource("5_a4wtc")]
+position = Vector2(176, 336)
+
+[node name="Flamethrower3" parent="." unique_id=782899804 instance=ExtResource("5_a4wtc")]
+position = Vector2(144, 336)
+
+[node name="Flamethrower4" parent="." unique_id=9957630 instance=ExtResource("5_a4wtc")]
+position = Vector2(112, 336)
+
+[node name="Flamethrower5" parent="." unique_id=19279245 instance=ExtResource("5_a4wtc")]
+position = Vector2(-112, 336)
+
+[node name="Flamethrower6" parent="." unique_id=519270902 instance=ExtResource("5_a4wtc")]
+position = Vector2(80, 336)
+
+[node name="Flamethrower7" parent="." unique_id=1575482653 instance=ExtResource("5_a4wtc")]
+position = Vector2(48, 336)
+
+[node name="Flamethrower8" parent="." unique_id=1255817627 instance=ExtResource("5_a4wtc")]
+position = Vector2(-80, 336)
+
+[node name="Flamethrower9" parent="." unique_id=178530149 instance=ExtResource("5_a4wtc")]
+position = Vector2(16, 336)
+
+[node name="Flamethrower10" parent="." unique_id=1176923063 instance=ExtResource("5_a4wtc")]
+position = Vector2(-16, 336)
+
+[node name="Spike_Trap" parent="." unique_id=576005909 instance=ExtResource("6_2jbty")]
+position = Vector2(-112, 368)
+
+[node name="Spike_Trap2" parent="." unique_id=1687209420 instance=ExtResource("6_2jbty")]
+position = Vector2(176, 400)
+
+[node name="Spike_Trap3" parent="." unique_id=930779101 instance=ExtResource("6_2jbty")]
+position = Vector2(144, 368)
+
+[node name="Spike_Trap4" parent="." unique_id=1229605474 instance=ExtResource("6_2jbty")]
+position = Vector2(112, 400)
+
+[node name="Spike_Trap5" parent="." unique_id=792110195 instance=ExtResource("6_2jbty")]
+position = Vector2(80, 368)
+
+[node name="Spike_Trap6" parent="." unique_id=2130159165 instance=ExtResource("6_2jbty")]
+position = Vector2(48, 400)
+
+[node name="Spike_Trap7" parent="." unique_id=1788847147 instance=ExtResource("6_2jbty")]
+position = Vector2(16, 368)
+
+[node name="Spike_Trap8" parent="." unique_id=1153084558 instance=ExtResource("6_2jbty")]
+position = Vector2(-16, 400)
+
+[node name="Spike_Trap9" parent="." unique_id=455123072 instance=ExtResource("6_2jbty")]
+position = Vector2(-48, 368)
+
+[node name="Spike_Trap10" parent="." unique_id=1605487296 instance=ExtResource("6_2jbty")]
+position = Vector2(-80, 400)
+
+[node name="Vampire" parent="." unique_id=1824911057 instance=ExtResource("7_46xd5")]
+position = Vector2(272, 352)
+
+[node name="Vampire2" parent="." unique_id=168955791 instance=ExtResource("7_46xd5")]
+position = Vector2(496, 352)
+
+[node name="Vampire3" parent="." unique_id=1547926159 instance=ExtResource("7_46xd5")]
+position = Vector2(416, 352)
+
+[node name="Vampire4" parent="." unique_id=747261386 instance=ExtResource("7_46xd5")]
+position = Vector2(344, 352)
+
+[node name="Chest" parent="." unique_id=618167068 instance=ExtResource("8_1hlpl")]
+position = Vector2(-248, 304)
+
+[node name="Chest3" parent="." unique_id=1249332936 instance=ExtResource("8_1hlpl")]
+position = Vector2(560, 344)
+
+[node name="Chest2" parent="." unique_id=1042809623 instance=ExtResource("8_1hlpl")]
+position = Vector2(448, 344)

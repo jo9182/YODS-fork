@@ -26,6 +26,7 @@ var current_save: Dictionary = {
 func save_game() -> void:
 	update_player_data()
 	update_scene_path()
+	update_item_data()
 	current_save.gold = PlayerStats.gold
 	current_save.purchased_skills = SkillTreeManager.get_save_data()
 	current_save.reputation = ReputationManager.get_save_data()
@@ -49,11 +50,12 @@ func load_game() -> void:
 	current_save = save_dict
 
 	LevelManager.load_new_level(current_save.scene_path, "", Vector2.ZERO)
-
+	#Modify the player
 	await LevelManager.level_load_started
 
 	PlayerManager.set_player_position(Vector2(current_save.player.pos_x, current_save.player.pos_y))
 	PlayerManager.set_health(current_save.player.hp, current_save.player.max_hp)
+	PlayerManager.INVENTORY_DATA.parseSave(current_save.items)
 	PlayerStats.gold = current_save.get("gold", 0)
 	ReputationManager.load_save_data(current_save.get("reputation", {}))
 	ShopLog.load_save_data(current_save.get("shop_log", []))
@@ -94,3 +96,19 @@ func _find_all_skills() -> Array[SkillData]:
 	# skills will still be marked as purchased, effects just won't re-apply until
 	# the player visits the altar room
 	return []
+
+func update_item_data() -> void:
+	current_save.items = PlayerManager.INVENTORY_DATA.getSaveData()
+
+func add_persistent_value(value : String) -> void:
+	if check_persistent_value(value) == false:
+		#If not in the array then we add it
+		current_save.persistience.append(value)
+	pass
+	
+func check_persistent_value(value : String) -> bool:
+	#Gets a persistence varialbe in an Array
+	var p = current_save.persistience as Array
+	#Does the array have the value
+	return p.has(value)
+	pass

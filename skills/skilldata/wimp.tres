@@ -5,8 +5,8 @@
 
 [resource]
 script = ExtResource("1_851vm")
-skill_name = "wimp"
-description = "weak"
+skill_name = "Slot"
+description = "Gain an addition slot to sell items in your shop."
 icon = ExtResource("1_r54v4")
 tree_row = 2
 effect_type = "shop_slots"

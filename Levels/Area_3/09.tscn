@@ -67,7 +67,7 @@ position = Vector2(80, 112)
 position = Vector2(304, 80)
 
 [node name="Spike_Trap5" parent="." unique_id=1761378087 instance=ExtResource("5_wq873")]
-position = Vector2(80, -16)
+position = Vector2(81, -16)
 
 [node name="Gold_Spike_Trap5" parent="." unique_id=1835107988 instance=ExtResource("6_1dv4w")]
 position = Vector2(16, 208)

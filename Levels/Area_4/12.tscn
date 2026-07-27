@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://b38hdhft262j7" path="res://Levels/Area_4/dungeon_04.tscn" id="2_hk3av"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_mfjpd"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_l3tnm"]
+[ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="5_mfjpd"]
+[ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="6_l3tnm"]
 
 [node name="12" type="Node2D" unique_id=1427471519]
 script = ExtResource("1_t0ntt")
@@ -24,3 +26,24 @@ side = 3
 position = Vector2(-288, 480)
 level = "uid://bojpgn15uqfn"
 side = 2
+
+[node name="Chest" parent="." unique_id=618167068 instance=ExtResource("5_mfjpd")]
+position = Vector2(-384, 760)
+
+[node name="Chest2" parent="." unique_id=1592270415 instance=ExtResource("5_mfjpd")]
+position = Vector2(-424, 760)
+
+[node name="Chest3" parent="." unique_id=936222554 instance=ExtResource("5_mfjpd")]
+position = Vector2(-232, 760)
+
+[node name="Chest4" parent="." unique_id=161791703 instance=ExtResource("5_mfjpd")]
+position = Vector2(-192, 760)
+
+[node name="Chest5" parent="." unique_id=848493270 instance=ExtResource("5_mfjpd")]
+position = Vector2(-152, 760)
+
+[node name="Chest6" parent="." unique_id=1482941203 instance=ExtResource("5_mfjpd")]
+position = Vector2(-344, 760)
+
+[node name="Skeleton" parent="." unique_id=1824911057 instance=ExtResource("6_l3tnm")]
+position = Vector2(-288, 632)
