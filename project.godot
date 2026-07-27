@@ -10,9 +10,9 @@ config_version=5
 
 [application]
 
-config/name="YODS (4.6)"
+config/name="YODS (4.7.1)"
 run/main_scene="uid://cm8iwxas4pg7s"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 boot_splash/image="uid://dnnpjnesadxvi"
 config/icon="res://icon.svg"
 

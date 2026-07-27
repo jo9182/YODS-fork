@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://dpi7nc6k811av" path="res://Props/mini_box.tscn" id="5_8w7iy"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="5_tttjr"]
 [ext_resource type="PackedScene" uid="uid://r3xg4dkqjteu" path="res://enemies/slime/slime.tscn" id="6_8w7iy"]
-[ext_resource type="Resource" uid="uid://5toukbxfodon" path="res://loot/loot tables/floor_1_chest.tres" id="6_f6lt7"]
 [ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="9_kjq62"]
 [ext_resource type="Resource" uid="uid://cw84olpw3w3s" path="res://loot/loot tables/vamp_loot.tres" id="10_4qqxy"]
 [ext_resource type="PackedScene" uid="uid://gnnwrpnnkvuj" path="res://Props/torch/torch.tscn" id="10_evs3i"]
@@ -45,7 +44,6 @@ side = 2
 
 [node name="Mini_Box" parent="." unique_id=1600137050 instance=ExtResource("5_8w7iy")]
 position = Vector2(40, 224)
-loot_table = ExtResource("6_f6lt7")
 
 [node name="Slime" parent="." unique_id=692538436 instance=ExtResource("6_8w7iy")]
 position = Vector2(-64, 280)

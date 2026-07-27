@@ -18,7 +18,6 @@
 [ext_resource type="PackedScene" uid="uid://gnnwrpnnkvuj" path="res://Props/torch/torch.tscn" id="15_qtx8l"]
 [ext_resource type="PackedScene" uid="uid://bayslgf51lvhb" path="res://Props/flamethrower.tscn" id="16_a0w4r"]
 [ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="17_um170"]
-[ext_resource type="Resource" uid="uid://5toukbxfodon" path="res://loot/loot tables/floor_1_chest.tres" id="18_qe4k5"]
 [ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="19_pxypk"]
 [ext_resource type="PackedScene" uid="uid://cjvoitybvddjy" path="res://Props/candelstick.tscn" id="21_8hdd1"]
 
@@ -122,7 +121,6 @@ position = Vector2(401, 78)
 
 [node name="Chest" parent="." unique_id=489669578 instance=ExtResource("17_um170")]
 position = Vector2(529, 94)
-loot_table = ExtResource("18_qe4k5")
 
 [node name="Skeleton" parent="." unique_id=1003239173 instance=ExtResource("19_pxypk")]
 position = Vector2(232, 200)

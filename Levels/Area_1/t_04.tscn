@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="5_fi2vr"]
 [ext_resource type="PackedScene" uid="uid://dpi7nc6k811av" path="res://Props/mini_box.tscn" id="6_aqfph"]
 [ext_resource type="Resource" uid="uid://kpdcjijrm0od" path="res://loot/loot tables/valuable_floor_1_chest.tres" id="6_d55m4"]
-[ext_resource type="Resource" uid="uid://5toukbxfodon" path="res://loot/loot tables/floor_1_chest.tres" id="8_f3a8y"]
 
 [node name="t_04" type="Node2D" unique_id=1941446555]
 script = ExtResource("1_jacns")
@@ -30,4 +29,3 @@ loot_table = ExtResource("6_d55m4")
 
 [node name="Mini_Box" parent="." unique_id=610731761 instance=ExtResource("6_aqfph")]
 position = Vector2(-21, 288)
-loot_table = ExtResource("8_f3a8y")
