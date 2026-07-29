@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_bicmb"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_pdb6j"]
 [ext_resource type="PackedScene" uid="uid://b5ctydrsxayd0" path="res://enemies/vampire.tscn" id="5_nirbj"]
+[ext_resource type="PackedScene" path="res://Props/torch/torch.tscn" id="6_torch"]
 
 [node name="01_2" type="Node2D" unique_id=932361577]
 script = ExtResource("1_ty0mx")
@@ -36,4 +37,10 @@ hp = 7
 
 [node name="Vampire3" parent="." unique_id=2029092724 instance=ExtResource("5_nirbj")]
 position = Vector2(296, 152)
+
+[node name="Torch" parent="." instance=ExtResource("6_torch")]
+position = Vector2(96, 320)
+
+[node name="Torch2" parent="." instance=ExtResource("6_torch")]
+position = Vector2(512, 80)
 hp = 7

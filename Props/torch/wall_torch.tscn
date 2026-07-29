@@ -3,9 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://wtc5n0htp80g" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/Props.png" id="1_jm1pv"]
 [ext_resource type="Script" uid="uid://rbefwkan1eso" path="res://Props/torch/torch2.gd" id="1_s14ev"]
 [ext_resource type="Texture2D" path="res://Props/torch/light_gradient.tres" id="3_wall_torch_light"]
+[ext_resource type="PackedScene" uid="uid://dlecjw8jjrpbm" path="res://General Nodes/Hitbox/Hitbox.tscn" id="4_wall_torch_hitbox"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s14ev"]
 radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wall_torch_hitbox"]
+radius = 8.0
 
 [sub_resource type="Animation" id="Animation_sr5he"]
 length = 0.001
@@ -48,7 +52,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.16666669, 0.33333337, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [0.72, 0.82, 0.76, 0.86]
+"values": [0.34, 0.42, 0.37, 0.44]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fadnr"]
@@ -72,10 +76,16 @@ frame = 94
 
 [node name="TorchLight" type="PointLight2D" parent="."]
 position = Vector2(0, -14)
-energy = 0.72
+energy = 0.34
 color = Color(1, 0.58, 0.3, 1)
 texture = ExtResource("3_wall_torch_light")
-texture_scale = 1.2
+texture_scale = 0.95
+
+[node name="Hitbox" parent="." instance=ExtResource("4_wall_torch_hitbox")]
+position = Vector2(0, -10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_wall_torch_hitbox")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=709953815]
 position = Vector2(0, -10)

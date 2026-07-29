@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bfrx8526haqte" path="res://Levels/Area_5/dungeon_05.tscn" id="2_ew6m0"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="3_55jcj"]
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_esx6f"]
+[ext_resource type="PackedScene" path="res://Props/torch/torch.tscn" id="5_torch"]
 
 [node name="04_5" type="Node2D" unique_id=1312831689]
 script = ExtResource("1_aod6i")
@@ -24,3 +25,6 @@ position = Vector2(-96, 128)
 level = "uid://dbpj8py7yy677"
 target_transition_area = "LevelTransition2"
 side = 2
+
+[node name="Torch" parent="." instance=ExtResource("5_torch")]
+position = Vector2(-48, 256)

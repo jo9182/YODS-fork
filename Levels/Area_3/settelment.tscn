@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://du7g4m3qd0y7o" path="res://Levels/level_transition.tscn" id="4_ovrls"]
 [ext_resource type="PackedScene" uid="uid://bm3pdj3rlgvso" path="res://NPC's/priest.tscn" id="5_ix77e"]
 [ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="6_ovrls"]
+[ext_resource type="PackedScene" path="res://Props/torch/torch.tscn" id="7_torch"]
 
 [node name="Settelment" type="Node2D" unique_id=611995251]
 script = ExtResource("1_0m4mt")
@@ -77,3 +78,9 @@ position = Vector2(112, 56)
 
 [node name="Chest4" parent="." unique_id=1957589194 instance=ExtResource("6_ovrls")]
 position = Vector2(-16, 56)
+
+[node name="Torch" parent="." instance=ExtResource("7_torch")]
+position = Vector2(176, 112)
+
+[node name="Torch2" parent="." instance=ExtResource("7_torch")]
+position = Vector2(704, 112)

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TorchItemData" format=3]
+
+[ext_resource type="Script" path="res://items/scripts/torch_item_data.gd" id="1_torch_item"]
+[ext_resource type="Texture2D" uid="uid://wtc5n0htp80g" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/Props.png" id="2_torch_icon"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_torch_icon"]
+atlas = ExtResource("2_torch_icon")
+region = Rect2(0, 368, 16, 16)
+
+[resource]
+script = ExtResource("1_torch_item")
+name = "Torch"
+description = "A dim torch. Carry more to brighten your lantern, or use one to place it here."
+texture = SubResource("AtlasTexture_torch_icon")
+base_value = 1

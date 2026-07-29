@@ -7,6 +7,11 @@ var cardinalDirection : Vector2 = Vector2.DOWN
 ## a variable that has two features (x,y) and in this instance ZERO means (0,0)
 
 const DIR_4 = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP ]
+const TORCH_ITEM_PATH := "res://items/torch.tres"
+const LANTERN_BASE_ENERGY := 0.3
+const LANTERN_BASE_SCALE := 0.55
+const LANTERN_TORCH_ENERGY := 0.13
+const LANTERN_TORCH_SCALE := 0.13
 var direction : Vector2 = Vector2.ZERO
 ## on ready variable only exsist when the node is in the scene tree and will only call on it if it exsist
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -14,17 +19,21 @@ var direction : Vector2 = Vector2.ZERO
 @onready var state_machine: PlayerStateMachine = $StateMachine
 @onready var hitbox: HitBox = $Sprite2D/Hitbox
 
+@onready var lantern_light: PointLight2D = $LanternLight
+
 @onready var effect_animation_player: AnimationPlayer = $EffectAnimationPlayer
 
 var invulnarable : bool = false
 var hp : int = 10
 var max_hp : int = 10
+var held_torch_count := -1
 
 func _ready():
 	PlayerManager.player = self
 	state_machine.initalize(self)
 	hitbox.Damaged.connect( _take_damage )
 	update_hp(99)
+	_update_lantern_light()
 	pass
 
 func _process(_delta):
@@ -36,6 +45,7 @@ func _process(_delta):
 	## prevents the total magnitude of the vector from being greater than one
 	## When moving sideways you won't move faster
 	direction = direction.normalized()
+	_update_lantern_light()
 	
 	
 ## causes movement
@@ -124,3 +134,16 @@ func make_invulnarable( _duration : float = 1.0) -> void:
 	invulnarable = false
 	hitbox.monitoring = true
 	pass
+
+
+func _update_lantern_light() -> void:
+	var torch_count := 0
+	for slot in PlayerManager.INVENTORY_DATA.slots:
+		if slot != null and slot.item_data != null and slot.item_data.resource_path == TORCH_ITEM_PATH:
+			torch_count += slot.quantity
+	if torch_count == held_torch_count:
+		return
+	held_torch_count = torch_count
+	var light_level := clampi(torch_count, 0, 5)
+	lantern_light.energy = LANTERN_BASE_ENERGY + light_level * LANTERN_TORCH_ENERGY
+	lantern_light.texture_scale = LANTERN_BASE_SCALE + light_level * LANTERN_TORCH_SCALE

@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bj0k0ro2btrj6" path="res://Props/chest.tscn" id="6_aeado"]
 [ext_resource type="PackedScene" uid="uid://dpi7nc6k811av" path="res://Props/mini_box.tscn" id="7_hghts"]
 [ext_resource type="PackedScene" uid="uid://dcuuk7wvekdps" path="res://enemies/skeleton.tscn" id="8_jhr2j"]
+[ext_resource type="PackedScene" path="res://Props/torch/torch.tscn" id="9_torch"]
 
 [node name="Armory" type="Node2D" unique_id=1971095872]
 script = ExtResource("1_dk1xq")
@@ -109,3 +110,9 @@ position = Vector2(-272, 1008)
 
 [node name="Skeleton10" parent="." unique_id=587225686 instance=ExtResource("8_jhr2j")]
 position = Vector2(-400, 896)
+
+[node name="Torch" parent="." instance=ExtResource("9_torch")]
+position = Vector2(-456, 920)
+
+[node name="Torch2" parent="." instance=ExtResource("9_torch")]
+position = Vector2(-112, 1200)
