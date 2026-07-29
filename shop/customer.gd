@@ -5,11 +5,28 @@ const ST_BROWSING := 1
 const ST_EXITING := 2
 const ST_GONE := 3
 
+const ARRIVAL_DISTANCE := 6.0
+const BROWSE_RADIUS := 18.0
+const BROWSE_PAUSE_MIN := 1.25
+const BROWSE_PAUSE_MAX := 3.0
+const WALK_BOB_SPEED := 12.0
+const WALK_BOB_HEIGHT := 0.75
+const WALK_ANIMATION_FPS := 7.0
+const WALK_FRAME_COUNT := 4
+const IDLE_SPRITE_Y := -18.0
+const DIRECTION_ROWS := {
+	"down": 0,
+	"left": 1,
+	"right": 2,
+	"up": 3,
+}
+
 @export var customer_data: CustomerData
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var name_label: Label = $NameLabel
+@onready var status_label: Label = $StatusLabel
 @onready var visit_timer: Timer = $VisitTimer
 @onready var buy_timer: Timer = $BuyTimer
 
@@ -19,25 +36,34 @@ var _current_budget: int
 var _entry_point: Vector2
 var _exit_point: Vector2
 var _browsing_spot: Vector2
+var _facing := "down"
+var _is_walking := false
+var _browse_pause_remaining := 0.0
+var _walk_time := 0.0
+var _status_tween: Tween
 
 signal customer_left(customer: Customer)
 
 
 func _ready() -> void:
 	if customer_data:
-		_current_budget = randi_range(customer_data.min_budget, customer_data.max_budget)
+		_current_budget = roundi(
+			randi_range(customer_data.min_budget, customer_data.max_budget)
+			* ReputationManager.get_budget_multiplier()
+		)
 		name_label.text = customer_data.customer_name
 		if not customer_data.greeting.is_empty():
-			_show_bubble(customer_data.greeting)
-		_setup_sprite_deferred.call_deferred()
+			_show_status(customer_data.greeting, Color(1.0, 1.0, 0.8), 2.5)
+		_setup_sprite()
 	else:
 		_current_budget = 0
 
 	visit_timer.timeout.connect(_on_visit_timeout)
 	buy_timer.timeout.connect(_on_buy_check)
+	_show_idle()
 
 
-func _setup_sprite_deferred() -> void:
+func _setup_sprite() -> void:
 	if not customer_data:
 		return
 	sprite_2d.texture = customer_data.texture
@@ -45,7 +71,7 @@ func _setup_sprite_deferred() -> void:
 	sprite_2d.region_enabled = false
 	sprite_2d.hframes = customer_data.hframes
 	sprite_2d.vframes = customer_data.vframes
-	animation_player.play("idle")
+	_show_idle()
 
 
 func init_spawn(entry: Vector2, exit_pos: Vector2, spot: Vector2) -> void:
@@ -64,38 +90,93 @@ func _physics_process(delta: float) -> void:
 		ST_ENTERING, ST_EXITING:
 			_move_toward_target(delta)
 		ST_BROWSING:
-			velocity = Vector2.ZERO
-			animation_player.play("idle")
+			_browse(delta)
+
+
+func _process(delta: float) -> void:
+	if _is_walking:
+		_walk_time += delta * WALK_BOB_SPEED
+		sprite_2d.position.y = IDLE_SPRITE_Y + sin(_walk_time) * WALK_BOB_HEIGHT
+		var walk_frame := int(_walk_time * WALK_ANIMATION_FPS) % WALK_FRAME_COUNT
+		sprite_2d.frame = _direction_row() * sprite_2d.hframes + walk_frame
+	else:
+		sprite_2d.position.y = move_toward(sprite_2d.position.y, IDLE_SPRITE_Y, delta * 8.0)
 
 
 func _move_toward_target(delta: float) -> void:
-	var direction := (_target_position - global_position).normalized()
-	var speed := customer_data.walk_speed if customer_data else 50.0
-	velocity = direction * speed
-	move_and_slide()
-
-	# Choose walk animation based on primary movement direction
-	if abs(direction.x) >= abs(direction.y):
-		if direction.x < 0:
-			animation_player.play("walk_left")
-		else:
-			animation_player.play("walk_right")
-	else:
-		if direction.y < 0:
-			animation_player.play("walk_up")
-		else:
-			animation_player.play("walk_down")
-
-	if global_position.distance_to(_target_position) < 6.0:
-		velocity = Vector2.ZERO
+	var target_offset := _target_position - global_position
+	if target_offset.length() <= ARRIVAL_DISTANCE:
 		global_position = _target_position
-		if _state == ST_ENTERING:
-			_state = ST_BROWSING
-			animation_player.play("idle")
-		elif _state == ST_EXITING:
-			_state = ST_GONE
-			customer_left.emit(self)
-			queue_free()
+		velocity = Vector2.ZERO
+		_show_idle()
+		_handle_target_reached()
+		return
+
+	var direction := target_offset.normalized()
+	var speed := customer_data.walk_speed if customer_data else 50.0
+	velocity = velocity.move_toward(direction * speed, speed * 10.0 * delta)
+	move_and_slide()
+	_play_walk_animation(direction)
+
+
+func _browse(delta: float) -> void:
+	if _browse_pause_remaining > 0.0:
+		_browse_pause_remaining -= delta
+		velocity = Vector2.ZERO
+		_show_idle()
+		if _browse_pause_remaining <= 0.0:
+			_choose_browse_target()
+		return
+
+	_move_toward_target(delta)
+
+
+func _handle_target_reached() -> void:
+	if _state == ST_ENTERING:
+		_state = ST_BROWSING
+		_start_browse_pause()
+	elif _state == ST_BROWSING:
+		_start_browse_pause()
+	elif _state == ST_EXITING:
+		_state = ST_GONE
+		customer_left.emit(self)
+		queue_free()
+
+
+func _choose_browse_target() -> void:
+	var offset := Vector2(
+		randf_range(-BROWSE_RADIUS, BROWSE_RADIUS),
+		randf_range(-BROWSE_RADIUS, BROWSE_RADIUS)
+	)
+	_target_position = _browsing_spot + offset.limit_length(BROWSE_RADIUS)
+
+
+func _start_browse_pause() -> void:
+	_browse_pause_remaining = randf_range(BROWSE_PAUSE_MIN, BROWSE_PAUSE_MAX)
+	_show_idle()
+
+
+func _play_walk_animation(direction: Vector2) -> void:
+	_facing = _direction_name(direction)
+	if not _is_walking:
+		_walk_time = 0.0
+	_is_walking = true
+
+
+func _show_idle() -> void:
+	_is_walking = false
+	if is_instance_valid(sprite_2d):
+		sprite_2d.frame = _direction_row() * sprite_2d.hframes
+
+
+func _direction_row() -> int:
+	return DIRECTION_ROWS[_facing]
+
+
+func _direction_name(direction: Vector2) -> String:
+	if abs(direction.x) >= abs(direction.y):
+		return "left" if direction.x < 0.0 else "right"
+	return "up" if direction.y < 0.0 else "down"
 
 
 func _on_buy_check() -> void:
@@ -107,10 +188,13 @@ func _on_buy_check() -> void:
 
 	var mood = ReputationManager.get_mood()
 	if mood == ReputationManager.Mood.HOSTILE:
+		_show_status("Not welcome here.", Color(1.0, 0.55, 0.55), 1.5)
 		_start_exiting()
 		return
 
 	if ShopManager.listings.is_empty():
+		_show_status("Nothing catches my eye.", Color(0.85, 0.85, 0.85), 1.5)
+		_start_exiting()
 		return
 
 	_attempt_purchase()
@@ -142,12 +226,15 @@ func _attempt_purchase() -> void:
 			_purchase(listing)
 			return
 
+	_show_status("Too expensive!", Color(1.0, 0.7, 0.45), 1.5)
+	_start_exiting()
+
 
 func _purchase(listing: ShopListing) -> void:
 	_current_budget -= listing.price
 	var buyer_name := customer_data.customer_name if customer_data else "Customer"
 	ShopManager.sell(listing, buyer_name)
-	_show_popup(listing.item_data.name, listing.price)
+	_show_status("Bought %s!" % listing.item_data.name, Color(0.45, 1.0, 0.55), 1.5)
 
 
 func _on_visit_timeout() -> void:
@@ -161,36 +248,22 @@ func _start_exiting() -> void:
 	_target_position = _exit_point
 	buy_timer.stop()
 	visit_timer.stop()
-	_show_bubble("Goodbye!")
+	if status_label.text.is_empty() or status_label.modulate.a <= 0.0:
+		_show_status("Goodbye!", Color(1.0, 1.0, 0.8), 1.2)
 
 
-func _show_bubble(text: String) -> void:
-	var lbl := Label.new()
-	lbl.text = text
-	lbl.add_theme_color_override("font_color", Color(1, 1, 0.8))
-	lbl.add_theme_font_size_override("font_size", 10)
-	call_deferred("_add_bubble", lbl)
+func _show_status(message: String, color: Color, duration: float) -> void:
+	if not is_instance_valid(status_label):
+		return
+	if is_instance_valid(_status_tween):
+		_status_tween.kill()
 
+	status_label.text = message
+	status_label.add_theme_color_override("font_color", color)
+	status_label.modulate = Color.WHITE
+	status_label.show()
 
-func _add_bubble(lbl: Label) -> void:
-	get_parent().add_child(lbl)
-	lbl.global_position = global_position + Vector2(-40, -32)
-	var tween := lbl.create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(lbl, "position:y", lbl.position.y - 25, 2.0).set_ease(Tween.EASE_OUT)
-	tween.tween_property(lbl, "modulate:a", 0.0, 2.0).set_ease(Tween.EASE_IN)
-	tween.chain().tween_callback(lbl.queue_free)
-
-
-func _show_popup(item_name: String, price: int) -> void:
-	var lbl := Label.new()
-	lbl.text = "Bought: %s (%dg)" % [item_name, price]
-	lbl.add_theme_color_override("font_color", Color(0.2, 1, 0.2))
-	lbl.add_theme_font_size_override("font_size", 10)
-	get_parent().add_child(lbl)
-	lbl.global_position = global_position + Vector2(-30, -44)
-	var tween := lbl.create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(lbl, "position:y", lbl.position.y - 30, 1.2).set_ease(Tween.EASE_OUT)
-	tween.tween_property(lbl, "modulate:a", 0.0, 1.2).set_ease(Tween.EASE_IN)
-	tween.chain().tween_callback(lbl.queue_free)
+	_status_tween = create_tween()
+	_status_tween.tween_interval(duration)
+	_status_tween.tween_property(status_label, "modulate:a", 0.0, 0.35)
+	_status_tween.tween_callback(status_label.hide)
