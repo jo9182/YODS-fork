@@ -3,6 +3,9 @@ extends Node
 signal room_discovered(scene_path: String)
 
 const AREA_PREFIX := "res://Levels/Area_"
+const FALLBACK_ROOM_BOUNDS := Rect2(-Vector2(8.0, 6.0), Vector2(16.0, 12.0))
+const ROOM_GAP := 64.0
+const MAX_LAYOUT_PUSH_STEPS := 128
 var discovered_rooms: Dictionary = {}
 var floor_layouts: Dictionary = {}
 
@@ -56,8 +59,8 @@ func get_floor_layout(floor_number: int) -> Dictionary:
 	for scene_path in room_paths:
 		var room_data: Dictionary = _get_room_data(scene_path)
 		edges[scene_path] = room_data.get("edges", [])
-		bounds[scene_path] = room_data.get("bounds", Rect2(-Vector2(8.0, 6.0), Vector2(16.0, 12.0)))
-	var positions := _build_positions(room_paths, edges)
+		bounds[scene_path] = room_data.get("bounds", FALLBACK_ROOM_BOUNDS)
+	var positions := _build_positions(room_paths, edges, bounds)
 	var layout := {"positions": positions, "edges": edges, "bounds": bounds}
 	floor_layouts[floor_number] = layout
 	return layout
@@ -89,7 +92,7 @@ func _get_room_paths(floor_number: int) -> Array[String]:
 func _get_room_data(scene_path: String) -> Dictionary:
 	var packed_scene := load(scene_path) as PackedScene
 	if packed_scene == null:
-		return {"edges": [], "bounds": Rect2(-Vector2(8.0, 6.0), Vector2(16.0, 12.0))}
+		return {"edges": [], "bounds": FALLBACK_ROOM_BOUNDS}
 	var room := packed_scene.instantiate()
 	var room_edges: Array[Dictionary] = []
 	for node in room.find_children("*", "", true, false):
@@ -108,7 +111,7 @@ func _get_room_data(scene_path: String) -> Dictionary:
 	return {"edges": room_edges, "bounds": room_bounds}
 
 
-func _build_positions(room_paths: Array[String], edges: Dictionary) -> Dictionary:
+func _build_positions(room_paths: Array[String], edges: Dictionary, bounds: Dictionary) -> Dictionary:
 	var positions: Dictionary = {}
 	if room_paths.is_empty():
 		return positions
@@ -122,16 +125,50 @@ func _build_positions(room_paths: Array[String], edges: Dictionary) -> Dictionar
 			if not room_paths.has(target_path) or positions.has(target_path):
 				continue
 			var source_position: Vector2 = edge.get("source_position", Vector2.ZERO)
-			var target_position := _get_transition_position(edges.get(target_path, []), edge.get("target_transition", ""))
-			positions[target_path] = position + source_position - target_position
+			var target_position: Vector2 = _get_transition_position(edges.get(target_path, []), edge.get("target_transition", ""))
+			var desired_position: Vector2 = position + source_position - target_position
+			var push_direction: Vector2 = _get_separation_direction(scene_path, source_position, positions, bounds)
+			positions[target_path] = _find_open_position(target_path, desired_position, push_direction, positions, bounds)
 			pending.append(target_path)
-	var loose_index := 0
+	var loose_index: int = 0
 	for scene_path in room_paths:
 		if positions.has(scene_path):
 			continue
-		positions[scene_path] = Vector2(640.0 + loose_index % 4 * 256.0, floori(float(loose_index) / 4.0) * 192.0)
+		var loose_position: Vector2 = Vector2(640.0 + loose_index % 4 * 256.0, floori(float(loose_index) / 4.0) * 192.0)
+		positions[scene_path] = _find_open_position(scene_path, loose_position, Vector2.RIGHT, positions, bounds)
 		loose_index += 1
 	return positions
+
+
+func _find_open_position(target_path: String, candidate_position: Vector2, push_direction: Vector2, positions: Dictionary, bounds: Dictionary) -> Vector2:
+	var open_position: Vector2 = candidate_position
+	for _push_step in MAX_LAYOUT_PUSH_STEPS:
+		if not _overlaps_placed_rooms(target_path, open_position, positions, bounds):
+			return open_position
+		open_position += push_direction * ROOM_GAP
+	return open_position
+
+
+func _overlaps_placed_rooms(target_path: String, target_position: Vector2, positions: Dictionary, bounds: Dictionary) -> bool:
+	var target_bounds: Rect2 = bounds.get(target_path, FALLBACK_ROOM_BOUNDS)
+	var target_rect: Rect2 = Rect2(target_position + target_bounds.position, target_bounds.size).grow(ROOM_GAP * 0.5)
+	for placed_path in positions:
+		var placed_position: Vector2 = positions[placed_path]
+		var placed_bounds: Rect2 = bounds.get(placed_path, FALLBACK_ROOM_BOUNDS)
+		var placed_rect: Rect2 = Rect2(placed_position + placed_bounds.position, placed_bounds.size).grow(ROOM_GAP * 0.5)
+		if target_rect.intersects(placed_rect):
+			return true
+	return false
+
+
+func _get_separation_direction(source_path: String, source_door_position: Vector2, positions: Dictionary, bounds: Dictionary) -> Vector2:
+	var source_position: Vector2 = positions.get(source_path, Vector2.ZERO)
+	var source_bounds: Rect2 = bounds.get(source_path, FALLBACK_ROOM_BOUNDS)
+	var source_rect: Rect2 = Rect2(source_position + source_bounds.position, source_bounds.size)
+	var doorway_offset: Vector2 = source_position + source_door_position - source_rect.get_center()
+	if absf(doorway_offset.x) >= absf(doorway_offset.y):
+		return Vector2.RIGHT if doorway_offset.x >= 0.0 else Vector2.LEFT
+	return Vector2.DOWN if doorway_offset.y >= 0.0 else Vector2.UP
 
 
 func _get_transition_position(transitions: Array, transition_name: String) -> Vector2:
@@ -153,7 +190,7 @@ func _find_tilemap(node: Node) -> TileMapLayer:
 
 func _get_room_bounds(tilemap: TileMapLayer) -> Rect2:
 	if tilemap == null or tilemap.tile_set == null:
-		return Rect2(-Vector2(8.0, 6.0), Vector2(16.0, 12.0))
+		return FALLBACK_ROOM_BOUNDS
 	var used_rect := tilemap.get_used_rect()
 	var tile_size := Vector2(tilemap.tile_set.tile_size)
 	return Rect2(tilemap.position + Vector2(used_rect.position) * tile_size, Vector2(used_rect.size) * tile_size)

@@ -67,12 +67,20 @@ func _prepare_transform(known_rooms: Array[String]) -> void:
 
 
 func _draw_connections(known_rooms: Array[String]) -> void:
-	var connection_color := Color(0.29, 0.68, 0.67, 0.7)
 	for scene_path in known_rooms:
 		for edge in edges.get(scene_path, []):
 			var target_path: String = edge.get("target", "")
 			if discovered.has(target_path) and positions.has(target_path):
-				draw_line(_to_canvas_position(scene_path), _to_canvas_position(target_path), connection_color, maxf(1.0, 2.0 * map_scale))
+				var source_door: Vector2 = _get_door_position(scene_path, edge)
+				var target_door: Vector2 = _get_target_door_position(target_path, edge.get("target_transition", ""))
+				_draw_hallway(_to_canvas_position(source_door), _to_canvas_position(target_door))
+
+
+func _draw_hallway(from: Vector2, to: Vector2) -> void:
+	if from.distance_to(to) < 0.5:
+		return
+	draw_line(from, to, Color(0.06, 0.12, 0.15, 0.9), maxf(5.0, 8.0 * map_scale))
+	draw_line(from, to, Color(0.35, 0.78, 0.71, 0.85), maxf(2.0, 4.0 * map_scale))
 
 
 func _draw_room(scene_path: String) -> void:
@@ -86,8 +94,21 @@ func _draw_room(scene_path: String) -> void:
 		draw_circle(center, maxf(2.0, 3.0 * map_scale), Color(1.0, 0.98, 0.82))
 
 
-func _to_canvas_position(scene_path: String) -> Vector2:
-	return _to_canvas_rect(_get_world_rect(scene_path)).get_center()
+func _get_door_position(scene_path: String, edge: Dictionary) -> Vector2:
+	var room_position: Vector2 = positions.get(scene_path, Vector2.ZERO)
+	var door_position: Vector2 = edge.get("source_position", Vector2.ZERO)
+	return room_position + door_position
+
+
+func _get_target_door_position(target_path: String, transition_name: String) -> Vector2:
+	for edge in edges.get(target_path, []):
+		if edge.get("name", "") == transition_name:
+			return _get_door_position(target_path, edge)
+	return _get_world_rect(target_path).get_center()
+
+
+func _to_canvas_position(world_position: Vector2) -> Vector2:
+	return map_origin + world_position * map_scale
 
 
 func _get_world_rect(scene_path: String) -> Rect2:
