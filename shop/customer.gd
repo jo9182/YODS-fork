@@ -14,11 +14,13 @@ const WALK_BOB_HEIGHT := 0.75
 const WALK_ANIMATION_FPS := 7.0
 const WALK_FRAME_COUNT := 4
 const IDLE_SPRITE_Y := -18.0
+const ENTRY_DIALOGUE_DISTANCE := 130.0
+const CUSTOMER_DIALOGUE = preload("res://shop/customer_dialogue.gd")
 const DIRECTION_ROWS := {
 	"down": 0,
-	"left": 1,
+	"left": 6,
 	"right": 2,
-	"up": 3,
+	"up": 4,
 }
 
 @export var customer_data: CustomerData
@@ -36,6 +38,9 @@ var _current_budget: int
 var _entry_point: Vector2
 var _exit_point: Vector2
 var _browsing_spot: Vector2
+var _customer_type := ""
+var _display_name := "Customer"
+var _entry_dialogue_shown := false
 var _facing := "down"
 var _is_walking := false
 var _browse_pause_remaining := 0.0
@@ -51,9 +56,9 @@ func _ready() -> void:
 			randi_range(customer_data.min_budget, customer_data.max_budget)
 			* ReputationManager.get_budget_multiplier()
 		)
-		name_label.text = customer_data.customer_name
-		if not customer_data.greeting.is_empty():
-			_show_status(customer_data.greeting, Color(1.0, 1.0, 0.8), 2.5)
+		_customer_type = customer_data.customer_name
+		_display_name = CUSTOMER_DIALOGUE.pick_name(_customer_type)
+		name_label.text = _display_name
 		_setup_sprite()
 	else:
 		_current_budget = 0
@@ -81,6 +86,7 @@ func init_spawn(entry: Vector2, exit_pos: Vector2, spot: Vector2) -> void:
 	global_position = _entry_point
 	_target_position = _browsing_spot
 	_state = ST_ENTERING
+	_entry_dialogue_shown = false
 	visit_timer.start(customer_data.visit_duration if customer_data else 25.0)
 	buy_timer.start(4.0)
 
@@ -95,8 +101,8 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta: float) -> void:
 	if _is_walking:
-		_walk_time += delta * WALK_BOB_SPEED
-		sprite_2d.position.y = IDLE_SPRITE_Y + sin(_walk_time) * WALK_BOB_HEIGHT
+		_walk_time += delta
+		sprite_2d.position.y = IDLE_SPRITE_Y + sin(_walk_time * WALK_BOB_SPEED) * WALK_BOB_HEIGHT
 		var walk_frame := int(_walk_time * WALK_ANIMATION_FPS) % WALK_FRAME_COUNT
 		sprite_2d.frame = _direction_row() * sprite_2d.hframes + walk_frame
 	else:
@@ -116,6 +122,7 @@ func _move_toward_target(delta: float) -> void:
 	var speed := customer_data.walk_speed if customer_data else 50.0
 	velocity = velocity.move_toward(direction * speed, speed * 10.0 * delta)
 	move_and_slide()
+	_show_entry_dialogue_when_visible()
 	_play_walk_animation(direction)
 
 
@@ -135,12 +142,23 @@ func _handle_target_reached() -> void:
 	if _state == ST_ENTERING:
 		_state = ST_BROWSING
 		_start_browse_pause()
+		_show_status(_dialogue_line("browse", "Let me have a look around."), Color(0.85, 0.9, 1.0), 1.8)
 	elif _state == ST_BROWSING:
 		_start_browse_pause()
 	elif _state == ST_EXITING:
 		_state = ST_GONE
 		customer_left.emit(self)
 		queue_free()
+
+
+func _show_entry_dialogue_when_visible() -> void:
+	if _state != ST_ENTERING or _entry_dialogue_shown:
+		return
+	if global_position.distance_to(_entry_point) < ENTRY_DIALOGUE_DISTANCE:
+		return
+
+	_entry_dialogue_shown = true
+	_show_status(_dialogue_line("entry", customer_data.greeting), Color(1.0, 1.0, 0.8), 2.5)
 
 
 func _choose_browse_target() -> void:
@@ -188,12 +206,12 @@ func _on_buy_check() -> void:
 
 	var mood = ReputationManager.get_mood()
 	if mood == ReputationManager.Mood.HOSTILE:
-		_show_status("Not welcome here.", Color(1.0, 0.55, 0.55), 1.5)
+		_show_status(_dialogue_line("hostile", "Not welcome here."), Color(1.0, 0.55, 0.55), 1.5)
 		_start_exiting()
 		return
 
 	if ShopManager.listings.is_empty():
-		_show_status("Nothing catches my eye.", Color(0.85, 0.85, 0.85), 1.5)
+		_show_status(_dialogue_line("empty", "Nothing catches my eye."), Color(0.85, 0.85, 0.85), 1.5)
 		_start_exiting()
 		return
 
@@ -226,15 +244,16 @@ func _attempt_purchase() -> void:
 			_purchase(listing)
 			return
 
-	_show_status("Too expensive!", Color(1.0, 0.7, 0.45), 1.5)
+	_show_status(_dialogue_line("pricey", "Too expensive!"), Color(1.0, 0.7, 0.45), 1.5)
 	_start_exiting()
 
 
 func _purchase(listing: ShopListing) -> void:
 	_current_budget -= listing.price
-	var buyer_name := customer_data.customer_name if customer_data else "Customer"
+	var buyer_name := _display_name
 	ShopManager.sell(listing, buyer_name)
-	_show_status("Bought %s!" % listing.item_data.name, Color(0.45, 1.0, 0.55), 1.5)
+	var purchase_line := _dialogue_line("purchase", "Bought {item}!")
+	_show_status(purchase_line.replace("{item}", listing.item_data.name), Color(0.45, 1.0, 0.55), 1.8)
 
 
 func _on_visit_timeout() -> void:
@@ -249,7 +268,11 @@ func _start_exiting() -> void:
 	buy_timer.stop()
 	visit_timer.stop()
 	if status_label.text.is_empty() or status_label.modulate.a <= 0.0:
-		_show_status("Goodbye!", Color(1.0, 1.0, 0.8), 1.2)
+		_show_status(_dialogue_line("farewell", "Goodbye!"), Color(1.0, 1.0, 0.8), 1.2)
+
+
+func _dialogue_line(category: String, fallback: String) -> String:
+	return CUSTOMER_DIALOGUE.pick_line(_customer_type, category, fallback)
 
 
 func _show_status(message: String, color: Color, duration: float) -> void:
