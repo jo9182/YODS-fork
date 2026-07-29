@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 LevelManager="*res://00_globals/GlobalLevelManager.gd"
+LightingManager="*res://00_globals/lighting_manager.gd"
 PlayerHud="*res://GUI/player_hud/player_hud.tscn"
 PlayerManager="*res://00_globals/global_player_manager.gd"
 SceneTransitions="*res://GUI/Scene_Transition/scene_transitions.tscn"

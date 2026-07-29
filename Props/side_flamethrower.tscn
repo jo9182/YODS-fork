@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ceo8r8x1vxv5q" path="res://Props/side_flamethrower.gd" id="1_bn6dt"]
 [ext_resource type="PackedScene" uid="uid://ckhbwy0dyy7gb" path="res://General Nodes/Hurt_Box/hurt_box.tscn" id="1_rpgll"]
 [ext_resource type="Texture2D" uid="uid://wtc5n0htp80g" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/Props.png" id="2_bn6dt"]
+[ext_resource type="Texture2D" path="res://Props/torch/light_gradient.tres" id="3_side_flame_light"]
 
 [sub_resource type="Animation" id="Animation_nv2m3"]
 length = 0.001
@@ -34,6 +35,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [15, 11, 12, 13, 15]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FlameLight:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.53, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.95, 0.78, 0.0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y05ix"]
 _data = {
@@ -59,6 +72,12 @@ texture = ExtResource("2_bn6dt")
 hframes = 4
 vframes = 25
 frame = 15
+
+[node name="FlameLight" type="PointLight2D" parent="."]
+energy = 0.0
+color = Color(1, 0.42, 0.16, 1)
+texture = ExtResource("3_side_flame_light")
+texture_scale = 0.9
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=960637047]
 libraries/ = SubResource("AnimationLibrary_y05ix")

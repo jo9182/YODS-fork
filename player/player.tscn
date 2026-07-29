@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://c6c67eafiqboa" path="res://player/Scripts/state_ranged.gd" id="13_tqiix"]
 [ext_resource type="PackedScene" uid="uid://dnfdluewnkym1" path="res://player/stone_projectile.tscn" id="14_e7oew"]
 [ext_resource type="AudioStream" uid="uid://k13mm8k7138m" path="res://player/Audio/hit_player.wav" id="14_wodsf"]
+[ext_resource type="Texture2D" path="res://Props/torch/light_gradient.tres" id="15_player_light"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_edjgo"]
 radius = 7.0
@@ -676,6 +677,13 @@ position = Vector2(7, -21)
 texture = ExtResource("2_wodsf")
 hframes = 17
 vframes = 7
+
+[node name="LanternLight" type="PointLight2D" parent="."]
+position = Vector2(7, -16)
+energy = 0.4
+color = Color(1, 0.78, 0.52, 1)
+texture = ExtResource("15_player_light")
+texture_scale = 0.65
 
 [node name="AttackHurtBox" parent="Sprite2D" unique_id=1865348707 instance=ExtResource("11_2ieo8")]
 unique_name_in_owner = true

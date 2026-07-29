@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://csn3c0ndk6wxv" path="res://Props/torch/torch1.gd" id="1_lpa5x"]
 [ext_resource type="Texture2D" uid="uid://wtc5n0htp80g" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/Props.png" id="2_aqllr"]
+[ext_resource type="Texture2D" path="res://Props/torch/light_gradient.tres" id="3_torch_light"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j8v0p"]
 radius = 6.0
@@ -21,6 +22,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [92, 93, 95, 96]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TorchLight:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.72, 0.86, 0.78, 0.9]
 }
 
 [sub_resource type="Animation" id="Animation_7jjy1"]
@@ -55,6 +68,13 @@ texture = ExtResource("2_aqllr")
 hframes = 4
 vframes = 25
 frame = 92
+
+[node name="TorchLight" type="PointLight2D" parent="."]
+position = Vector2(0, -14)
+energy = 0.72
+color = Color(1, 0.58, 0.3, 1)
+texture = ExtResource("3_torch_light")
+texture_scale = 1.2
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=211785853]
 position = Vector2(0, -10)
