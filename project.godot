@@ -37,6 +37,7 @@ TorchManager="*res://00_globals/torch_manager.gd"
 DungeonRenown="*res://00_globals/dungeon_renown.gd"
 DungeonPathfinder="*res://00_globals/dungeon_pathfinder.gd"
 DungeonLifeManager="*res://00_globals/dungeon_life_manager.gd"
+MapDiscoveryManager="*res://00_globals/map_discovery_manager.gd"
 
 [display]
 

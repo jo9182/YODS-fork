@@ -18,7 +18,9 @@ func _ready() -> void:
 	
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
-		if is_paused == false:
+		if mymap.visible:
+			hide_map()
+		elif is_paused == false:
 			show_pause_menu()
 			InventoryMenu.process_mode = Node.PROCESS_MODE_DISABLED
 		else:
@@ -26,11 +28,16 @@ func _unhandled_input(event: InputEvent) -> void:
 			InventoryMenu.process_mode = Node.PROCESS_MODE_ALWAYS
 		get_viewport().set_input_as_handled()
 	if event.is_action_pressed("map"):
-		mymap.visible = true
+		if mymap.visible:
+			hide_map()
+		else:
+			show_map()
+		get_viewport().set_input_as_handled()
 		
 func show_pause_menu() -> void:
 	get_tree().paused = true
 	visible = true
+	$Control.visible = true
 	is_paused = true
 	button_save.grab_focus()
 	shown.emit()
@@ -39,10 +46,28 @@ func show_pause_menu() -> void:
 		button_load.visible = false
 
 func hide_pause_menu() -> void:
+	mymap.close()
 	get_tree().paused = false
 	visible = false
+	$Control.visible = true
 	is_paused = false
 	hidden.emit()
+
+
+func show_map() -> void:
+	get_tree().paused = true
+	visible = true
+	$Control.visible = false
+	is_paused = false
+	mymap.open()
+
+
+func hide_map() -> void:
+	mymap.close()
+	get_tree().paused = false
+	visible = false
+	$Control.visible = true
+	is_paused = false
 	
 func _on_save_pressed() -> void:
 	if is_paused == false:

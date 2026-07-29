@@ -1,93 +1,33 @@
 class_name map extends CanvasLayer
-@onready var control: Control = $Control
-@onready var color_rect: ColorRect = $Control/ColorRect
-@onready var lvl_1: Button = $Control/Lvl1
-@onready var lvl_2: Button = $Control/Lvl2
-@onready var lvl_3: Button = $Control/Lvl3
-@onready var lvl_4: Button = $Control/Lvl4
-@onready var lvl_5: Button = $Control/Lvl5
-@onready var exit: Button = $Control/exit
+
+@onready var title_label: Label = $Control/TitleLabel
+@onready var subtitle_label: Label = $Control/SubtitleLabel
+@onready var room_map: DungeonMapCanvas = $Control/RoomMap
 
 
-
-func _on_lvl_1_pressed() -> void:
-	lvl_1.visible = false
-	lvl_2.visible = false
-	lvl_3.visible = false
-	lvl_4.visible = false
-	lvl_5.visible = false
-	#map1.visible = true
-	exit.visible = true
-	pass # Replace with function body.
-	
-	
+func _ready() -> void:
+	visible = false
 
 
-func _on_lvl_2_pressed() -> void:
-	lvl_1.visible = false
-	lvl_2.visible = false
-	lvl_3.visible = false
-	lvl_4.visible = false
-	lvl_5.visible = false
-	#map2.visible = true
-	exit.visible = true
-	pass # Replace with function body.
-	
+func open() -> void:
+	var current_scene := get_tree().current_scene
+	if current_scene == null:
+		return
+	var scene_path := current_scene.scene_file_path
+	var floor_number := MapDiscoveryManager.get_floor_number(scene_path)
+	visible = true
+	if floor_number == 0:
+		title_label.text = "Dungeon Map"
+		subtitle_label.text = "No dungeon chart is available here."
+		room_map.configure({}, [], "")
+		return
+	MapDiscoveryManager.discover_current_room()
+	var layout := MapDiscoveryManager.get_floor_layout(floor_number)
+	var discovered_rooms := MapDiscoveryManager.get_discovered_rooms(floor_number)
+	title_label.text = "Dungeon Map  ·  Floor %d" % floor_number
+	subtitle_label.text = "%d rooms charted  ·  Gold marker is your position" % discovered_rooms.size()
+	room_map.configure(layout, discovered_rooms, scene_path)
 
 
-
-func _on_lvl_3_pressed() -> void:
-	lvl_1.visible = false
-	lvl_2.visible = false
-	lvl_3.visible = false
-	lvl_4.visible = false
-	lvl_5.visible = false
-	#map3.visible = true
-	exit.visible = true
-	pass # Replace with function body.
-	
-
-
-
-func _on_lvl_4_pressed() -> void:
-	lvl_1.visible = false
-	lvl_2.visible = false
-	lvl_3.visible = false
-	lvl_4.visible = false
-	lvl_5.visible = false
-	#map4.visible = true
-	exit.visible = true
-	pass # Replace with function body.
-	
-
-
-
-func _on_lvl_5_pressed() -> void:
-	lvl_1.visible = false
-	lvl_2.visible = false
-	lvl_3.visible = false
-	lvl_4.visible = false
-	lvl_5.visible = false
-	#map5.visible = true
-	exit.visible = true
-	pass # Replace with function body.
-
-
-func _on_exit_pressed() -> void:
-	mapreset()
-	self.visible = false
-	pass # Replace with function body.
-
-func mapreset() -> void:
-	exit.visible = false
-	#map1.visible = false
-	#map2.visible = false
-	#map3.visible = false
-	#map4.visible = false
-	#map5.visible = false
-	lvl_1.visible = true
-	lvl_2.visible = true
-	lvl_3.visible = true
-	lvl_4.visible = true
-	lvl_5.visible = true
-	
+func close() -> void:
+	visible = false

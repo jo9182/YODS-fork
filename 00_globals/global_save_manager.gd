@@ -22,6 +22,7 @@ var current_save: Dictionary = {
 	chests = [],
 	torches = {},
 	dungeon_renown = {},
+	map_discovery = [],
 }
 
 

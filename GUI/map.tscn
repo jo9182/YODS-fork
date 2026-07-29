@@ -1,87 +1,75 @@
 [gd_scene format=3 uid="uid://dqi17ey8tbyws"]
 
-[ext_resource type="Script" uid="uid://dldfg6c2g0fmg" path="res://map.gd" id="1_x1d7o"]
+[ext_resource type="Script" path="res://map.gd" id="1_map"]
+[ext_resource type="Script" path="res://GUI/map_canvas.gd" id="2_canvas"]
 
-[node name="Map" type="CanvasLayer" unique_id=971038249]
-script = ExtResource("1_x1d7o")
+[node name="Map" type="CanvasLayer"]
+layer = 2
+process_mode = 3
+script = ExtResource("1_map")
 
-[node name="Control" type="Control" parent="." unique_id=2051695698]
+[node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 440.0
-offset_bottom = 248.0
-
-[node name="ColorRect" type="ColorRect" parent="Control" unique_id=2069061539]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.095
-anchor_bottom = 1.097
-offset_right = 0.19998169
-offset_bottom = 1.9440002
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 0.9372549, 0.56078434, 1)
+mouse_filter = 2
 
-[node name="Lvl1" type="Button" parent="Control" unique_id=14584483]
-texture_filter = 1
-layout_mode = 0
-offset_left = 32.0
-offset_top = 112.0
-offset_right = 94.0
-offset_bottom = 144.0
-text = "Level 1"
-
-[node name="Lvl2" type="Button" parent="Control" unique_id=880634581]
-texture_filter = 1
-layout_mode = 0
-offset_left = 120.0
-offset_top = 112.0
-offset_right = 182.0
-offset_bottom = 144.0
-text = "Level 2"
-
-[node name="Lvl3" type="Button" parent="Control" unique_id=1400438817]
-texture_filter = 1
-layout_mode = 0
-offset_left = 208.0
-offset_top = 112.0
-offset_right = 270.0
-offset_bottom = 144.0
-text = "Level 3"
-
-[node name="Lvl4" type="Button" parent="Control" unique_id=1364596003]
-texture_filter = 1
-layout_mode = 0
-offset_left = 296.0
-offset_top = 112.0
-offset_right = 358.0
-offset_bottom = 144.0
-text = "Level 4"
-
-[node name="Lvl5" type="Button" parent="Control" unique_id=1614768265]
-texture_filter = 1
+[node name="Background" type="ColorRect" parent="Control"]
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0910001
-anchor_bottom = 1.097
-offset_left = 384.0
-offset_top = 112.0
-offset_right = -34.04004
-offset_bottom = -128.056
-text = "Level 5"
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.035, 0.06, 0.09, 0.96)
 
-[node name="exit" type="Button" parent="Control" unique_id=885620711]
-visible = false
+[node name="Frame" type="Panel" parent="Control"]
 layout_mode = 0
-offset_left = 200.0
-offset_top = 208.0
-offset_right = 272.0
-offset_bottom = 240.0
-text = "Exit"
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 468.0
+offset_bottom = 258.0
 
-[connection signal="pressed" from="Control/Lvl1" to="." method="_on_lvl_1_pressed"]
-[connection signal="pressed" from="Control/Lvl2" to="." method="_on_lvl_2_pressed"]
-[connection signal="pressed" from="Control/Lvl3" to="." method="_on_lvl_3_pressed"]
-[connection signal="pressed" from="Control/Lvl4" to="." method="_on_lvl_4_pressed"]
-[connection signal="pressed" from="Control/Lvl5" to="." method="_on_lvl_5_pressed"]
-[connection signal="pressed" from="Control/exit" to="." method="_on_exit_pressed"]
+[node name="TitleLabel" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 22.0
+offset_right = 454.0
+offset_bottom = 42.0
+theme_override_colors/font_color = Color(0.95, 0.76, 0.29, 1)
+theme_override_font_sizes/font_size = 16
+text = "Dungeon Map"
+horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 43.0
+offset_right = 454.0
+offset_bottom = 59.0
+theme_override_colors/font_color = Color(0.65, 0.77, 0.79, 1)
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+
+[node name="RoomMap" type="Control" parent="Control"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 66.0
+offset_right = 452.0
+offset_bottom = 220.0
+mouse_filter = 2
+script = ExtResource("2_canvas")
+
+[node name="HintLabel" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 228.0
+offset_right = 454.0
+offset_bottom = 244.0
+theme_override_colors/font_color = Color(0.5, 0.62, 0.67, 1)
+theme_override_font_sizes/font_size = 10
+text = "M / Esc to close"
+horizontal_alignment = 1
