@@ -1,24 +1,21 @@
 extends Node
 
 const FLOOR_AMBIENT := {
-	"Area_1": Color(0.7, 0.64, 0.76, 1.0),
-	"Area_2": Color(0.52, 0.47, 0.64, 1.0),
-	"Area_3": Color(0.35, 0.34, 0.52, 1.0),
-	"Area_4": Color(0.2, 0.23, 0.36, 1.0),
-	"Area_5": Color(0.06, 0.08, 0.14, 1.0),
+	"Area_1": Color(0.66, 0.62, 0.72, 1.0),
+	"Area_2": Color(0.45, 0.41, 0.55, 1.0),
+	"Area_3": Color(0.26, 0.25, 0.4, 1.0),
+	"Area_4": Color(0.11, 0.13, 0.2, 1.0),
+	"Area_5": Color(0.012, 0.014, 0.025, 1.0),
 }
 
 
 func _ready() -> void:
 	get_tree().scene_changed.connect(_apply_floor_lighting)
-	call_deferred("_apply_current_scene_lighting")
+	call_deferred("_apply_floor_lighting")
 
 
-func _apply_current_scene_lighting() -> void:
-	_apply_floor_lighting(get_tree().current_scene)
-
-
-func _apply_floor_lighting(scene_root: Node) -> void:
+func _apply_floor_lighting() -> void:
+	var scene_root := get_tree().current_scene
 	if scene_root == null:
 		return
 
