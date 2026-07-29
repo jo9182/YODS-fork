@@ -1,8 +1,7 @@
 class_name vision extends Area2D
 
-signal playerarrive()
-
-signal playerleave()
+signal target_arrived(target: Node2D)
+signal target_left(target: Node2D)
 
 func _ready() -> void:
 	body_entered.connect(_on_body_enter)
@@ -12,15 +11,14 @@ func _ready() -> void:
 	if p is Enemy:
 		p.DirectionChanged.connect(_on_Direction_changed)
 	
-func _on_body_enter(_b : Node2D) -> void:
-	if _b is Player:
-		playerarrive.emit()
-	pass
-	
-func _on_body_exit(_b : Node2D) -> void:
-	if _b is Player:
-		playerleave.emit()
-	pass
+func _on_body_enter(body: Node2D) -> void:
+	if body is Player or body.is_in_group("dungeon_explorers"):
+		target_arrived.emit(body)
+
+
+func _on_body_exit(body: Node2D) -> void:
+	if body is Player or body.is_in_group("dungeon_explorers"):
+		target_left.emit(body)
 	
 
 func _on_Direction_changed( new_Dir : Vector2) -> void:

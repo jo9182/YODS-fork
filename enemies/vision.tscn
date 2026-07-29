@@ -4,5 +4,6 @@
 
 [node name="Vision" type="Area2D" unique_id=161422571]
 collision_layer = 0
+collision_mask = 17
 monitorable = false
 script = ExtResource("1_86xjw")

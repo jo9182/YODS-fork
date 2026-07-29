@@ -26,6 +26,7 @@ var invunerable: bool = false
 
 
 func _ready():
+	add_to_group("enemies")
 	state_machine.initalize(self)
 	player = PlayerManager.player
 	hitbox.Damaged.connect(_take_damage)

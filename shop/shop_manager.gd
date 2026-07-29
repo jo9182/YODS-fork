@@ -49,6 +49,9 @@ func sell(listing: ShopListing, buyer_name: String = "Unknown") -> int:
 	var gold_earned = listing.price
 
 	ReputationManager.record_sale(listing.price, listing.item_data.base_value)
+	var dungeon_renown := get_node_or_null("/root/DungeonRenown")
+	if dungeon_renown != null:
+		dungeon_renown.call("record_sale", listing.price, listing.item_data.base_value)
 	ShopLog.record(listing.item_data.name, gold_earned, buyer_name)
 
 	listing.quantity -= 1

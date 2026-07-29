@@ -13,7 +13,9 @@ class_name EnemyStateChasing extends EnemyState
 
 var _timer : float = 0.0
 var _direction : Vector2
-var see_player : bool = false
+var see_target : bool = false
+var target: Node2D
+var visible_targets: Array[Node2D] = []
 
 func _ready():
 	
@@ -23,36 +25,38 @@ func _ready():
 ## What happens when you initalize this state
 func init() -> void:
 	if myvision:
-		myvision.playerarrive.connect(_on_player_entered)
-		myvision.playerarrive.connect(_on_player_exited)
-		pass
+		myvision.target_arrived.connect(_on_target_entered)
+		myvision.target_left.connect(_on_target_exited)
 	
 ## what happens when the player enters this state
 func enter() -> void:
 	_timer = state_agro_duration
+	_select_target()
 	enemy.updateAnimation(anim_name)
 	if attack_target_area:
 		attack_target_area.monitoring = true
-	pass
 	
 ## what happens when the player exits this state
 func exit() -> void:
 	if attack_target_area:
 		attack_target_area.monitoring = false
-	see_player = false
-	pass
+	see_target = false
 	
 ## what happens during the process in this state
 func process(_delta):
-	var new_dir : Vector2 = enemy.global_position.direction_to(PlayerManager.player.global_position)
-	_direction = lerp(_direction, new_dir,turn_rate)
-	enemy.velocity = _direction * attack_speed
-	if enemy.setDirection( _direction ):
-		enemy.updateAnimation(anim_name)
-	
-	if see_player == false:
+	if not is_instance_valid(target):
+		_select_target()
+	if target != null:
+		var new_dir: Vector2 = enemy.global_position.direction_to(target.global_position)
+		_direction = lerp(_direction, new_dir, turn_rate)
+		enemy.velocity = _direction * attack_speed
+		if enemy.setDirection(_direction):
+			enemy.updateAnimation(anim_name)
+	else:
+		enemy.velocity = Vector2.ZERO
+	if not see_target:
 		_timer -= _delta
-		if _timer <= 0:
+		if _timer <= 0.0:
 			return next_state
 	else:
 		_timer = state_agro_duration
@@ -63,8 +67,10 @@ func process(_delta):
 func physics(_delta : float) -> EnemyState:
 	return null
 	
-func _on_player_entered() -> void:
-	see_player = true
+func _on_target_entered(new_target: Node2D) -> void:
+	if not visible_targets.has(new_target):
+		visible_targets.append(new_target)
+	_select_target()
 	if (
 		state_machine.currentState is EnemyStateStun
 		or state_machine.currentState is EnemyStateDestroy
@@ -72,5 +78,20 @@ func _on_player_entered() -> void:
 		return
 	state_machine.changeState(self)
 
-func _on_player_exited() -> void:
-	see_player = false
+
+func _on_target_exited(old_target: Node2D) -> void:
+	visible_targets.erase(old_target)
+	_select_target()
+
+
+func _select_target() -> void:
+	target = null
+	var nearest_distance := INF
+	for candidate in visible_targets:
+		if not is_instance_valid(candidate) or candidate.is_queued_for_deletion():
+			continue
+		var distance := enemy.global_position.distance_to(candidate.global_position)
+		if distance < nearest_distance:
+			target = candidate
+			nearest_distance = distance
+	see_target = target != null

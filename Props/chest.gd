@@ -3,6 +3,7 @@ class_name chest extends Node2D
 @export_file("*.tscn") var lava
 @export var chestName = "chestName"
 @export var loot_table: LootTable
+@export var replenishes_with_renown := true
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var marker_2d: Marker2D = $Marker2D
@@ -47,9 +48,16 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		opened = true
 		mypersistence.setValue()
+		_register_renown_chest()
 		animation_player.play("Open")
 		await get_tree().create_timer(0.2).timeout
 		_spawn_loot()
+
+
+func _register_renown_chest() -> void:
+	var renown := get_node_or_null("/root/DungeonRenown")
+	if renown != null:
+		renown.call("register_opened_chest", mypersistence.get_persistence_key(), replenishes_with_renown)
 
 
 func _spawn_loot() -> void:

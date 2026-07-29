@@ -21,6 +21,7 @@ var current_save: Dictionary = {
 	quest = [],
 	chests = [],
 	torches = {},
+	dungeon_renown = {},
 }
 
 
@@ -68,6 +69,7 @@ func load_game() -> void:
 	SkillTreeManager.load_save_data(current_save.get("purchased_skills", []), all_skills)
 
 	await LevelManager.level_loaded
+	game_loaded.emit()
 	print("load game")
 
 

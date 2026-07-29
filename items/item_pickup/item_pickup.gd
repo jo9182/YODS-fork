@@ -12,6 +12,7 @@ func _ready() -> void:
 	_update_texture()
 	if Engine.is_editor_hint():
 		return
+	add_to_group("item_pickups")
 	area_2d.body_entered.connect(_on_body_entered)
 
 
@@ -34,6 +35,20 @@ func item_picked_up() -> void:
 	visible = false
 	await audio_stream_player_2d.finished
 	queue_free()
+
+
+func collect_for_dungeon_explorer() -> bool:
+	return take_for_dungeon_explorer() != null
+
+
+func take_for_dungeon_explorer() -> ItemData:
+	if item_data == null or item_data.use_on_pickup:
+		return null
+	var collected_item := item_data
+	area_2d.set_deferred("monitoring", false)
+	visible = false
+	queue_free()
+	return collected_item
 
 
 func _set_item_data(value: ItemData) -> void:

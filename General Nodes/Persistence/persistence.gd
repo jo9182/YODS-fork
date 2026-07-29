@@ -18,6 +18,10 @@ func getValue() -> void:
 	data_loaded.emit()
 	pass
 
+
+func get_persistence_key() -> String:
+	return _getName()
+
 func _getName() -> String:
 	#This gets the name of the current scene in a resource format (res://) + Gets the name of the parent node
 	return get_tree().current_scene.scene_file_path + "/" + get_parent().name + "/" + name

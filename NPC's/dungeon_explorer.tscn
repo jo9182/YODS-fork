@@ -1,0 +1,82 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://NPC's/dungeon_explorer.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://o8pckq73hyuu" path="res://player/Sprites/Shadow.png" id="2_shadow"]
+[ext_resource type="Texture2D" uid="uid://cftkom6j5ecag" path="res://NPC's/Puny-Characters/Human-Soldier-Cyan.png" id="3_sprite"]
+[ext_resource type="Script" uid="uid://bclxo76rtwvwa" path="res://General Nodes/Hurt_Box/hurt_box.gd" id="4_hurtbox"]
+[ext_resource type="PackedScene" uid="uid://dlecjw8jjrpbm" path="res://General Nodes/Hitbox/Hitbox.tscn" id="5_hitbox"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_explorer"]
+radius = 7.0
+height = 14.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_attack"]
+radius = 11.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hitbox"]
+radius = 9.0
+
+[node name="DungeonExplorer" type="CharacterBody2D"]
+y_sort_enabled = true
+collision_layer = 16
+collision_mask = 272
+motion_mode = 1
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -9)
+shape = SubResource("CapsuleShape2D_explorer")
+
+[node name="ShadowSprite" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+position = Vector2(-1, -4)
+scale = Vector2(0.9, 0.72)
+texture = ExtResource("2_shadow")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -18)
+scale = Vector2(2, 2)
+texture = ExtResource("3_sprite")
+hframes = 24
+vframes = 8
+
+[node name="NameLabel" type="Label" parent="."]
+offset_left = -30.0
+offset_top = -36.0
+offset_right = 30.0
+offset_bottom = -26.0
+theme_override_colors/font_outline_color = Color(0.08, 0.08, 0.08, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 8
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="."]
+offset_left = -38.0
+offset_top = -48.0
+offset_right = 38.0
+offset_bottom = -38.0
+theme_override_colors/font_outline_color = Color(0.08, 0.08, 0.08, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 8
+horizontal_alignment = 1
+
+[node name="AttackHurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+monitorable = false
+damage = 1
+script = ExtResource("4_hurtbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHurtBox"]
+shape = SubResource("CircleShape2D_attack")
+
+[node name="Hitbox" parent="." instance=ExtResource("5_hitbox")]
+collision_layer = 258
+monitorable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-2, -9)
+shape = SubResource("CircleShape2D_hitbox")
