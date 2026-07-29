@@ -20,6 +20,7 @@ var current_save: Dictionary = {
 	persistience = [],
 	quest = [],
 	chests = [],
+	torches = {},
 }
 
 

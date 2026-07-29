@@ -1,7 +1,5 @@
 class_name TorchItemData extends ItemData
 
-const TORCH_SCENE := preload("res://Props/torch/torch.tscn")
-
 
 func use() -> bool:
 	if PlayerManager.player == null:
@@ -9,7 +7,10 @@ func use() -> bool:
 	var level_root := PlayerManager.player.get_parent()
 	if level_root == null:
 		return false
-	var torch := TORCH_SCENE.instantiate()
-	level_root.add_child(torch)
-	torch.global_position = PlayerManager.player.global_position
-	return true
+	var scene_tree := Engine.get_main_loop() as SceneTree
+	if scene_tree == null:
+		return false
+	var torch_manager := scene_tree.root.get_node_or_null("TorchManager")
+	if torch_manager == null:
+		return false
+	return torch_manager.place_torch(level_root, PlayerManager.player.global_position)

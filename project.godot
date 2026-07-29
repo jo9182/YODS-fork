@@ -19,7 +19,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 LevelManager="*res://00_globals/GlobalLevelManager.gd"
-LightingManager="*res://00_globals/lighting_manager.gd"
 PlayerHud="*res://GUI/player_hud/player_hud.tscn"
 PlayerManager="*res://00_globals/global_player_manager.gd"
 SceneTransitions="*res://GUI/Scene_Transition/scene_transitions.tscn"
@@ -33,6 +32,8 @@ ShopManager="*uid://cdla1gtlyfti1"
 SkillTreeManager="*uid://3b32ji3bw4lm"
 ShopLog="*uid://ddcrf4qkd1ff7"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
+LightingManager="*res://00_globals/lighting_manager.gd"
+TorchManager="*res://00_globals/torch_manager.gd"
 
 [display]
 
