@@ -6,19 +6,23 @@ var positions: Dictionary = {}
 var edges: Dictionary = {}
 var bounds: Dictionary = {}
 var discovered: Dictionary = {}
+var room_markers: Dictionary = {}
 var current_room := ""
+var current_player_position := Vector2.INF
 var map_origin := Vector2.ZERO
 var map_scale := 1.0
 
 
-func configure(layout: Dictionary, discovered_rooms: Array, current_scene_path: String) -> void:
+func configure(layout: Dictionary, discovered_rooms: Array, current_scene_path: String, marker_data: Dictionary = {}, player_position: Vector2 = Vector2.INF) -> void:
 	positions = layout.get("positions", {})
 	edges = layout.get("edges", {})
 	bounds = layout.get("bounds", {})
+	room_markers = marker_data
 	discovered.clear()
 	for scene_path in discovered_rooms:
 		discovered[scene_path] = true
 	current_room = current_scene_path
+	current_player_position = player_position
 	queue_redraw()
 
 
@@ -35,6 +39,9 @@ func _draw() -> void:
 	_draw_connections(known_rooms)
 	for scene_path in known_rooms:
 		_draw_room(scene_path)
+	_draw_exits(known_rooms)
+	_draw_markers(known_rooms)
+	_draw_player_marker()
 
 
 func _draw_grid() -> void:
@@ -83,15 +90,60 @@ func _draw_hallway(from: Vector2, to: Vector2) -> void:
 	draw_line(from, to, Color(0.35, 0.78, 0.71, 0.85), maxf(2.0, 4.0 * map_scale))
 
 
+func _draw_exits(known_rooms: Array[String]) -> void:
+	for scene_path in known_rooms:
+		for edge in edges.get(scene_path, []):
+			var target_path: String = edge.get("target", "")
+			var exit_position := _to_canvas_position(_get_door_position(scene_path, edge))
+			var exit_color := Color(0.92, 0.96, 0.98) if discovered.has(target_path) else Color(0.57, 0.66, 0.71)
+			draw_circle(exit_position, 3.2, Color(0.04, 0.08, 0.1, 0.95))
+			draw_circle(exit_position, 1.75, exit_color)
+
+
 func _draw_room(scene_path: String) -> void:
 	var room_rect := _to_canvas_rect(_get_world_rect(scene_path))
-	var center := room_rect.get_center()
 	var fill_color := Color(0.20, 0.66, 0.62) if scene_path != current_room else Color(0.95, 0.76, 0.29)
 	var outline_color := Color(0.62, 0.93, 0.87) if scene_path != current_room else Color(1.0, 0.93, 0.62)
 	draw_rect(room_rect, fill_color)
 	draw_rect(room_rect, outline_color, false, maxf(1.0, 2.0 * map_scale))
-	if scene_path == current_room:
-		draw_circle(center, maxf(2.0, 3.0 * map_scale), Color(1.0, 0.98, 0.82))
+
+
+func _draw_markers(known_rooms: Array[String]) -> void:
+	for scene_path in known_rooms:
+		for marker in room_markers.get(scene_path, []):
+			var marker_position := Vector2(float(marker.get("x", 0.0)), float(marker.get("y", 0.0)))
+			var world_position: Vector2 = positions.get(scene_path, Vector2.ZERO) + marker_position
+			_draw_marker(_to_canvas_position(world_position), marker.get("kind", ""))
+
+
+func _draw_marker(position: Vector2, kind: String) -> void:
+	match kind:
+		"chest":
+			draw_rect(Rect2(position - Vector2(3.5, 2.5), Vector2(7.0, 5.0)), Color(0.1, 0.06, 0.03, 0.9))
+			draw_rect(Rect2(position - Vector2(2.25, 1.5), Vector2(4.5, 3.0)), Color(0.63, 0.34, 0.13))
+		"opened_chest":
+			draw_rect(Rect2(position - Vector2(3.5, 2.5), Vector2(7.0, 5.0)), Color(0.1, 0.06, 0.03, 0.9))
+			draw_rect(Rect2(position - Vector2(2.25, 1.5), Vector2(4.5, 3.0)), Color(0.32, 0.2, 0.13))
+		"torch":
+			draw_circle(position, 3.5, Color(0.16, 0.07, 0.02, 0.9))
+			draw_circle(position, 2.0, Color(1.0, 0.56, 0.16))
+		"explorer":
+			draw_circle(position, 3.6, Color(0.05, 0.08, 0.16, 0.9))
+			draw_circle(position, 2.1, Color(0.35, 0.65, 1.0))
+
+
+func _draw_player_marker() -> void:
+	if not discovered.has(current_room):
+		return
+	var marker_position := current_player_position
+	if not marker_position.is_finite():
+		marker_position = bounds.get(current_room, FALLBACK_ROOM_BOUNDS).get_center()
+	var world_position: Vector2 = positions.get(current_room, Vector2.ZERO) + marker_position
+	var canvas_position := _to_canvas_position(world_position)
+	var room_rect := _to_canvas_rect(_get_world_rect(current_room)).grow(-3.0)
+	canvas_position = canvas_position.clamp(room_rect.position, room_rect.end)
+	draw_circle(canvas_position, 4.4, Color(0.08, 0.06, 0.02, 0.95))
+	draw_circle(canvas_position, 2.6, Color(1.0, 0.98, 0.82))
 
 
 func _get_door_position(scene_path: String, edge: Dictionary) -> Vector2:

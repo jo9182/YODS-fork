@@ -15,6 +15,7 @@ const ATTACK_OFFSETS := {
 	"up": Vector2(0, -18),
 }
 const ATTACK_ANIMATION_DURATION := 0.32
+const PARTY_FOLLOW_DISTANCE := 30.0
 const PICKUP_SCENE := preload("res://items/item_pickup/item_pickup.tscn")
 const FLOOR_GEAR := {
 	1: [preload("res://items/stone.tres")],
@@ -46,6 +47,10 @@ var navigation_path := PackedVector2Array()
 var navigation_index := 0
 var is_dead := false
 var carried_items: Array[ItemData] = []
+var explorer_name := ""
+var party_title := ""
+var party_role := ""
+var party_leader: DungeonExplorer
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var name_label: Label = $NameLabel
@@ -57,7 +62,8 @@ var carried_items: Array[ItemData] = []
 func _ready() -> void:
 	add_to_group("dungeon_explorers")
 	anchor_position = global_position
-	name_label.text = EXPLORER_NAMES.pick_random()
+	explorer_name = EXPLORER_NAMES.pick_random()
+	name_label.text = explorer_name
 	status_label.text = "Exploring"
 	current_health = max_health
 	attack_hurt_box.monitoring = false
@@ -71,6 +77,13 @@ func setup(spawn_position: Vector2, floor_number: int) -> void:
 	anchor_position = spawn_position
 	configure_for_floor(floor_number)
 	_choose_wander_target()
+
+
+func configure_party(leader: DungeonExplorer, party_slot: int, new_party_title: String) -> void:
+	party_leader = leader
+	party_title = new_party_title
+	party_role = "Lead" if party_slot == 0 else "Scout" if party_slot == 1 else "Guard"
+	name_label.text = "%s %s" % [party_title, party_role]
 
 
 func configure_for_floor(floor_number: int) -> void:
@@ -134,11 +147,27 @@ func _handle_pickup(pickup: Node2D, delta: float) -> void:
 
 
 func _handle_wander(delta: float) -> void:
+	if _follow_party_leader(delta):
+		return
 	wander_time -= delta
 	if wander_time <= 0.0 or global_position.distance_to(wander_target) <= 8.0:
 		_choose_wander_target()
 	status_label.text = "Exploring"
 	_move_toward_target(wander_target, delta)
+
+
+func _follow_party_leader(delta: float) -> bool:
+	if party_leader == null or party_leader == self or not is_instance_valid(party_leader) or party_leader.is_dead:
+		return false
+	var leader_distance := global_position.distance_to(party_leader.global_position)
+	status_label.text = "%s party" % party_title
+	if leader_distance <= PARTY_FOLLOW_DISTANCE:
+		velocity = Vector2.ZERO
+		if party_leader.velocity.length_squared() > 0.001:
+			_face(party_leader.velocity)
+		return true
+	_move_toward_target(party_leader.global_position, delta)
+	return true
 
 
 func _find_combat_target() -> Node2D:

@@ -54,9 +54,9 @@ visible = false
 layout_mode = 0
 offset_left = -26.0
 offset_top = -66.0
-offset_right = 133.0
+offset_right = 182.0
 offset_bottom = -43.0
-text = "Press \"I\" to list items!"
+text = "I: list items  C: workshop  Q: commissions"
 label_settings = SubResource("LabelSettings_j7d8m")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

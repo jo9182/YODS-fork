@@ -18,14 +18,14 @@ func _ready() -> void:
 	for child in get_children():
 		if child is Marker2D and child.name.begins_with("BrowseSpot"):
 			_browse_spots.append(child)
-	_spawn_timer = 3.0
+	_spawn_timer = 3.0 * ShopUpgradeManager.get_customer_spawn_multiplier()
 
 
 func _process(delta: float) -> void:
 	_spawn_timer -= delta
 	if _spawn_timer <= 0 and _active_customers.size() < max_customers and not customer_types.is_empty():
 		_spawn_customer()
-		_spawn_timer = spawn_cooldown
+		_spawn_timer = _get_spawn_cooldown()
 
 
 func _spawn_customer() -> void:
@@ -43,6 +43,9 @@ func _spawn_customer() -> void:
 	customer.init_spawn(entry_point.global_position, exit_point.global_position, spot.global_position)
 	customer.customer_left.connect(_on_customer_left)
 	_active_customers.append(customer)
+	var commission_manager := get_node_or_null("/root/CommissionManager")
+	if commission_manager != null:
+		commission_manager.call("record_customer_visit")
 
 
 func _pick_weighted() -> CustomerData:
@@ -82,3 +85,8 @@ func _find_available_spot() -> Marker2D:
 
 func _on_customer_left(customer: Customer) -> void:
 	_active_customers.erase(customer)
+
+
+func _get_spawn_cooldown() -> float:
+	var altar_multiplier := maxf(0.5, 1.0 - PlayerStats.customer_spawn_reduction)
+	return spawn_cooldown * ShopUpgradeManager.get_customer_spawn_multiplier() * altar_multiplier

@@ -19,7 +19,7 @@ func _ready() -> void:
 func record_sale(sale_price: int, base_value: int) -> void:
 	if base_value <= 0 or float(sale_price) / float(base_value) > 1.2:
 		return
-	add_renown(1)
+	add_renown(1 + PlayerStats.fair_sale_renown_bonus)
 
 
 func add_renown(amount: int) -> void:
@@ -44,11 +44,12 @@ func register_opened_chest(chest_key: String, can_replenish: bool) -> void:
 
 
 func get_explorer_count() -> int:
+	var base_count := 1
 	if total_renown >= 30:
-		return 3
-	if total_renown >= 10:
-		return 2
-	return 1
+		base_count = 3
+	elif total_renown >= 10:
+		base_count = 2
+	return base_count + PlayerStats.explorer_bonus
 
 
 func _replenish_chests() -> int:

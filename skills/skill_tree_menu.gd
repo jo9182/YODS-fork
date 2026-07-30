@@ -18,6 +18,7 @@ const COL_BTN_BROKE   = Color(0.22, 0.10, 0.10)       # dark red -- can see but 
 
 var skill_tree: SkillTreeData
 var description_label: Label
+var gold_label: Label
 var lines_node: SkillTreeLines
 var buttons_node: Control        # sits on top of lines_node, same size
 var skill_buttons: Dictionary = {}
@@ -47,7 +48,7 @@ func _build_ui() -> void:
 	# main panel
 	var panel = PanelContainer.new()
 	panel.set_anchors_preset(Control.PRESET_CENTER)
-	panel.custom_minimum_size = Vector2(460, 360)
+	panel.custom_minimum_size = Vector2(460, 262)
 	panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	panel.grow_vertical = Control.GROW_DIRECTION_BOTH
 	var panel_style = _make_flat_style(COL_BG, COL_BORDER, 6)
@@ -62,13 +63,21 @@ func _build_ui() -> void:
 	var title = Label.new()
 	title.text = "— Skill Tree —"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.text = "Altar Upgrades"
 	title.add_theme_font_size_override("font_size", 15)
 	title.add_theme_color_override("font_color", Color(0.9, 0.78, 0.3))
 	vbox.add_child(title)
 
+	gold_label = Label.new()
+	gold_label.text = "Gold: %d" % PlayerStats.gold
+	gold_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	gold_label.add_theme_font_size_override("font_size", 10)
+	gold_label.add_theme_color_override("font_color", Color(0.75, 0.68, 0.5))
+	vbox.add_child(gold_label)
+
 	# scroll container for the tree canvas
 	var scroll = ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(440, 240)
+	scroll.custom_minimum_size = Vector2(440, 160)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
 	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
 	vbox.add_child(scroll)
@@ -110,7 +119,7 @@ func _build_ui() -> void:
 
 	# description label below the scroll area
 	description_label = Label.new()
-	description_label.custom_minimum_size = Vector2(440, 36)
+	description_label.custom_minimum_size = Vector2(440, 26)
 	description_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	description_label.autowrap_mode = TextServer.AUTOWRAP_WORD
 	description_label.add_theme_font_size_override("font_size", 11)
@@ -120,13 +129,14 @@ func _build_ui() -> void:
 
 	# close button
 	var close_btn = Button.new()
-	close_btn.text = "Close  [Esc]"
+	close_btn.text = "Close [Esc]"
 	close_btn.add_theme_stylebox_override("normal", _make_flat_style(Color(0.15, 0.1, 0.08), Color(0.5, 0.35, 0.1), 4))
 	close_btn.add_theme_color_override("font_color", Color(0.85, 0.7, 0.3))
 	close_btn.pressed.connect(_on_close_pressed)
 	vbox.add_child(close_btn)
 
 	SkillTreeManager.skill_purchased.connect(_on_skill_purchased)
+	PlayerStats.gold_changed.connect(_on_gold_changed)
 
 
 func _add_skill_button(skill: SkillData) -> void:
@@ -221,6 +231,12 @@ func _on_skill_hovered(skill: SkillData) -> void:
 
 
 func _on_skill_purchased(_skill: SkillData) -> void:
+	_refresh_all_buttons()
+
+
+func _on_gold_changed(new_amount: int) -> void:
+	if gold_label != null:
+		gold_label.text = "Gold: %d" % new_amount
 	_refresh_all_buttons()
 
 

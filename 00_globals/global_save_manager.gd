@@ -23,6 +23,9 @@ var current_save: Dictionary = {
 	torches = {},
 	dungeon_renown = {},
 	map_discovery = [],
+	map_markers = {},
+	commissions = {},
+	shop_upgrades = [],
 }
 
 

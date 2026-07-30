@@ -3,6 +3,8 @@
 
 extends Node
 
+const DEFAULT_SKILL_TREE: SkillTreeData = preload("res://skills/my_skill_tree.tres")
+
 # fires when anything gets bought -- useful for custom skills
 signal skill_purchased(skill: SkillData)
 
@@ -39,6 +41,7 @@ func try_buy(skill: SkillData) -> bool:
 	print("PURCHASED: '%s' -- full list now: %s" % [skill.id, purchased_skills])
 	_apply_effect(skill)
 	skill_purchased.emit(skill)
+	SaveManager.save_game()
 	return true
 
 
@@ -56,6 +59,21 @@ func _apply_effect(skill: SkillData) -> void:
 			PlayerStats.damage_bonus += skill.effect_value
 		"shop_slots":
 			ShopManager.max_listings += int(skill.effect_value)
+		"lantern":
+			PlayerStats.lantern_energy_bonus += skill.effect_value
+			PlayerStats.lantern_scale_bonus += skill.effect_value * 0.8
+			if PlayerManager.player != null:
+				PlayerManager.player.refresh_lantern()
+		"torch_yield":
+			CraftingManager.torch_bundle_bonus += int(skill.effect_value)
+		"customer_speed":
+			PlayerStats.customer_spawn_reduction += skill.effect_value
+		"customer_budget":
+			PlayerStats.customer_budget_bonus += skill.effect_value
+		"renown":
+			PlayerStats.fair_sale_renown_bonus += int(skill.effect_value)
+		"explorer":
+			PlayerStats.explorer_bonus += int(skill.effect_value)
 		"custom":
 			# nothing automatic happens -- listen to skill_purchased signal yourself
 			pass
@@ -73,6 +91,25 @@ func load_save_data(data: Array, all_skills: Array[SkillData]) -> void:
 	for id in data:
 		purchased_skills.append(str(id))
 
-	for skill in all_skills:
+	_reset_reapplied_effects()
+	var skills_to_apply: Array[SkillData] = all_skills
+	if skills_to_apply.is_empty():
+		skills_to_apply = DEFAULT_SKILL_TREE.skills
+	for skill in skills_to_apply:
 		if is_purchased(skill.id) and skill.effect_type != "hp_max":
 			_apply_effect(skill)
+	if PlayerManager.player != null:
+		PlayerManager.player.refresh_lantern()
+
+
+func _reset_reapplied_effects() -> void:
+	PlayerStats.speed_bonus = 0.0
+	PlayerStats.damage_bonus = 0.0
+	PlayerStats.lantern_energy_bonus = 0.0
+	PlayerStats.lantern_scale_bonus = 0.0
+	PlayerStats.customer_spawn_reduction = 0.0
+	PlayerStats.customer_budget_bonus = 0.0
+	PlayerStats.fair_sale_renown_bonus = 0
+	PlayerStats.explorer_bonus = 0
+	ShopManager.max_listings = 5
+	CraftingManager.torch_bundle_bonus = 0

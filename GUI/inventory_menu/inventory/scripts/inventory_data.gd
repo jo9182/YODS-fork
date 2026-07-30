@@ -22,6 +22,36 @@ func addItem(item : ItemData, count : int = 1) -> bool:
 			return true
 	print("inventory was full")
 	return false
+
+
+func get_item_count(item: ItemData) -> int:
+	var total: int = 0
+	for slot in slots:
+		if slot != null and slot.item_data == item:
+			total += slot.quantity
+	return total
+
+
+func has_space_for(item: ItemData) -> bool:
+	for slot in slots:
+		if slot != null and slot.item_data == item:
+			return true
+	return slots.has(null)
+
+
+func remove_item(item: ItemData, count: int = 1) -> bool:
+	if count < 1 or get_item_count(item) < count:
+		return false
+	var remaining: int = count
+	for slot in slots:
+		if slot == null or slot.item_data != item:
+			continue
+		var removed: int = mini(slot.quantity, remaining)
+		slot.quantity -= removed
+		remaining -= removed
+		if remaining == 0:
+			return true
+	return false
 	
 func connect_slots() -> void:
 	for s in slots:
@@ -35,7 +65,7 @@ func slot_changed() -> void:
 				s.changed.disconnect(slot_changed)
 				var index = slots.find(s)
 				slots[index] = null
-				emit_changed()
+	emit_changed()
 	
 #Gather the information into an array
 func getSaveData() -> Array:

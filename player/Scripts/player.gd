@@ -26,7 +26,6 @@ var direction : Vector2 = Vector2.ZERO
 var invulnarable : bool = false
 var hp : int = 10
 var max_hp : int = 10
-var held_torch_count := -1
 
 func _ready():
 	PlayerManager.player = self
@@ -141,9 +140,10 @@ func _update_lantern_light() -> void:
 	for slot in PlayerManager.INVENTORY_DATA.slots:
 		if slot != null and slot.item_data != null and slot.item_data.resource_path == TORCH_ITEM_PATH:
 			torch_count += slot.quantity
-	if torch_count == held_torch_count:
-		return
-	held_torch_count = torch_count
 	var light_level := clampi(torch_count, 0, 5)
-	lantern_light.energy = LANTERN_BASE_ENERGY + light_level * LANTERN_TORCH_ENERGY
-	lantern_light.texture_scale = LANTERN_BASE_SCALE + light_level * LANTERN_TORCH_SCALE
+	lantern_light.energy = LANTERN_BASE_ENERGY + light_level * LANTERN_TORCH_ENERGY + PlayerStats.lantern_energy_bonus
+	lantern_light.texture_scale = LANTERN_BASE_SCALE + light_level * LANTERN_TORCH_SCALE + PlayerStats.lantern_scale_bonus
+
+
+func refresh_lantern() -> void:
+	_update_lantern_light()

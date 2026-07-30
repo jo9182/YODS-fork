@@ -7,6 +7,7 @@ const FALLBACK_ROOM_BOUNDS := Rect2(-Vector2(8.0, 6.0), Vector2(16.0, 12.0))
 const ROOM_GAP := 64.0
 const MAX_LAYOUT_PUSH_STEPS := 128
 var discovered_rooms: Dictionary = {}
+var room_markers: Dictionary = {}
 var floor_layouts: Dictionary = {}
 
 
@@ -19,7 +20,9 @@ func discover_current_room() -> bool:
 	var current_scene := get_tree().current_scene
 	if current_scene == null:
 		return false
-	return discover_room(current_scene.scene_file_path)
+	var discovered := discover_room(current_scene.scene_file_path)
+	var markers_updated := refresh_current_room_markers()
+	return discovered or markers_updated
 
 
 func discover_room(scene_path: String) -> bool:
@@ -50,6 +53,38 @@ func get_discovered_rooms(floor_number: int) -> Array[String]:
 	return rooms
 
 
+func get_room_markers(floor_number: int) -> Dictionary:
+	var markers_for_floor: Dictionary = {}
+	for scene_path in room_markers:
+		if get_floor_number(scene_path) == floor_number and discovered_rooms.has(scene_path):
+			markers_for_floor[scene_path] = room_markers[scene_path]
+	return markers_for_floor
+
+
+func get_current_player_position() -> Vector2:
+	var current_scene := get_tree().current_scene as Node2D
+	var player := PlayerManager.player
+	if current_scene == null or player == null or not is_instance_valid(player):
+		return Vector2.INF
+	return current_scene.to_local(player.global_position)
+
+
+func refresh_current_room_markers() -> bool:
+	var current_scene := get_tree().current_scene as Node2D
+	if current_scene == null:
+		return false
+	var scene_path := current_scene.scene_file_path
+	if get_floor_number(scene_path) == 0 or not discovered_rooms.has(scene_path):
+		return false
+	var markers := _collect_room_markers(current_scene)
+	if room_markers.get(scene_path, []) == markers:
+		return false
+	room_markers[scene_path] = markers
+	_store_in_save()
+	SaveManager.save_game()
+	return true
+
+
 func get_floor_layout(floor_number: int) -> Dictionary:
 	if floor_layouts.has(floor_number):
 		return floor_layouts[floor_number]
@@ -68,15 +103,45 @@ func get_floor_layout(floor_number: int) -> Dictionary:
 
 func _load_from_save() -> void:
 	discovered_rooms.clear()
+	room_markers.clear()
 	var saved_rooms = SaveManager.current_save.get("map_discovery", [])
 	if saved_rooms is Array:
 		for scene_path in saved_rooms:
 			if scene_path is String and get_floor_number(scene_path) > 0:
 				discovered_rooms[scene_path] = true
+	var saved_markers: Dictionary = SaveManager.current_save.get("map_markers", {})
+	for scene_path: String in saved_markers:
+		var saved_room_markers: Array = saved_markers.get(scene_path, [])
+		if discovered_rooms.has(scene_path):
+			room_markers[scene_path] = saved_room_markers
 
 
 func _store_in_save() -> void:
 	SaveManager.current_save["map_discovery"] = discovered_rooms.keys()
+	SaveManager.current_save["map_markers"] = room_markers
+
+
+func _collect_room_markers(room: Node2D) -> Array[Dictionary]:
+	var markers: Array[Dictionary] = []
+	for node in room.find_children("*", "", true, false):
+		if node is chest:
+			markers.append(_create_marker("opened_chest" if node.opened else "chest", room.to_local(node.global_position)))
+		elif node is Torch1 or node is Torch2:
+			markers.append(_create_marker("torch", room.to_local(node.global_position)))
+		elif node is DungeonExplorer:
+			markers.append(_create_marker("explorer", room.to_local(node.global_position)))
+	markers.sort_custom(_sort_markers)
+	return markers
+
+
+func _create_marker(kind: String, position: Vector2) -> Dictionary:
+	return {"kind": kind, "x": position.x, "y": position.y}
+
+
+func _sort_markers(first: Dictionary, second: Dictionary) -> bool:
+	var first_key := "%s:%08.2f:%08.2f" % [first.get("kind", ""), float(first.get("x", 0.0)), float(first.get("y", 0.0))]
+	var second_key := "%s:%08.2f:%08.2f" % [second.get("kind", ""), float(second.get("x", 0.0)), float(second.get("y", 0.0))]
+	return first_key < second_key
 
 
 func _get_room_paths(floor_number: int) -> Array[String]:

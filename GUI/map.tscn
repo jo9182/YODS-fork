@@ -71,5 +71,5 @@ offset_right = 454.0
 offset_bottom = 244.0
 theme_override_colors/font_color = Color(0.5, 0.62, 0.67, 1)
 theme_override_font_sizes/font_size = 10
-text = "M / Esc to close"
+text = "Gold: you  Brown: chest  Amber: torch  Blue: explorer  White: exit  M / Esc close"
 horizontal_alignment = 1

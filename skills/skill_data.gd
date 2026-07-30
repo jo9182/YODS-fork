@@ -26,8 +26,7 @@ class_name SkillData extends Resource
 # speed     -- adds effect_value to movement speed
 # damage    -- adds effect_value to attack damage
 # shop_slots -- adds effect_value more listing slots to the shop
-# custom    -- does nothing automatically, handle it via SkillTreeManager.skill_purchased signal
-@export_enum("hp_max", "speed", "damage", "shop_slots", "custom") var effect_type: String = "custom"
+@export_enum("hp_max", "speed", "damage", "shop_slots", "lantern", "torch_yield", "customer_speed", "customer_budget", "renown", "explorer", "custom") var effect_type: String = "custom"
 @export var effect_value: float = 1.0
 
 # unique id -- just set this to the skill name, needs to be unique across all skills

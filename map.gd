@@ -24,9 +24,15 @@ func open() -> void:
 	MapDiscoveryManager.discover_current_room()
 	var layout := MapDiscoveryManager.get_floor_layout(floor_number)
 	var discovered_rooms := MapDiscoveryManager.get_discovered_rooms(floor_number)
-	title_label.text = "Dungeon Map  ·  Floor %d" % floor_number
-	subtitle_label.text = "%d rooms charted  ·  Gold marker is your position" % discovered_rooms.size()
-	room_map.configure(layout, discovered_rooms, scene_path)
+	title_label.text = "Dungeon Map - Floor %d" % floor_number
+	subtitle_label.text = "%d rooms charted - markers update when you chart a room" % discovered_rooms.size()
+	room_map.configure(
+		layout,
+		discovered_rooms,
+		scene_path,
+		MapDiscoveryManager.get_room_markers(floor_number),
+		MapDiscoveryManager.get_current_player_position()
+	)
 
 
 func close() -> void:

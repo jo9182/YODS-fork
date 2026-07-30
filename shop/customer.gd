@@ -55,6 +55,8 @@ func _ready() -> void:
 		_current_budget = roundi(
 			randi_range(customer_data.min_budget, customer_data.max_budget)
 			* ReputationManager.get_budget_multiplier()
+			* ShopUpgradeManager.get_customer_budget_multiplier()
+			* (1.0 + PlayerStats.customer_budget_bonus)
 		)
 		_customer_type = customer_data.customer_name
 		_display_name = CUSTOMER_DIALOGUE.pick_name(_customer_type)

@@ -14,8 +14,8 @@ func add_listing(item_data: ItemData, price: int) -> bool:
 	var total_listed = 0
 	for l in listings:
 		total_listed += l.quantity
-	if total_listed >= max_listings:
-		print("shop is full -- buy more listing slots at the altar")
+	if total_listed >= ShopUpgradeManager.get_listing_capacity(max_listings):
+		print("shop is full -- buy more display space at the workshop")
 		return false
 
 	for listing in listings:
