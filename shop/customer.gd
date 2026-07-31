@@ -46,18 +46,23 @@ var _is_walking := false
 var _browse_pause_remaining := 0.0
 var _walk_time := 0.0
 var _status_tween: Tween
+var _is_tax_collector := false
 
 signal customer_left(customer: Customer)
 
 
 func _ready() -> void:
 	if customer_data:
-		_current_budget = roundi(
-			randi_range(customer_data.min_budget, customer_data.max_budget)
-			* ReputationManager.get_budget_multiplier()
-			* ShopUpgradeManager.get_customer_budget_multiplier()
-			* (1.0 + PlayerStats.customer_budget_bonus)
-		)
+		_is_tax_collector = customer_data.is_tax_collector
+		if _is_tax_collector:
+			_current_budget = 0
+		else:
+			_current_budget = roundi(
+				randi_range(customer_data.min_budget, customer_data.max_budget)
+				* ReputationManager.get_budget_multiplier()
+				* ShopUpgradeManager.get_customer_budget_multiplier()
+				* (1.0 + PlayerStats.customer_budget_bonus)
+			)
 		_customer_type = customer_data.customer_name
 		_display_name = CUSTOMER_DIALOGUE.pick_name(_customer_type)
 		name_label.text = _display_name
@@ -74,6 +79,7 @@ func _setup_sprite() -> void:
 	if not customer_data:
 		return
 	sprite_2d.texture = customer_data.texture
+	sprite_2d.modulate = customer_data.sprite_modulate
 	sprite_2d.scale = customer_data.sprite_scale
 	sprite_2d.region_enabled = false
 	sprite_2d.hframes = customer_data.hframes
@@ -143,6 +149,11 @@ func _browse(delta: float) -> void:
 func _handle_target_reached() -> void:
 	if _state == ST_ENTERING:
 		_state = ST_BROWSING
+		if _is_tax_collector:
+			buy_timer.stop()
+			_show_status(_dialogue_line("browse", "Reviewing your account."), Color(0.93, 0.65, 0.26), 1.2)
+			get_tree().create_timer(1.35).timeout.connect(_complete_tax_visit, CONNECT_ONE_SHOT)
+			return
 		_start_browse_pause()
 		_show_status(_dialogue_line("browse", "Let me have a look around."), Color(0.85, 0.9, 1.0), 1.8)
 	elif _state == ST_BROWSING:
@@ -151,6 +162,13 @@ func _handle_target_reached() -> void:
 		_state = ST_GONE
 		customer_left.emit(self)
 		queue_free()
+
+
+func _complete_tax_visit() -> void:
+	if _state != ST_BROWSING:
+		return
+	_show_status("Our arrangement remains in effect.", Color(0.93, 0.65, 0.26), 1.6)
+	get_tree().create_timer(1.65).timeout.connect(_start_exiting, CONNECT_ONE_SHOT)
 
 
 func _show_entry_dialogue_when_visible() -> void:

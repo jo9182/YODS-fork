@@ -1,0 +1,45 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://Levels/Area_1/test_lab.gd" id="1_test"]
+[ext_resource type="PackedScene" path="res://Tile Maps/grass_01.tscn" id="2_tilemap"]
+[ext_resource type="PackedScene" path="res://Levels/player_spawn.tscn" id="3_spawn"]
+[ext_resource type="PackedScene" path="res://shop/shop_interact.tscn" id="4_shop"]
+[ext_resource type="PackedScene" path="res://shop/customer_manager.tscn" id="5_customers"]
+[ext_resource type="PackedScene" path="res://Props/chest.tscn" id="6_chest"]
+[ext_resource type="PackedScene" path="res://Props/torch/torch.tscn" id="7_torch"]
+[ext_resource type="PackedScene" path="res://shop/shop_log_menu.tscn" id="8_log"]
+
+[node name="TestLab" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_test")
+
+[node name="TestTileMap" parent="." instance=ExtResource("2_tilemap")]
+modulate = Color(1, 1, 1, 0)
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("3_spawn")]
+position = Vector2(240, 236)
+
+[node name="ShopZone" parent="." instance=ExtResource("4_shop")]
+position = Vector2(-68, 0)
+
+[node name="CustomerManager" parent="." instance=ExtResource("5_customers")]
+position = Vector2(80, 0)
+max_customers = 4
+spawn_cooldown = 2.5
+
+[node name="Chest" parent="." instance=ExtResource("6_chest")]
+position = Vector2(68, 146)
+
+[node name="Chest2" parent="." instance=ExtResource("6_chest")]
+position = Vector2(108, 146)
+
+[node name="TorchWest" parent="." instance=ExtResource("7_torch")]
+position = Vector2(52, 96)
+
+[node name="TorchCenter" parent="." instance=ExtResource("7_torch")]
+position = Vector2(240, 96)
+
+[node name="TorchEast" parent="." instance=ExtResource("7_torch")]
+position = Vector2(428, 96)
+
+[node name="ShopLogMenu" parent="." instance=ExtResource("8_log")]

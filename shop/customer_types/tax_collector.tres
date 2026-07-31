@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CustomerData" format=3]
+
+[ext_resource type="Script" path="res://shop/customer_data.gd" id="1_data"]
+[ext_resource type="Texture2D" path="res://NPC's/Puny-Characters/Soldier-Blue.png" id="2_texture"]
+
+[resource]
+script = ExtResource("1_data")
+customer_name = "Tax Collector"
+texture = ExtResource("2_texture")
+hframes = 24
+vframes = 8
+sprite_modulate = Color(0.58, 0.31, 0.7, 1)
+min_budget = 0
+max_budget = 0
+visit_duration = 18.0
+spawn_weight = 0.0
+walk_speed = 38.0
+is_tax_collector = true
+greeting = "Ah. There you are."

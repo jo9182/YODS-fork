@@ -6,8 +6,8 @@ var restored_scene_id := 0
 
 
 func _ready() -> void:
-	LevelManager.level_loaded.connect(_restore_placed_torches)
-	call_deferred("_restore_placed_torches")
+	LevelManager.level_loaded.connect(restore_current_scene)
+	call_deferred("restore_current_scene")
 
 
 func place_torch(level_root: Node2D, position: Vector2) -> bool:
@@ -44,7 +44,7 @@ func record_torch_broken(torch: Node) -> void:
 	_store_scene_state(scene_root.scene_file_path, scene_state)
 
 
-func _restore_placed_torches() -> void:
+func restore_current_scene() -> void:
 	var scene_root := get_tree().current_scene
 	if scene_root == null or scene_root.scene_file_path.is_empty():
 		return
@@ -68,6 +68,7 @@ func _remove_saved_original_torches(scene_root: Node, removed_torches: Array) ->
 	for torch_path in removed_torches:
 		var original_torch := scene_root.get_node_or_null(NodePath(str(torch_path)))
 		if original_torch != null:
+			original_torch.hide()
 			original_torch.queue_free()
 
 

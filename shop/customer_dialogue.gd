@@ -51,6 +51,12 @@ const PROFILES := {
 		"hostile": ["I have heard this shop is trouble.", "I will take my chances without your wares."],
 		"farewell": ["Stay sharp, shopkeep.", "See you after the next dungeon run."],
 	},
+	"Tax Collector": {
+		"names": ["The Tax Collector"],
+		"entry": ["Ah. There you are.", "I had hoped we would not need to meet."],
+		"browse": ["Please, continue.", "Do not mind me."],
+		"farewell": ["We will speak again.", "Do take care."],
+	},
 }
 
 

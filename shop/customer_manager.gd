@@ -12,6 +12,7 @@ var _spawn_timer: float = 0.0
 var _browse_spots: Array[Marker2D] = []
 
 const CUSTOMER_SCENE := preload("res://shop/customer.tscn")
+const TAX_COLLECTOR_DATA := preload("res://shop/customer_types/tax_collector.tres")
 
 
 func _ready() -> void:
@@ -22,6 +23,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if _active_customers.size() < max_customers and TaxDebtManager.has_collector_visit_pending():
+		_spawn_tax_collector()
+		return
 	_spawn_timer -= delta
 	if _spawn_timer <= 0 and _active_customers.size() < max_customers and not customer_types.is_empty():
 		_spawn_customer()
@@ -32,10 +36,19 @@ func _spawn_customer() -> void:
 	var selected := _pick_weighted()
 	if not selected:
 		return
+	_spawn_customer_data(selected, true)
+
+
+func _spawn_tax_collector() -> void:
+	if _spawn_customer_data(TAX_COLLECTOR_DATA, false):
+		TaxDebtManager.claim_collector_visit()
+
+
+func _spawn_customer_data(selected: CustomerData, creates_commission: bool) -> bool:
 
 	var spot := _find_available_spot()
 	if not spot:
-		return
+		return false
 
 	var customer: Customer = CUSTOMER_SCENE.instantiate()
 	customer.customer_data = selected
@@ -43,9 +56,11 @@ func _spawn_customer() -> void:
 	customer.init_spawn(entry_point.global_position, exit_point.global_position, spot.global_position)
 	customer.customer_left.connect(_on_customer_left)
 	_active_customers.append(customer)
-	var commission_manager := get_node_or_null("/root/CommissionManager")
-	if commission_manager != null:
-		commission_manager.call("record_customer_visit")
+	if creates_commission:
+		var commission_manager := get_node_or_null("/root/CommissionManager")
+		if commission_manager != null:
+			commission_manager.call("record_customer_visit")
+	return true
 
 
 func _pick_weighted() -> CustomerData:

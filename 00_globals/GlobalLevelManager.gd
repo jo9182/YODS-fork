@@ -33,6 +33,8 @@ func load_new_level(level_path : String, _target_transition : String, _position_
 	await get_tree().process_frame
 	
 	get_tree().change_scene_to_file(level_path)
+	await get_tree().process_frame
+	TorchManager.restore_current_scene()
 	
 	await SceneTransitions.fade_in()
 	

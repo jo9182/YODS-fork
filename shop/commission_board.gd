@@ -69,29 +69,24 @@ func _refresh() -> void:
 
 func _add_commission_row(commission: Dictionary, active: Dictionary) -> void:
 	var commission_id: String = str(commission.get("id", ""))
-	var item_data := CommissionManager.get_item_data(commission)
-	var item_name := item_data.name if item_data != null else "Items"
-	var amount: int = int(commission.get("amount", 0))
 	var reward: int = int(commission.get("reward", 0))
 	var renown: int = int(commission.get("renown", 0))
 	var button := Button.new()
-	button.custom_minimum_size = Vector2(420.0, 40.0)
+	button.custom_minimum_size = Vector2(420.0, 56.0)
 	button.add_theme_font_size_override("font_size", 9)
 	if active.is_empty():
-		button.text = "ACCEPT: %s - bring %d %s\nReward: %dg + %d renown" % [
-			str(commission.get("title", "Commission")), amount, item_name, reward, renown,
+		button.text = "ACCEPT: %s\n%s\nReward: %dg + %d renown" % [
+			str(commission.get("title", "Commission")), CommissionManager.get_requirements_text(commission), reward, renown,
 		]
 	elif commission_id == str(active.get("id", "")):
 		var progress: Dictionary = CommissionManager.get_progress(commission)
-		var current_amount: int = int(progress.get("current", 0))
-		var target_amount: int = int(progress.get("target", amount))
-		button.text = "TURN IN: %s - %d/%d %s\nReward: %dg + %d renown" % [
-			str(commission.get("title", "Commission")), current_amount, target_amount, item_name, reward, renown,
+		button.text = "TURN IN: %s\n%s\nReward: %dg + %d renown" % [
+			str(commission.get("title", "Commission")), CommissionManager.get_requirements_text(commission, true), reward, renown,
 		]
-		button.disabled = current_amount < target_amount
+		button.disabled = not bool(progress.get("complete", false))
 	else:
-		button.text = "%s - bring %d %s\nFinish the active commission first." % [
-			str(commission.get("title", "Commission")), amount, item_name,
+		button.text = "%s\n%s\nFinish the active commission first." % [
+			str(commission.get("title", "Commission")), CommissionManager.get_requirements_text(commission),
 		]
 		button.disabled = true
 	button.pressed.connect(_on_commission_pressed.bind(commission_id))

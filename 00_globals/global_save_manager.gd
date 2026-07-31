@@ -25,11 +25,20 @@ var current_save: Dictionary = {
 	map_discovery = [],
 	map_markers = {},
 	commissions = {},
+	tax_debt = {},
 	shop_upgrades = [],
 }
+var is_test_session := false
+
+
+func set_test_session(active: bool) -> void:
+	is_test_session = active
 
 
 func save_game() -> void:
+	if is_test_session:
+		game_saved.emit()
+		return
 	update_player_data()
 	update_scene_path()
 	update_item_data()

@@ -46,12 +46,14 @@ func sell(listing: ShopListing, buyer_name: String = "Unknown") -> int:
 	if not listings.has(listing):
 		return -1
 
-	var gold_earned = listing.price
+	var gross_sale := listing.price
+	var loan_payment := TaxDebtManager.record_shop_sale(gross_sale)
+	var gold_earned := gross_sale - loan_payment
 
-	ReputationManager.record_sale(listing.price, listing.item_data.base_value)
+	ReputationManager.record_sale(gross_sale, listing.item_data.base_value)
 	var dungeon_renown := get_node_or_null("/root/DungeonRenown")
 	if dungeon_renown != null:
-		dungeon_renown.call("record_sale", listing.price, listing.item_data.base_value)
+		dungeon_renown.call("record_sale", gross_sale, listing.item_data.base_value)
 	ShopLog.record(listing.item_data.name, gold_earned, buyer_name)
 
 	listing.quantity -= 1
@@ -60,4 +62,5 @@ func sell(listing: ShopListing, buyer_name: String = "Unknown") -> int:
 	listings_changed.emit()
 
 	PlayerStats.add_gold(gold_earned)
+	TaxDebtManager.consider_misfortune(PlayerStats.gold)
 	return gold_earned
