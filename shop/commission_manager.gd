@@ -4,11 +4,13 @@ signal commissions_changed
 signal commission_completed(commission_id: String)
 
 const MAX_OPEN_COMMISSIONS := 3
-const SAVE_VERSION := 3
+const SAVE_VERSION := 4
 const CUSTOMER_VISITS_PER_COMMISSION := 5
 const COMMISSION_POOL: Array[Dictionary] = [
 	{
 		"id": "campfire_supplies",
+		"faction_id": "commoners",
+		"requester_name": "The Lower Stair Carters",
 		"title": "Campfire Supplies",
 		"description": "A caravan wants a compact bundle for its first descent.",
 		"requirements": [
@@ -21,6 +23,8 @@ const COMMISSION_POOL: Array[Dictionary] = [
 	},
 	{
 		"id": "slime_specimens",
+		"faction_id": "reagent_circle",
+		"requester_name": "The Reagent Circle",
 		"title": "Slime Specimens",
 		"description": "An alchemist needs a properly packed sample crate.",
 		"requirements": [
@@ -33,6 +37,8 @@ const COMMISSION_POOL: Array[Dictionary] = [
 	},
 	{
 		"id": "field_rations",
+		"faction_id": "commoners",
+		"requester_name": "The First Landing Workers",
 		"title": "Field Rations",
 		"description": "A cautious party wants food and medicine before going below.",
 		"requirements": [
@@ -44,7 +50,79 @@ const COMMISSION_POOL: Array[Dictionary] = [
 		"renown": 1,
 	},
 	{
+		"id": "landing_lanterns",
+		"faction_id": "commoners",
+		"requester_name": "The Lower Stair Carters",
+		"title": "Landing Lanterns",
+		"description": "Workers need enough light to move supplies through the first landing.",
+		"requirements": [
+			{"item_path": "res://items/torch.tres", "amount": 3},
+			{"item_path": "res://items/apple.tres", "amount": 2},
+		],
+		"area": 1,
+		"reward": 46,
+		"renown": 1,
+	},
+	{
+		"id": "masonry_repair",
+		"faction_id": "craftsfolk",
+		"requester_name": "The Stonecutters' Circle",
+		"title": "Masonry Repair",
+		"description": "A damaged route needs stone and light before the next hauling run.",
+		"requirements": [
+			{"item_path": "res://items/stone.tres", "amount": 5},
+			{"item_path": "res://items/torch.tres", "amount": 2},
+		],
+		"area": 2,
+		"reward": 78,
+		"renown": 2,
+	},
+	{
+		"id": "volatile_culture",
+		"faction_id": "reagent_circle",
+		"requester_name": "The Reagent Circle",
+		"title": "Volatile Culture",
+		"description": "The Circle needs residue and medicine for a sample that will not stay still.",
+		"requirements": [
+			{"item_path": "res://items/slime_residue.tres", "amount": 3},
+			{"item_path": "res://items/potion.tres", "amount": 1},
+		],
+		"area": 2,
+		"reward": 75,
+		"renown": 2,
+	},
+	{
+		"id": "vault_trophy",
+		"faction_id": "patron_houses",
+		"requester_name": "House Voss",
+		"title": "Vault Trophy",
+		"description": "A patron wants a presentable treasure recovered from below the first routes.",
+		"requirements": [
+			{"item_path": "res://items/gem.tres", "amount": 1},
+			{"item_path": "res://items/vamp_tooth.tres", "amount": 1},
+		],
+		"area": 3,
+		"reward": 150,
+		"renown": 3,
+	},
+	{
+		"id": "escort_provisions",
+		"faction_id": "patron_houses",
+		"requester_name": "The Voss Escort",
+		"title": "Escort Provisions",
+		"description": "An escorted expedition needs food and a little insurance before it descends.",
+		"requirements": [
+			{"item_path": "res://items/apple.tres", "amount": 3},
+			{"item_path": "res://items/potion.tres", "amount": 1},
+		],
+		"area": 2,
+		"reward": 96,
+		"renown": 2,
+	},
+	{
 		"id": "second_floor_survey",
+		"faction_id": "expedition_companies",
+		"requester_name": "The Lantern Company",
 		"title": "Second Floor Survey",
 		"description": "A mapmaker needs proof that a route into Area 2 is viable.",
 		"requirements": [
@@ -57,6 +135,8 @@ const COMMISSION_POOL: Array[Dictionary] = [
 	},
 	{
 		"id": "artisan_shipment",
+		"faction_id": "craftsfolk",
+		"requester_name": "The Stonecutters' Circle",
 		"title": "Artisan's Shipment",
 		"description": "A craftsperson needs sturdy stone and a cut gem from Area 2.",
 		"requirements": [
@@ -69,6 +149,8 @@ const COMMISSION_POOL: Array[Dictionary] = [
 	},
 	{
 		"id": "vampire_hunter_kit",
+		"faction_id": "expedition_companies",
+		"requester_name": "The Red Wardens",
 		"title": "Vampire Hunter's Kit",
 		"description": "A hunter wants trophies and medicine from the deeper rooms.",
 		"requirements": [
@@ -81,6 +163,8 @@ const COMMISSION_POOL: Array[Dictionary] = [
 	},
 	{
 		"id": "recovery_detail",
+		"faction_id": "expedition_companies",
+		"requester_name": "The Recovery Detail",
 		"title": "Recovery Detail",
 		"description": "A rescue party wants supplies after a survey of Area 3.",
 		"requirements": [
@@ -94,6 +178,8 @@ const COMMISSION_POOL: Array[Dictionary] = [
 	},
 	{
 		"id": "deep_delver_cache",
+		"faction_id": "expedition_companies",
+		"requester_name": "The Deep Delvers",
 		"title": "Deep Delver Cache",
 		"description": "An expedition is stocking up for an Area 4 push.",
 		"requirements": [
@@ -107,6 +193,8 @@ const COMMISSION_POOL: Array[Dictionary] = [
 	},
 	{
 		"id": "silent_watch",
+		"faction_id": "expedition_companies",
+		"requester_name": "The Silent Watch",
 		"title": "Silent Watch",
 		"description": "A sentry company is preparing to hold an Area 4 doorway.",
 		"requirements": [
@@ -119,6 +207,8 @@ const COMMISSION_POOL: Array[Dictionary] = [
 	},
 	{
 		"id": "last_light_relay",
+		"faction_id": "expedition_companies",
+		"requester_name": "The Last Light Company",
 		"title": "Last Light Relay",
 		"description": "Someone is paying well to prepare a route into the final dark.",
 		"requirements": [
@@ -235,15 +325,22 @@ func get_requirements_text(commission: Dictionary, include_progress: bool = fals
 	return ", ".join(labels)
 
 
-func record_customer_visit() -> bool:
+func record_customer_visit(faction_id: String = "") -> bool:
 	if offers.size() >= MAX_OPEN_COMMISSIONS:
 		return false
 	customer_visits_since_offer += 1
 	if customer_visits_since_offer < CUSTOMER_VISITS_PER_COMMISSION:
 		_write_save_data()
 		return false
+	var offer := _next_offer(faction_id)
+	if offer.is_empty():
+		_write_save_data()
+		return false
 	customer_visits_since_offer = 0
-	offers.append(_next_offer())
+	offers.append(offer)
+	var shop_log := get_node_or_null("/root/ShopLog")
+	if shop_log != null:
+		shop_log.call("record_commission_offered", offer)
 	_write_save_data()
 	commissions_changed.emit()
 	return true
@@ -272,6 +369,12 @@ func turn_in_active() -> bool:
 		PlayerManager.INVENTORY_DATA.remove_item(item_data, int(requirement.get("amount", 0)))
 	PlayerStats.add_gold(int(commission.get("reward", 0)))
 	DungeonRenown.add_renown(int(commission.get("renown", 0)))
+	var shop_log := get_node_or_null("/root/ShopLog")
+	if shop_log != null:
+		shop_log.call("record_commission_completed", commission)
+	var faction_manager := get_node_or_null("/root/FactionManager")
+	if faction_manager != null:
+		faction_manager.call("record_commission_completed", str(commission.get("faction_id", "")))
 	var completed_id := active_commission_id
 	var offer_index := _get_offer_index(completed_id)
 	active_commission_id = ""
@@ -293,7 +396,7 @@ func _load_from_save() -> void:
 		var saved_offers: Array = saved_data.get("offers", [])
 		for offer: Dictionary in saved_offers:
 			if not str(offer.get("id", "")).is_empty():
-				offers.append(offer.duplicate(true))
+				offers.append(_normalize_offer(offer))
 		active_commission_id = str(saved_data.get("active_id", ""))
 		next_offer_index = int(saved_data.get("next_offer_index", 0))
 		customer_visits_since_offer = int(saved_data.get("customer_visits_since_offer", 0))
@@ -301,16 +404,37 @@ func _load_from_save() -> void:
 		active_commission_id = ""
 
 
-func _next_offer() -> Dictionary:
+func _next_offer(faction_id: String = "") -> Dictionary:
 	for _attempt in COMMISSION_POOL.size():
 		var pool_index: int = posmod(next_offer_index, COMMISSION_POOL.size())
 		next_offer_index += 1
 		var candidate: Dictionary = COMMISSION_POOL[pool_index].duplicate(true)
+		if not faction_id.is_empty() and str(candidate.get("faction_id", "")) != faction_id:
+			continue
+		if not _is_area_known(int(candidate.get("area", 0))):
+			continue
 		if _get_offer_index(str(candidate.get("id", ""))) == -1:
 			return candidate
-	var fallback_index: int = posmod(next_offer_index, COMMISSION_POOL.size())
-	next_offer_index += 1
-	return COMMISSION_POOL[fallback_index].duplicate(true)
+	return {}
+
+
+func _normalize_offer(saved_offer: Dictionary) -> Dictionary:
+	var saved_id := str(saved_offer.get("id", ""))
+	for pool_offer: Dictionary in COMMISSION_POOL:
+		if str(pool_offer.get("id", "")) == saved_id:
+			var normalized := pool_offer.duplicate(true)
+			normalized.merge(saved_offer, true)
+			return normalized
+	return saved_offer.duplicate(true)
+
+
+func _is_area_known(area: int) -> bool:
+	if area <= 0:
+		return true
+	var discovery := get_node_or_null("/root/MapDiscoveryManager")
+	if discovery == null:
+		return true
+	return not MapDiscoveryManager.get_discovered_rooms(area).is_empty()
 
 
 func _get_offer_index(commission_id: String) -> int:

@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1")
 customer_name = "Alchemist"
+faction_id = &"reagent_circle"
 texture = ExtResource("2")
 hframes = 24
 vframes = 8

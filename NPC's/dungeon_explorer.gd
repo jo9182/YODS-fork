@@ -261,6 +261,13 @@ func _take_damage(hurt_box: HurtBox) -> void:
 	current_health -= hurt_box.damage
 	if _is_player_attack(hurt_box):
 		ReputationManager.record_adventurer_harm(current_health <= 0)
+		var faction_manager := get_node_or_null("/root/FactionManager")
+		if faction_manager != null:
+			faction_manager.call("record_adventurer_harm", current_health <= 0)
+		var shop_log := get_node_or_null("/root/ShopLog")
+		if shop_log != null:
+			var outcome := "killed" if current_health <= 0 else "injured"
+			shop_log.call("record_dungeon_event", "The Goblin %s an adventurer." % outcome, "combat")
 		status_label.text = "Under attack"
 	var flash_tween := create_tween()
 	flash_tween.tween_property(sprite, "modulate", Color(1.3, 0.55, 0.55, 1.0), 0.06)

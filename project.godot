@@ -32,7 +32,6 @@ TaxDebtManager="*res://shop/tax_debt_manager.gd"
 ShopManager="*uid://cdla1gtlyfti1"
 SkillTreeManager="*uid://3b32ji3bw4lm"
 ShopLog="*uid://ddcrf4qkd1ff7"
-_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 LightingManager="*res://00_globals/lighting_manager.gd"
 TorchManager="*res://00_globals/torch_manager.gd"
 DungeonRenown="*res://00_globals/dungeon_renown.gd"
@@ -44,6 +43,7 @@ ShopUpgradeManager="*res://shop/shop_upgrade_manager.gd"
 CommissionManager="*res://shop/commission_manager.gd"
 CommissionBoard="*res://shop/commission_board.tscn"
 WorkshopMenu="*res://shop/workshop_menu.tscn"
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 

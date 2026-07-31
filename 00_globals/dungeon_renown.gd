@@ -27,12 +27,17 @@ func add_renown(amount: int) -> void:
 		return
 	total_renown += amount
 	chest_progress += amount
+	var shop_log := get_node_or_null("/root/ShopLog")
+	if shop_log != null:
+		shop_log.call("record_dungeon_event", "Dungeon Renown increased by %d." % amount, "renown", amount)
 	while chest_progress >= CHEST_REFRESH_THRESHOLD:
 		var replenished := _replenish_chests()
 		if replenished <= 0:
 			break
 		chest_progress -= CHEST_REFRESH_THRESHOLD
 		chests_replenished.emit(replenished)
+		if shop_log != null:
+			shop_log.call("record_dungeon_event", "%d chest(s) replenished." % replenished, "chest", replenished)
 	_write_save_data()
 	renown_changed.emit(total_renown, chest_progress)
 

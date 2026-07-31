@@ -36,7 +36,7 @@ func exit() -> void:
 	pass
 	
 ## what happens during the process in this state
-func process(_delta):
+func _process(_delta):
 	enemy.velocity -= enemy.velocity * decelerate_speed * _delta
 	pass
 	

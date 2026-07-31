@@ -22,6 +22,7 @@ var current_save: Dictionary = {
 	chests = [],
 	torches = {},
 	dungeon_renown = {},
+	factions = {},
 	map_discovery = [],
 	map_markers = {},
 	commissions = {},
@@ -29,6 +30,10 @@ var current_save: Dictionary = {
 	shop_upgrades = [],
 }
 var is_test_session := false
+
+
+func _ready() -> void:
+	call_deferred("_ensure_faction_manager")
 
 
 func set_test_session(active: bool) -> void:
@@ -45,6 +50,9 @@ func save_game() -> void:
 	current_save.gold = PlayerStats.gold
 	current_save.purchased_skills = SkillTreeManager.get_save_data()
 	current_save.reputation = ReputationManager.get_save_data()
+	var faction_manager := get_node_or_null("/root/FactionManager")
+	if faction_manager != null:
+		current_save.factions = faction_manager.call("get_save_data")
 	current_save.shop_log = ShopLog.get_save_data()
 	var file := FileAccess.open(SAVE_PATH + "save.sav", FileAccess.WRITE)
 	var save_json = JSON.stringify(current_save)
@@ -73,6 +81,9 @@ func load_game() -> void:
 	PlayerManager.INVENTORY_DATA.parseSave(current_save.items)
 	PlayerStats.gold = current_save.get("gold", 0)
 	ReputationManager.load_save_data(current_save.get("reputation", {}))
+	var faction_manager := get_node_or_null("/root/FactionManager")
+	if faction_manager != null:
+		faction_manager.call("load_save_data", current_save.get("factions", {}))
 	ShopLog.load_save_data(current_save.get("shop_log", []))
 
 	# restore skill purchases and re-apply their effects
@@ -128,3 +139,14 @@ func check_persistent_value(value : String) -> bool:
 	#Does the array have the value
 	return p.has(value)
 	pass
+
+
+func _ensure_faction_manager() -> void:
+	if get_node_or_null("/root/FactionManager") != null:
+		return
+	var faction_script := load("res://shop/faction_manager.gd") as GDScript
+	if faction_script == null:
+		return
+	var faction_manager: Node = faction_script.new() as Node
+	faction_manager.name = "FactionManager"
+	get_tree().root.add_child(faction_manager)

@@ -1,5 +1,43 @@
 class_name CustomerDialogue extends RefCounted
 
+const FACTION_PROFILES := {
+	"commoners": {
+		"entry": [
+			"The upper route is safe enough today. I came down for food and lamp oil.",
+			"My family works the first landing. I need supplies before the next shift.",
+			"I came in with the scavengers. The surface prices are worse than the monsters.",
+		],
+	},
+	"craftsfolk": {
+		"entry": [
+			"I made it through the freight lift for ore and salvage. Show me what you have.",
+			"The old stonecutters' route is open again. I need materials before it closes.",
+			"I am not here for adventure. I am here for the things adventurers leave behind.",
+		],
+	},
+	"reagent_circle": {
+		"entry": [
+			"The fumes below changed overnight. I need fresh samples before they settle.",
+			"I came down for residue and teeth. The dungeon is an unpleasant laboratory.",
+			"The surface has no reagent this lively. Point me toward anything strange.",
+		],
+	},
+	"patron_houses": {
+		"entry": [
+			"My escort is waiting above the old vaults. I came for a relic, not a stroll.",
+			"House Voss is paying for a proper trophy from below. Your shop is the nearest stop.",
+			"The dungeon is dangerous, but at least its treasures have not learned manners.",
+		],
+	},
+	"expedition_companies": {
+		"entry": [
+			"We made it back from the lower route. I need supplies before we go in again.",
+			"The shop is the only dry place between the entrance and the next descent.",
+			"Our scout is injured and our torches are gone. Sell me something useful.",
+		],
+	},
+}
+
 const PROFILES := {
 	"Peasant": {
 		"names": ["Mira", "Nell", "Bram", "Tilda"],
@@ -68,8 +106,15 @@ static func pick_line(customer_type: String, category: String, fallback: String)
 	return _pick(customer_type, category, fallback)
 
 
+static func pick_faction_line(faction_id: String, category: String, fallback: String) -> String:
+	return _pick_from_profile(FACTION_PROFILES.get(faction_id, {}), category, fallback)
+
+
 static func _pick(customer_type: String, category: String, fallback: String) -> String:
-	var profile: Dictionary = PROFILES.get(customer_type, {})
+	return _pick_from_profile(PROFILES.get(customer_type, {}), category, fallback)
+
+
+static func _pick_from_profile(profile: Dictionary, category: String, fallback: String) -> String:
 	var options: Array = profile.get(category, [])
 	if options.is_empty():
 		return fallback

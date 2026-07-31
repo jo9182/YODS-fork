@@ -55,14 +55,23 @@ layout_mode = 0
 offset_left = 16.0
 offset_top = 50.0
 offset_right = 440.0
-offset_bottom = 65.0
+offset_bottom = 64.0
 theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+
+[node name="FactionLabel" type="Label" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 440.0
+offset_bottom = 82.0
+theme_override_font_sizes/font_size = 8
 horizontal_alignment = 1
 
 [node name="CommissionRows" type="VBoxContainer" parent="Control/Panel"]
 layout_mode = 0
 offset_left = 18.0
-offset_top = 70.0
+offset_top = 84.0
 offset_right = 438.0
 offset_bottom = 203.0
 theme_override_constants/separation = 4

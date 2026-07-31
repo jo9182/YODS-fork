@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1")
 customer_name = "Noble"
+faction_id = &"patron_houses"
 texture = ExtResource("2")
 hframes = 24
 vframes = 8

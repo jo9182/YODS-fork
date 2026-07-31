@@ -36,15 +36,15 @@ func _spawn_customer() -> void:
 	var selected := _pick_weighted()
 	if not selected:
 		return
-	_spawn_customer_data(selected, true)
+	_spawn_customer_data(selected)
 
 
 func _spawn_tax_collector() -> void:
-	if _spawn_customer_data(TAX_COLLECTOR_DATA, false):
+	if _spawn_customer_data(TAX_COLLECTOR_DATA):
 		TaxDebtManager.claim_collector_visit()
 
 
-func _spawn_customer_data(selected: CustomerData, creates_commission: bool) -> bool:
+func _spawn_customer_data(selected: CustomerData) -> bool:
 
 	var spot := _find_available_spot()
 	if not spot:
@@ -56,27 +56,38 @@ func _spawn_customer_data(selected: CustomerData, creates_commission: bool) -> b
 	customer.init_spawn(entry_point.global_position, exit_point.global_position, spot.global_position)
 	customer.customer_left.connect(_on_customer_left)
 	_active_customers.append(customer)
-	if creates_commission:
-		var commission_manager := get_node_or_null("/root/CommissionManager")
-		if commission_manager != null:
-			commission_manager.call("record_customer_visit")
 	return true
 
 
 func _pick_weighted() -> CustomerData:
 	var total_weight := 0.0
 	for ct in customer_types:
-		total_weight += ct.spawn_weight
+		if ct.is_tax_collector:
+			continue
+		var faction_weight := _get_faction_visit_weight(str(ct.faction_id))
+		total_weight += ct.spawn_weight * faction_weight
 	if total_weight <= 0:
 		return null
 
 	var roll := randf() * total_weight
 	var cumulative := 0.0
 	for ct in customer_types:
-		cumulative += ct.spawn_weight
+		if ct.is_tax_collector:
+			continue
+		cumulative += ct.spawn_weight * _get_faction_visit_weight(str(ct.faction_id))
 		if roll <= cumulative:
 			return ct
-	return customer_types.back()
+	for ct in customer_types:
+		if not ct.is_tax_collector:
+			return ct
+	return null
+
+
+func _get_faction_visit_weight(faction_id: String) -> float:
+	var faction_manager := get_node_or_null("/root/FactionManager")
+	if faction_manager == null:
+		return 1.0
+	return float(faction_manager.call("get_visit_weight", faction_id))
 
 
 func _find_available_spot() -> Marker2D:

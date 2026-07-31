@@ -38,6 +38,9 @@ func consider_misfortune(player_gold: int) -> void:
 		return
 	collector_visit_pending = true
 	_store_in_save()
+	var shop_log := get_node_or_null("/root/ShopLog")
+	if shop_log != null:
+		shop_log.call("record_debt_event", "The Tax Collector has been requested.", 0, loan_balance)
 	collector_visit_requested.emit()
 
 

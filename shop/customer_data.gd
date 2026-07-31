@@ -1,6 +1,7 @@
 class_name CustomerData extends Resource
 
 @export var customer_name: String = "Customer"
+@export var faction_id: StringName = &"commoners"
 @export var texture: Texture2D
 @export var hframes: int = 1
 @export var vframes: int = 1

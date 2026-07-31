@@ -39,6 +39,7 @@ var _entry_point: Vector2
 var _exit_point: Vector2
 var _browsing_spot: Vector2
 var _customer_type := ""
+var _faction_id := ""
 var _display_name := "Customer"
 var _entry_dialogue_shown := false
 var _facing := "down"
@@ -47,6 +48,7 @@ var _browse_pause_remaining := 0.0
 var _walk_time := 0.0
 var _status_tween: Tween
 var _is_tax_collector := false
+var _visit_recorded := false
 
 signal customer_left(customer: Customer)
 
@@ -64,6 +66,7 @@ func _ready() -> void:
 				* (1.0 + PlayerStats.customer_budget_bonus)
 			)
 		_customer_type = customer_data.customer_name
+		_faction_id = str(customer_data.faction_id)
 		_display_name = CUSTOMER_DIALOGUE.pick_name(_customer_type)
 		name_label.text = _display_name
 		_setup_sprite()
@@ -149,6 +152,7 @@ func _browse(delta: float) -> void:
 func _handle_target_reached() -> void:
 	if _state == ST_ENTERING:
 		_state = ST_BROWSING
+		_record_shop_visit()
 		if _is_tax_collector:
 			buy_timer.stop()
 			_show_status(_dialogue_line("browse", "Reviewing your account."), Color(0.93, 0.65, 0.26), 1.2)
@@ -271,7 +275,7 @@ func _attempt_purchase() -> void:
 func _purchase(listing: ShopListing) -> void:
 	_current_budget -= listing.price
 	var buyer_name := _display_name
-	ShopManager.sell(listing, buyer_name)
+	ShopManager.sell(listing, buyer_name, _faction_id)
 	var purchase_line := _dialogue_line("purchase", "Bought {item}!")
 	_show_status(purchase_line.replace("{item}", listing.item_data.name), Color(0.45, 1.0, 0.55), 1.8)
 
@@ -292,7 +296,28 @@ func _start_exiting() -> void:
 
 
 func _dialogue_line(category: String, fallback: String) -> String:
+	if category == "entry" and not _is_tax_collector:
+		var faction_line := CUSTOMER_DIALOGUE.pick_faction_line(_faction_id, category, "")
+		if not faction_line.is_empty():
+			return faction_line
 	return CUSTOMER_DIALOGUE.pick_line(_customer_type, category, fallback)
+
+
+func _record_shop_visit() -> void:
+	if _visit_recorded:
+		return
+	_visit_recorded = true
+	var shop_log := get_node_or_null("/root/ShopLog")
+	if shop_log != null:
+		shop_log.call("record_visitor", _display_name, _customer_type, _faction_id)
+	if _is_tax_collector or _faction_id.is_empty():
+		return
+	var faction_manager := get_node_or_null("/root/FactionManager")
+	if faction_manager != null:
+		faction_manager.call("record_customer_visit", _faction_id)
+	var commission_manager := get_node_or_null("/root/CommissionManager")
+	if commission_manager != null:
+		commission_manager.call("record_customer_visit", _faction_id)
 
 
 func _show_status(message: String, color: Color, duration: float) -> void:

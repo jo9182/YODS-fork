@@ -42,7 +42,7 @@ func delist(listing: ShopListing, inventory: inventoryData) -> void:
 
 
 # buyer_name is shown in the shop log, pass the NPC's priest_name
-func sell(listing: ShopListing, buyer_name: String = "Unknown") -> int:
+func sell(listing: ShopListing, buyer_name: String = "Unknown", buyer_faction: String = "") -> int:
 	if not listings.has(listing):
 		return -1
 
@@ -51,10 +51,16 @@ func sell(listing: ShopListing, buyer_name: String = "Unknown") -> int:
 	var gold_earned := gross_sale - loan_payment
 
 	ReputationManager.record_sale(gross_sale, listing.item_data.base_value)
+	if not buyer_faction.is_empty():
+		var faction_manager := get_node_or_null("/root/FactionManager")
+		if faction_manager != null:
+			faction_manager.call("record_purchase", buyer_faction, gross_sale, listing.item_data.base_value)
 	var dungeon_renown := get_node_or_null("/root/DungeonRenown")
 	if dungeon_renown != null:
 		dungeon_renown.call("record_sale", gross_sale, listing.item_data.base_value)
-	ShopLog.record(listing.item_data.name, gold_earned, buyer_name)
+	ShopLog.record(listing.item_data.name, gold_earned, buyer_name, gross_sale, loan_payment, buyer_faction)
+	if loan_payment > 0:
+		ShopLog.record_debt_event("Loan payment made after the sale.", loan_payment, TaxDebtManager.loan_balance)
 
 	listing.quantity -= 1
 	if listing.quantity <= 0:
