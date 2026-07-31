@@ -11,6 +11,8 @@ const FAIR_GAIN     = 3   # priced within 20% of base_value
 const CHEAP_GAIN    = 5   # priced below base_value (generous)
 const GREEDY_LOSS   = 4   # priced 20-60% above base_value
 const GOUGE_LOSS    = 10  # priced more than 60% above base_value
+const ADVENTURER_ASSAULT_LOSS = 4
+const ADVENTURER_KILL_LOSS = 20
 
 
 enum Mood { HOSTILE, WARY, NEUTRAL, FRIENDLY, BELOVED }
@@ -49,6 +51,10 @@ func record_sale(sale_price: int, base_value: int) -> void:
 		score -= GREEDY_LOSS
 	else:
 		score -= GOUGE_LOSS
+
+
+func record_adventurer_harm(killed: bool) -> void:
+	score -= ADVENTURER_KILL_LOSS if killed else ADVENTURER_ASSAULT_LOSS
 
 
 # returns a multiplier for how much gold an NPC brings
