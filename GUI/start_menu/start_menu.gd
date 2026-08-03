@@ -52,6 +52,9 @@ func open_options() -> void:
 	play_audio( button_press_audio )
 	var options_instance := OPTIONS_MENU.instantiate()
 	add_child(options_instance)
+	var menu_manager := get_node_or_null("/root/MenuManager")
+	if menu_manager != null:
+		menu_manager.call("open", options_instance)
 	options_instance.options_closed.connect(_on_options_closed)
 	_set_menu_buttons_disabled(true)
 

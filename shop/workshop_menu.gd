@@ -17,11 +17,9 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("craft"):
-		if _is_commission_board_open():
-			return
 		if is_open:
 			close()
-		elif ShopManager.in_shop_zone and not InventoryMenu.is_paused:
+		elif ShopManager.in_shop_zone:
 			open()
 		else:
 			return
@@ -33,12 +31,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func open() -> void:
-	if not ShopManager.in_shop_zone or _is_commission_board_open():
+	if not ShopManager.in_shop_zone:
 		return
+	var menu_manager := get_node_or_null("/root/MenuManager")
+	if menu_manager != null:
+		menu_manager.call("open", self)
 	is_open = true
 	visible = true
 	get_tree().paused = true
-	PauseMenu.process_mode = Node.PROCESS_MODE_DISABLED
 	_refresh()
 
 
@@ -47,8 +47,10 @@ func close() -> void:
 		return
 	is_open = false
 	visible = false
+	var menu_manager := get_node_or_null("/root/MenuManager")
+	if menu_manager != null:
+		menu_manager.call("close", self)
 	get_tree().paused = false
-	PauseMenu.process_mode = Node.PROCESS_MODE_ALWAYS
 
 
 func _refresh() -> void:
@@ -117,8 +119,3 @@ func _on_recipe_crafted(_recipe_id: String) -> void:
 
 func _on_gold_changed(_new_amount: int) -> void:
 	_refresh()
-
-
-func _is_commission_board_open() -> bool:
-	var board: Node = get_node_or_null("/root/CommissionBoard")
-	return board != null and bool(board.get("is_open"))

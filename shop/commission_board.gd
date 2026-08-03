@@ -23,7 +23,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("commission"):
 		if is_open:
 			close()
-		elif ShopManager.in_shop_zone and not InventoryMenu.is_paused and not _is_workshop_open():
+		elif ShopManager.in_shop_zone:
 			open()
 		else:
 			return
@@ -37,12 +37,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func open() -> void:
-	if not ShopManager.in_shop_zone or _is_workshop_open():
+	if not ShopManager.in_shop_zone:
 		return
+	var menu_manager := get_node_or_null("/root/MenuManager")
+	if menu_manager != null:
+		menu_manager.call("open", self)
 	is_open = true
 	visible = true
 	get_tree().paused = true
-	PauseMenu.process_mode = Node.PROCESS_MODE_DISABLED
 	_refresh()
 
 
@@ -51,8 +53,10 @@ func close() -> void:
 		return
 	is_open = false
 	visible = false
+	var menu_manager := get_node_or_null("/root/MenuManager")
+	if menu_manager != null:
+		menu_manager.call("close", self)
 	get_tree().paused = false
-	PauseMenu.process_mode = Node.PROCESS_MODE_ALWAYS
 
 
 func _refresh() -> void:
@@ -145,8 +149,3 @@ func _get_faction_summary() -> String:
 	if recent_events.is_empty():
 		return "Contacts: " + " | ".join(relationships)
 	return "Contacts: %s\n%s" % [" | ".join(relationships), str(recent_events.back())]
-
-
-func _is_workshop_open() -> bool:
-	var workshop: Node = get_node_or_null("/root/WorkshopMenu")
-	return workshop != null and bool(workshop.get("is_open"))

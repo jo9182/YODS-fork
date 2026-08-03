@@ -25,17 +25,28 @@ func _unhandled_input(event: InputEvent) -> void:
 			_close()
 		else:
 			_open()
+		get_viewport().set_input_as_handled()
 
 
 func _open() -> void:
+	var menu_manager := get_node_or_null("/root/MenuManager")
+	if menu_manager != null:
+		menu_manager.call("open", self)
 	_refresh()
 	panel.visible = true
 	get_tree().paused = true
 
 
 func _close() -> void:
+	var menu_manager := get_node_or_null("/root/MenuManager")
+	if menu_manager != null:
+		menu_manager.call("close", self)
 	panel.visible = false
 	get_tree().paused = false
+
+
+func close() -> void:
+	_close()
 
 
 func _refresh() -> void:

@@ -17,16 +17,18 @@ func _ready() -> void:
 	pass
 	
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause"):
+	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause"):
+		var menu_manager := _get_menu_manager()
 		if mymap.visible:
 			hide_map()
+		elif menu_manager != null and bool(menu_manager.call("has_active_menu")) and not bool(menu_manager.call("is_active", self)):
+			menu_manager.call("close_active")
 		elif is_paused == false:
 			show_pause_menu()
-			InventoryMenu.process_mode = Node.PROCESS_MODE_DISABLED
 		else:
 			hide_pause_menu()
-			InventoryMenu.process_mode = Node.PROCESS_MODE_ALWAYS
 		get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("map"):
 		if mymap.visible:
 			hide_map()
@@ -35,6 +37,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		
 func show_pause_menu() -> void:
+	var menu_manager := _get_menu_manager()
+	if menu_manager != null:
+		menu_manager.call("open", self)
 	get_tree().paused = true
 	visible = true
 	$Control.visible = true
@@ -47,6 +52,9 @@ func show_pause_menu() -> void:
 
 func hide_pause_menu() -> void:
 	mymap.close()
+	var menu_manager := _get_menu_manager()
+	if menu_manager != null:
+		menu_manager.call("close", self)
 	get_tree().paused = false
 	visible = false
 	$Control.visible = true
@@ -55,6 +63,9 @@ func hide_pause_menu() -> void:
 
 
 func show_map() -> void:
+	var menu_manager := _get_menu_manager()
+	if menu_manager != null:
+		menu_manager.call("open", self)
 	get_tree().paused = true
 	visible = true
 	$Control.visible = false
@@ -64,6 +75,9 @@ func show_map() -> void:
 
 func hide_map() -> void:
 	mymap.close()
+	var menu_manager := _get_menu_manager()
+	if menu_manager != null:
+		menu_manager.call("close", self)
 	get_tree().paused = false
 	visible = false
 	$Control.visible = true
@@ -97,3 +111,7 @@ func _on_button_quit_pressed() -> void:
 func play_audio(audio : AudioStream) -> void:
 	audio_stream_player.stream = audio
 	audio_stream_player.play()
+
+
+func _get_menu_manager() -> Node:
+	return get_node_or_null("/root/MenuManager")

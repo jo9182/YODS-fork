@@ -52,11 +52,17 @@ func _open_menu() -> void:
 	menu_instance.setup(skill_tree)
 	menu_instance.closed.connect(_close_menu)
 	get_tree().root.add_child(menu_instance)
+	var menu_manager := get_node_or_null("/root/MenuManager")
+	if menu_manager != null:
+		menu_manager.call("open", menu_instance)
 
 
 func _close_menu() -> void:
 	menu_open = false
 	get_tree().paused = false
 	if is_instance_valid(menu_instance):
+		var menu_manager := get_node_or_null("/root/MenuManager")
+		if menu_manager != null:
+			menu_manager.call("close", menu_instance)
 		menu_instance.queue_free()
 	menu_instance = null

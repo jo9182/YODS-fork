@@ -30,6 +30,16 @@ func _ready() -> void:
 	volume_slider.value_changed.connect(_on_volume_changed)
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause"):
+		get_viewport().set_input_as_handled()
+		_on_back_pressed()
+
+
+func close() -> void:
+	_on_back_pressed()
+
+
 func _populate_resolutions() -> void:
 	resolution_option.clear()
 	for preset in WindowPreset.values():
@@ -111,5 +121,8 @@ func _on_volume_changed(value: float) -> void:
 
 
 func _on_back_pressed() -> void:
+	var menu_manager := get_node_or_null("/root/MenuManager")
+	if menu_manager != null:
+		menu_manager.call("close", self)
 	options_closed.emit()
 	queue_free()

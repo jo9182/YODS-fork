@@ -37,6 +37,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		closed.emit()
 
 
+func close() -> void:
+	closed.emit()
+
+
 func _build_ui() -> void:
 	# dark overlay behind everything
 	var bg = ColorRect.new()

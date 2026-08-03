@@ -16,22 +16,26 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("inventory"):
 		if is_paused == false:
 			show_inventory_menu()
-			PauseMenu.process_mode = Node.PROCESS_MODE_DISABLED
 		else:
 			hide_inventory_menu()
-			PauseMenu.process_mode = Node.PROCESS_MODE_ALWAYS
-	if is_paused == true:
-		if event.is_action_pressed("pause"):
-			hide_inventory_menu()
-			PauseMenu.process_mode = Node.PROCESS_MODE_ALWAYS
 		get_viewport().set_input_as_handled()
+
+
+func close() -> void:
+	hide_inventory_menu()
 func show_inventory_menu() -> void:
+	var menu_manager := get_node_or_null("/root/MenuManager")
+	if menu_manager != null:
+		menu_manager.call("open", self)
 	get_tree().paused = true
 	visible = true
 	is_paused = true
 	shown.emit()
 
 func hide_inventory_menu() -> void:
+	var menu_manager := get_node_or_null("/root/MenuManager")
+	if menu_manager != null:
+		menu_manager.call("close", self)
 	get_tree().paused = false
 	visible = false
 	is_paused = false
