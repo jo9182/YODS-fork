@@ -43,8 +43,8 @@ ShopUpgradeManager="*res://shop/shop_upgrade_manager.gd"
 CommissionManager="*res://shop/commission_manager.gd"
 CommissionBoard="*res://shop/commission_board.tscn"
 WorkshopMenu="*res://shop/workshop_menu.tscn"
-_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 MenuManager="*res://00_globals/menu_manager.gd"
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 
