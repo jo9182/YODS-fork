@@ -41,7 +41,7 @@ func try_buy(skill: SkillData) -> bool:
 	print("PURCHASED: '%s' -- full list now: %s" % [skill.id, purchased_skills])
 	_apply_effect(skill)
 	skill_purchased.emit(skill)
-	SaveManager.save_game()
+	SaveManager.autosave_game()
 	return true
 
 

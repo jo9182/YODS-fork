@@ -31,7 +31,7 @@ func discover_room(scene_path: String) -> bool:
 	discovered_rooms[scene_path] = true
 	_store_in_save()
 	room_discovered.emit(scene_path)
-	SaveManager.save_game()
+	SaveManager.autosave_game()
 	return true
 
 
@@ -81,7 +81,7 @@ func refresh_current_room_markers() -> bool:
 		return false
 	room_markers[scene_path] = markers
 	_store_in_save()
-	SaveManager.save_game()
+	SaveManager.autosave_game()
 	return true
 
 

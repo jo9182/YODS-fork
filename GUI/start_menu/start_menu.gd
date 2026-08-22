@@ -12,6 +12,7 @@ const OPTIONS_MENU : PackedScene = preload("res://GUI/start_menu/options_menu.ts
 @onready var button_continue: Button = $CanvasLayer/Control/ButtonContinue
 @onready var button_options: Button = $CanvasLayer/Control/ButtonOptions
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var save_menu: SaveMenu = $CanvasLayer/SaveMenu
 
 
 
@@ -24,11 +25,13 @@ func _ready() -> void:
 	PlayerHud.visible = false
 	PauseMenu.process_mode = Node.PROCESS_MODE_DISABLED
 	
-	if SaveManager.get_save_file() == null:
+	if not SaveManager.has_any_save():
 		button_continue.disabled = true
 		button_continue.visible = false
 	
 	setup_title_screen()
+	save_menu.load_requested.connect(_on_load_slot_requested)
+	save_menu.closed.connect(_on_save_menu_closed)
 	
 	LevelManager.level_load_started.connect( exit_title_screen )
 	
@@ -77,9 +80,23 @@ func start_game() -> void:
 
 func load_game() -> void:
 	play_audio( button_press_audio )
-	SaveManager.load_game()
-	
-	pass
+	_set_menu_buttons_disabled(true)
+	$CanvasLayer/Control.visible = false
+	save_menu.open_load()
+
+
+func _on_load_slot_requested(slot_id: String) -> void:
+	var loaded: bool = await SaveManager.load_slot(slot_id)
+	if not loaded and is_inside_tree():
+		save_menu.close()
+
+
+func _on_save_menu_closed() -> void:
+	if not is_inside_tree():
+		return
+	$CanvasLayer/Control.visible = true
+	_set_menu_buttons_disabled(false)
+	button_continue.grab_focus()
 
 func exit_title_screen() -> void:
 	PlayerManager.player.visible = true

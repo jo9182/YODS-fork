@@ -49,7 +49,7 @@ func purchase(upgrade_id: String) -> bool:
 	purchased[upgrade_id] = true
 	_store_in_save()
 	upgrades_changed.emit()
-	SaveManager.save_game()
+	SaveManager.autosave_game()
 	return true
 
 

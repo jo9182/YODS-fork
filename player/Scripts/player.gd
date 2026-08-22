@@ -109,13 +109,15 @@ func _take_damage( hurtBox : HurtBox) -> void:
 		animation_player.play("death")
 		invulnarable = true
 		await get_tree().create_timer(.54).timeout
-		if SaveManager.get_save_file() != null:
+		if SaveManager.has_slot("autosave"):
+			SaveManager.load_autosave()
+		elif SaveManager.has_any_save():
 			SaveManager.load_game()
 			invulnarable = false
 		else:
 			update_hp(max_hp)
-			SaveManager.save_game()
-			SaveManager.load_game()
+			SaveManager.autosave_game()
+			SaveManager.load_autosave()
 			invulnarable = false
 	pass
 	

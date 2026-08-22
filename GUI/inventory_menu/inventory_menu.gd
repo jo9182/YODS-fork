@@ -44,7 +44,7 @@ func hide_inventory_menu() -> void:
 func _on_save_pressed() -> void:
 	if is_paused == false:
 		return
-	SaveManager.save_game()
+	SaveManager.autosave_game()
 	hide_inventory_menu()
 	pass
 

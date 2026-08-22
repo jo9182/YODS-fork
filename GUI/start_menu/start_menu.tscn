@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dnnpjnesadxvi" path="res://Tile Maps/Sprites/titlescreen.png" id="4_fqqss"]
 [ext_resource type="FontFile" uid="uid://5se4m828n1ty" path="res://GUI/fonts/KiwiSoda.ttf" id="5_5lm31"]
 [ext_resource type="PackedScene" uid="uid://disne6mk77iyi" path="res://Levels/player_spawn.tscn" id="6_5lm31"]
+[ext_resource type="PackedScene" path="res://GUI/save_menu/save_menu.tscn" id="7_save_menu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fqqss"]
 texture = ExtResource("2_bod48")
@@ -301,6 +302,9 @@ offset_bottom = 218.0
 theme = SubResource("Theme_peo7x")
 text = "Options"
 metadata/_edit_use_anchors_ = true
+
+[node name="SaveMenu" parent="CanvasLayer" instance=ExtResource("7_save_menu")]
+visible = false
 
 [node name="PlayerSpawn" parent="." unique_id=163098939 instance=ExtResource("6_5lm31")]
 position = Vector2(240, 128)

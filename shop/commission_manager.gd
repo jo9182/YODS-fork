@@ -454,4 +454,4 @@ func _write_save_data() -> void:
 		"next_offer_index": next_offer_index,
 		"customer_visits_since_offer": customer_visits_since_offer,
 	}
-	SaveManager.save_game()
+	SaveManager.autosave_game()

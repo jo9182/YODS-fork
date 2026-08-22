@@ -98,7 +98,7 @@ func _do_use() -> void:
 	slot_data.quantity -= 1
 	label.text = str(slot_data.quantity)
 	if slot_data.item_data is TorchItemData:
-		SaveManager.save_game()
+		SaveManager.autosave_game()
 
 
 func _do_drop() -> void:

@@ -25,7 +25,7 @@ func _on_body_entered(b) -> void:
 				item_picked_up()
 			elif PlayerManager.INVENTORY_DATA.addItem(item_data) == true:
 				if item_data is TorchItemData:
-					SaveManager.save_game()
+					SaveManager.autosave_game()
 				item_picked_up()
 
 

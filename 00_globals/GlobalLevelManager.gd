@@ -21,6 +21,8 @@ func ChangeTilemapBounds( bounds :  Array[ Vector2 ]) -> void:
 	
 	
 func load_new_level(level_path : String, _target_transition : String, _position_offset : Vector2) -> void:
+	if not SaveManager.is_loading:
+		SaveManager.autosave_game()
 	
 	get_tree().paused = true
 	target_transition = _target_transition
@@ -42,5 +44,7 @@ func load_new_level(level_path : String, _target_transition : String, _position_
 	
 	await get_tree().process_frame
 	level_loaded.emit()
+	if not SaveManager.is_loading:
+		SaveManager.autosave_game()
 	
 	pass

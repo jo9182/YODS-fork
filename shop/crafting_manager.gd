@@ -81,7 +81,7 @@ func craft(recipe_id: String) -> bool:
 	var output: ItemData = load(str(recipe.get("output_path", ""))) as ItemData
 	inventory.addItem(output, get_output_amount(recipe))
 	recipe_crafted.emit(recipe_id)
-	SaveManager.save_game()
+	SaveManager.autosave_game()
 	return true
 
 

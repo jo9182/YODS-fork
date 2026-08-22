@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cwrvjvusutxyr" path="res://GUI/pause_menu/pause_menu.gd" id="1_4w82k"]
 [ext_resource type="PackedScene" uid="uid://dqi17ey8tbyws" path="res://GUI/map.tscn" id="2_yiq8o"]
+[ext_resource type="PackedScene" path="res://GUI/save_menu/save_menu.tscn" id="3_save_menu"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4w82k"]
 font_size = 32
@@ -81,6 +82,9 @@ text = "QUIT"
 max_polyphony = 4
 
 [node name="Map" parent="." unique_id=971038249 instance=ExtResource("2_yiq8o")]
+visible = false
+
+[node name="SaveMenu" parent="." instance=ExtResource("3_save_menu")]
 visible = false
 
 [connection signal="pressed" from="Control/VBoxContainer/Button_quit" to="." method="_on_button_quit_pressed"]
