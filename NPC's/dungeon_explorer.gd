@@ -30,10 +30,15 @@ const FLOOR_GEAR := {
 @export var pickup_range := 14.0
 @export var attack_cooldown := 0.9
 @export var max_health := 5
+@export var patrol_radius := Vector2(88.0, 64.0)
+@export var patrol_pause_min := 0.45
+@export var patrol_pause_max := 1.4
+@export var patrol_return_distance := 140.0
 
 var anchor_position := Vector2.ZERO
 var wander_target := Vector2.ZERO
 var wander_time := 0.0
+var patrol_pause_time := 0.0
 var attack_time := 0.0
 var walk_time := 0.0
 var attack_animation_time := 0.0
@@ -51,6 +56,11 @@ var explorer_name := ""
 var party_title := ""
 var party_role := ""
 var party_leader: DungeonExplorer
+var patrol_route: PatrolRoute
+var patrol_waypoint_index := 0
+var patrol_route_direction := 1
+var patrol_wait_remaining := 0.0
+var patrol_route_finished := false
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var name_label: Label = $NameLabel
@@ -84,6 +94,17 @@ func configure_party(leader: DungeonExplorer, party_slot: int, new_party_title: 
 	party_title = new_party_title
 	party_role = "Lead" if party_slot == 0 else "Scout" if party_slot == 1 else "Guard"
 	name_label.text = "%s %s" % [party_title, party_role]
+
+
+func configure_patrol_route(route: PatrolRoute) -> void:
+	patrol_route = route
+	patrol_waypoint_index = 0
+	patrol_route_direction = 1
+	patrol_wait_remaining = 0.0
+	patrol_route_finished = false
+	navigation_target = Vector2.INF
+	if patrol_route != null and not patrol_route.get_waypoints().is_empty():
+		wander_target = patrol_route.get_waypoint_position(patrol_waypoint_index)
 
 
 func configure_for_floor(floor_number: int) -> void:
@@ -149,11 +170,58 @@ func _handle_pickup(pickup: Node2D, delta: float) -> void:
 func _handle_wander(delta: float) -> void:
 	if _follow_party_leader(delta):
 		return
+	if patrol_route != null and not patrol_route.get_waypoints().is_empty():
+		_handle_route_patrol(delta)
+		return
+	if patrol_pause_time > 0.0:
+		patrol_pause_time = maxf(patrol_pause_time - delta, 0.0)
+		velocity = Vector2.ZERO
+		status_label.text = "Watching"
+		return
+	var returning_to_anchor := global_position.distance_to(anchor_position) > patrol_return_distance
+	if returning_to_anchor:
+		wander_target = anchor_position
+		navigation_target = Vector2.INF
 	wander_time -= delta
-	if wander_time <= 0.0 or global_position.distance_to(wander_target) <= 8.0:
+	if global_position.distance_to(wander_target) <= 8.0:
+		velocity = Vector2.ZERO
+		patrol_pause_time = randf_range(patrol_pause_min, patrol_pause_max)
+		wander_time = 0.0
+		return
+	if wander_time <= 0.0 and not returning_to_anchor:
 		_choose_wander_target()
 	status_label.text = "Exploring"
 	_move_toward_target(wander_target, delta)
+
+
+func _handle_route_patrol(delta: float) -> void:
+	if patrol_route_finished:
+		velocity = Vector2.ZERO
+		status_label.text = "Watching"
+		return
+	if patrol_wait_remaining > 0.0:
+		patrol_wait_remaining = maxf(patrol_wait_remaining - delta, 0.0)
+		velocity = Vector2.ZERO
+		status_label.text = "Watching"
+		return
+	if global_position.distance_to(wander_target) <= 8.0:
+		velocity = Vector2.ZERO
+		patrol_wait_remaining = patrol_route.get_waypoint_wait(patrol_waypoint_index)
+		if patrol_wait_remaining <= 0.0:
+			_advance_patrol_waypoint()
+		return
+	status_label.text = "Patrolling"
+	_move_toward_target(wander_target, delta)
+
+
+func _advance_patrol_waypoint() -> void:
+	var next := patrol_route.get_next_index(patrol_waypoint_index, patrol_route_direction)
+	patrol_waypoint_index = int(next.get("index", patrol_waypoint_index))
+	patrol_route_direction = int(next.get("direction", patrol_route_direction))
+	patrol_route_finished = bool(next.get("finished", false))
+	patrol_wait_remaining = 0.0
+	wander_target = patrol_route.get_waypoint_position(patrol_waypoint_index)
+	navigation_target = Vector2.INF
 
 
 func _follow_party_leader(delta: float) -> bool:
@@ -314,8 +382,8 @@ func _drop_carried_items() -> void:
 
 
 func _choose_wander_target() -> void:
-	wander_time = randf_range(1.4, 3.2)
-	wander_target = DungeonPathfinder.get_wander_point(anchor_position, Vector2(88.0, 64.0))
+	wander_time = randf_range(1.8, 4.0)
+	wander_target = DungeonPathfinder.get_wander_point(anchor_position, patrol_radius)
 	navigation_target = Vector2.INF
 
 

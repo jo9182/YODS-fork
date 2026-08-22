@@ -66,6 +66,15 @@ func is_walkable(world_position: Vector2) -> bool:
 	return _grid.is_in_boundsv(cell) and not _grid.is_point_solid(cell)
 
 
+func find_nearest_walkable(world_position: Vector2) -> Vector2:
+	if _grid == null or _tilemap == null:
+		return Vector2.INF
+	var cell := _nearest_open_cell(_global_to_cell(world_position))
+	if cell == Vector2i.MAX:
+		return Vector2.INF
+	return _cell_to_global(cell)
+
+
 func get_wander_point(anchor: Vector2, max_offset: Vector2) -> Vector2:
 	if _grid == null:
 		return anchor
@@ -73,7 +82,8 @@ func get_wander_point(anchor: Vector2, max_offset: Vector2) -> Vector2:
 		var candidate := anchor + Vector2(randf_range(-max_offset.x, max_offset.x), randf_range(-max_offset.y, max_offset.y))
 		if is_walkable(candidate):
 			return candidate
-	return _cell_to_global(_nearest_open_cell(_global_to_cell(anchor)))
+	var nearest := find_nearest_walkable(anchor)
+	return anchor if nearest == Vector2.INF else nearest
 
 
 func _find_tilemap(node: Node) -> TileMapLayer:

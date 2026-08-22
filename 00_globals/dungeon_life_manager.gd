@@ -43,6 +43,10 @@ func _populate_explorers() -> void:
 	populated_scene_id = scene_id
 	var floor_number := _get_floor_number(level_root.scene_file_path)
 	var spawn_budget := mini(int(renown.call("get_explorer_count")), _get_spawn_limit(floor_number))
+	var authored_points := _get_authored_spawn_points(level_root, floor_number)
+	if not authored_points.is_empty():
+		_populate_authored_explorers(level_root, explorer_scene, floor_number, spawn_budget, authored_points)
+		return
 	var reserved_positions: Array[Vector2] = []
 	while spawn_budget > 0:
 		var party_size := _get_party_size(spawn_budget, floor_number)
@@ -64,6 +68,45 @@ func _populate_explorers() -> void:
 			reserved_positions.append(member_position)
 			members_spawned += 1
 		spawn_budget -= members_spawned
+
+
+func _populate_authored_explorers(level_root: Node2D, explorer_scene: PackedScene, floor_number: int, spawn_budget: int, authored_points: Array[AdventurerSpawnPoint]) -> void:
+	var reserved_positions: Array[Vector2] = []
+	authored_points.sort_custom(func(first: AdventurerSpawnPoint, second: AdventurerSpawnPoint): return first.priority < second.priority)
+	for point in authored_points:
+		if spawn_budget <= 0:
+			break
+		var leader_position := point.global_position
+		if not DungeonPathfinder.is_walkable(leader_position) or not _is_position_free(level_root, leader_position):
+			leader_position = DungeonPathfinder.find_nearest_walkable(leader_position)
+		if leader_position == Vector2.INF or _is_position_reserved(leader_position, reserved_positions):
+			continue
+		var party_size := mini(point.party_size, spawn_budget)
+		party_serial += 1
+		var party_name: String = PARTY_NAMES[party_serial % PARTY_NAMES.size()]
+		var leader := _spawn_explorer(explorer_scene, level_root, leader_position, floor_number)
+		leader.configure_party(leader, 0, party_name)
+		leader.configure_patrol_route(point.get_patrol_route())
+		reserved_positions.append(leader_position)
+		var members_spawned := 1
+		for party_slot in range(1, party_size):
+			var member_position := _find_party_member_position(level_root, leader_position, reserved_positions)
+			if member_position == Vector2.INF:
+				break
+			var member := _spawn_explorer(explorer_scene, level_root, member_position, floor_number)
+			member.configure_party(leader, party_slot, party_name)
+			reserved_positions.append(member_position)
+			members_spawned += 1
+		spawn_budget -= members_spawned
+
+
+func _get_authored_spawn_points(level_root: Node2D, floor_number: int) -> Array[AdventurerSpawnPoint]:
+	var points: Array[AdventurerSpawnPoint] = []
+	for node in get_tree().get_nodes_in_group("adventurer_spawn_points"):
+		var point := node as AdventurerSpawnPoint
+		if point != null and level_root.is_ancestor_of(point) and point.is_available_on_floor(floor_number):
+			points.append(point)
+	return points
 
 
 func _is_explorer_scene(scene_path: String) -> bool:

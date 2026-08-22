@@ -78,6 +78,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_summon_tax_collector()
 		KEY_F9:
 			_stock_shop()
+		KEY_F10:
+			_reset_enemy_encounters()
 		_:
 			return
 	get_viewport().set_input_as_handled()
@@ -133,7 +135,7 @@ func _build_overlay() -> void:
 	instructions.position = Vector2(10, 8)
 	instructions.size = Vector2(178, 218)
 	instructions.add_theme_font_size_override("font_size", 8)
-	instructions.text = "TEST LAB\nSave writes disabled\n\nI inventory/list items\nC workshop, Q commissions\nM map, L shop log\n\nF1 loadout   F2 party\nF3 enemies   F4 pickups\nF5 job       F6 survey\nF7 torch     F8 Tax Collector\nF9 stock shop"
+	instructions.text = "TEST LAB\nSave writes disabled\n\nI inventory/list items\nC workshop, Q commissions\nM map, L shop log\n\nF1 loadout   F2 party\nF3 enemies   F4 pickups\nF5 job       F6 survey\nF7 torch     F8 Tax Collector\nF9 stock shop  F10 reset enemies"
 	instructions.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(instructions)
 	status_label = Label.new()
@@ -210,11 +212,22 @@ func _spawn_enemy_wave() -> void:
 
 
 func _spawn_enemy(enemy_scene: PackedScene, spawn_position: Vector2) -> void:
+	var enemy_manager := get_node_or_null("/root/DungeonEnemyManager")
+	if enemy_manager != null and enemy_manager.has_method("spawn_enemy"):
+		enemy_manager.call("spawn_enemy", enemy_scene, spawn_position)
+		return
 	var enemy := enemy_scene.instantiate() as Enemy
 	if enemy == null:
 		return
 	enemy.position = spawn_position
 	add_child(enemy)
+
+
+func _reset_enemy_encounters() -> void:
+	var enemy_manager := get_node_or_null("/root/DungeonEnemyManager")
+	if enemy_manager != null and enemy_manager.has_method("reset_current_room_state"):
+		enemy_manager.call("reset_current_room_state")
+		_show_status("Reset authored encounters for this test room.")
 
 
 func _spawn_pickup_row() -> void:

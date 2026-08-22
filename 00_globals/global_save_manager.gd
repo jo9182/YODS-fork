@@ -1,7 +1,7 @@
 extends Node
 
 const SAVE_PATH: String = "user://"
-const SAVE_VERSION: int = 2
+const SAVE_VERSION: int = 3
 const MANUAL_SLOT_IDS: Array[String] = ["slot_1", "slot_2", "slot_3"]
 const AUTOSAVE_SLOT_ID: String = "autosave"
 const LEGACY_SAVE_FILE: String = "save.sav"
@@ -281,6 +281,9 @@ func _sync_runtime_state() -> void:
 	update_player_data()
 	update_scene_path()
 	update_item_data()
+	var enemy_manager: Node = get_node_or_null("/root/DungeonEnemyManager")
+	if enemy_manager != null:
+		enemy_manager.call("sync_save_data")
 	current_save.gold = PlayerStats.gold
 	current_save.purchased_skills = SkillTreeManager.get_save_data()
 	current_save.reputation = ReputationManager.get_save_data()
@@ -308,6 +311,7 @@ func _default_save() -> Dictionary:
 		"chests": [],
 		"torches": {},
 		"dungeon_renown": {},
+		"enemy_rooms": {},
 		"reputation": {},
 		"factions": {},
 		"map_discovery": [],
