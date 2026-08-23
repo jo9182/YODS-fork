@@ -83,6 +83,7 @@ func _register_current_room() -> void:
 	var room_state := _get_room_state(room_path, true)
 	room_state["visit_count"] = int(room_state.get("visit_count", 0)) + 1
 	room_state["last_visit"] = Time.get_unix_time_from_system()
+	_prepare_auto_spawn_room(level_root, room_path, room_state)
 	_register_static_enemies(level_root, room_path, room_state)
 	_restore_saved_runtime_enemies(level_root, room_path, room_state)
 	_spawn_for_room(level_root, room_path, room_state)
@@ -173,6 +174,9 @@ func _on_enemy_destroyed(_hurt_box: HurtBox, enemy: Enemy) -> void:
 		return
 	var room_state := _get_room_state(room_path, true)
 	var spawn_point_id := str(enemy.get_meta("enemy_spawn_point_id", ""))
+	if bool(enemy.get_meta("enemy_auto_spawn", false)):
+		_handle_auto_spawn_enemy_destroyed(enemy, room_state)
+		return
 	if not spawn_point_id.is_empty():
 		_handle_spawn_point_enemy_destroyed(enemy, room_state, spawn_point_id)
 		return
@@ -230,6 +234,7 @@ func _restore_runtime_enemy(level_root: Node2D, room_path: String, enemy_id: Str
 func _spawn_for_room(level_root: Node2D, room_path: String, room_state: Dictionary) -> void:
 	var floor_number := _get_floor_number(room_path)
 	var remaining_budget := _get_room_budget(level_root, floor_number)
+	_spawn_auto_room_enemies(level_root, room_path, room_state)
 	var points: Array[EnemySpawnPoint] = []
 	for node in get_tree().get_nodes_in_group("enemy_spawn_points"):
 		var point := node as EnemySpawnPoint
@@ -288,6 +293,150 @@ func _spawn_for_room(level_root: Node2D, room_path: String, room_state: Dictiona
 	room_state["spawn_points"] = point_states
 
 
+func _prepare_auto_spawn_room(level_root: Node2D, room_path: String, room_state: Dictionary) -> void:
+	if _should_skip_auto_conversion(room_path) or room_state.has("auto_spawn"):
+		if room_state.has("auto_spawn"):
+			_remove_static_scene_enemies(level_root)
+		return
+	var static_enemies: Array[Enemy] = []
+	for enemy in _get_room_enemies(level_root):
+		if not bool(enemy.get_meta("dungeon_enemy_runtime", false)) and str(enemy.get_meta("enemy_spawn_point_id", "")).is_empty():
+			static_enemies.append(enemy)
+	if static_enemies.is_empty():
+		return
+	var active_states: Variant = room_state.get("active", {})
+	var old_active: Dictionary = active_states as Dictionary if active_states is Dictionary else {}
+	var dead_ids: Array = room_state.get("dead_ids", [])
+	var templates: Array[Dictionary] = []
+	var weights: Dictionary = {}
+	for enemy in static_enemies:
+		_register_enemy(enemy, room_path)
+		var scene_path := enemy.scene_file_path
+		if scene_path.is_empty():
+			continue
+		var previous_state: Dictionary = old_active.get(enemy.persistence_id, {}) if old_active.has(enemy.persistence_id) else {}
+		var permanently_dead := dead_ids.has(enemy.persistence_id)
+		templates.append({
+			"source_id": enemy.persistence_id,
+			"scene_path": scene_path,
+			"position_x": enemy.global_position.x,
+			"position_y": enemy.global_position.y,
+			"permanently_dead": permanently_dead,
+			"initial_state": previous_state,
+		})
+		weights[scene_path] = int(weights.get(scene_path, 0)) + 1
+	var active_template_count := 0
+	for template in templates:
+		if not bool(template.get("permanently_dead", false)):
+			active_template_count += 1
+	if active_template_count == 0:
+		return
+	room_state["auto_spawn"] = {
+		"initialized": true,
+		"cycle": 0,
+		"selection_seed": randi(),
+		"next_respawn_visit": -1,
+		"respawn_after_visits": 4,
+		"permanently_cleared": false,
+		"population": active_template_count,
+		"templates": templates,
+		"weights": weights,
+	}
+	_remove_static_scene_enemies(level_root)
+
+
+func _spawn_auto_room_enemies(level_root: Node2D, room_path: String, room_state: Dictionary) -> void:
+	var auto_state_variant: Variant = room_state.get("auto_spawn", {})
+	if not auto_state_variant is Dictionary:
+		return
+	var auto_state := auto_state_variant as Dictionary
+	if bool(auto_state.get("permanently_cleared", false)) or _has_active_auto_spawn_enemy():
+		return
+	var visit_count := int(room_state.get("visit_count", 0))
+	if int(auto_state.get("next_respawn_visit", -1)) >= 0 and visit_count < int(auto_state.get("next_respawn_visit", -1)):
+		return
+	var templates_variant: Variant = auto_state.get("templates", [])
+	if not templates_variant is Array:
+		return
+	var active_templates: Array[Dictionary] = []
+	for template_variant in templates_variant:
+		if template_variant is Dictionary and not bool((template_variant as Dictionary).get("permanently_dead", false)):
+			active_templates.append(template_variant as Dictionary)
+	if active_templates.is_empty():
+		return
+	var cycle := int(auto_state.get("cycle", 0))
+	var respawning := int(auto_state.get("next_respawn_visit", -1)) >= 0
+	if respawning:
+		cycle += 1
+		auto_state["cycle"] = cycle
+	var random := RandomNumberGenerator.new()
+	random.seed = int(auto_state.get("selection_seed", 1)) + cycle * 9973
+	var weights_variant: Variant = auto_state.get("weights", {})
+	var weights: Dictionary = weights_variant as Dictionary if weights_variant is Dictionary else {}
+	var weighted_paths: Array[String] = []
+	for path_variant in weights:
+		for _weight in range(int(weights[path_variant])):
+			weighted_paths.append(str(path_variant))
+	for slot in active_templates.size():
+		var template := active_templates[slot]
+		var scene_path := str(template.get("scene_path", ""))
+		if respawning and not weighted_paths.is_empty():
+			scene_path = weighted_paths[random.randi_range(0, weighted_paths.size() - 1)]
+		if scene_path.is_empty() or not ResourceLoader.exists(scene_path):
+			continue
+		var enemy_scene := load(scene_path) as PackedScene
+		if enemy_scene == null:
+			continue
+		var spawn_position := Vector2(float(template.get("position_x", 0.0)), float(template.get("position_y", 0.0)))
+		var spawn_id := "%s::auto::%d::%d" % [room_path, cycle, slot]
+		var enemy := _spawn_enemy_instance(level_root, room_path, enemy_scene, spawn_position, spawn_id, "auto_spawn", "", cycle, slot, null, Vector2(96.0, 64.0))
+		if enemy != null and not respawning:
+			var initial_state: Variant = template.get("initial_state", {})
+			if initial_state is Dictionary and not (initial_state as Dictionary).is_empty():
+				_restore_enemy_state(enemy, initial_state as Dictionary)
+	auto_state["next_respawn_visit"] = -1
+	room_state["auto_spawn"] = auto_state
+
+
+func _handle_auto_spawn_enemy_destroyed(enemy: Enemy, room_state: Dictionary) -> void:
+	var active_states: Variant = room_state.get("active", {})
+	if active_states is Dictionary:
+		(active_states as Dictionary).erase(enemy.persistence_id)
+	room_state["active"] = active_states
+	if _has_active_auto_spawn_enemy():
+		room_states[enemy.persistence_room_key] = room_state
+		return
+	var auto_state: Dictionary = room_state.get("auto_spawn", {})
+	auto_state["permanently_cleared"] = false
+	auto_state["next_respawn_visit"] = int(room_state.get("visit_count", 0)) + int(auto_state.get("respawn_after_visits", 4))
+	room_state["auto_spawn"] = auto_state
+	room_states[enemy.persistence_room_key] = room_state
+
+
+func _has_active_auto_spawn_enemy() -> bool:
+	for node in get_tree().get_nodes_in_group("enemies"):
+		var enemy := node as Enemy
+		if enemy != null and is_instance_valid(enemy) and bool(enemy.get_meta("enemy_auto_spawn", false)) and not enemy.is_dead:
+			return true
+	return false
+
+
+func _remove_static_scene_enemies(level_root: Node2D) -> void:
+	for enemy in _get_room_enemies(level_root):
+		if bool(enemy.get_meta("dungeon_enemy_runtime", false)):
+			continue
+		enemy.process_mode = Node.PROCESS_MODE_DISABLED
+		enemy.queue_free()
+
+
+func _should_skip_auto_conversion(room_path: String) -> bool:
+	var lowercase_path := room_path.to_lower()
+	for token in ["boss", "arena", "exit", "settlement", "settelment"]:
+		if lowercase_path.contains(token):
+			return true
+	return false
+
+
 func _spawn_enemy_instance(level_root: Node2D, room_path: String, enemy_scene: PackedScene, spawn_position: Vector2, spawn_id: String, source_kind: String, spawn_point_id: String, spawn_cycle: int, spawn_slot: int, route: PatrolRoute, patrol_radius: Vector2) -> Enemy:
 	if enemy_scene == null:
 		return null
@@ -305,6 +454,8 @@ func _spawn_enemy_instance(level_root: Node2D, room_path: String, enemy_scene: P
 	enemy.set_meta("enemy_spawn_cycle", spawn_cycle)
 	enemy.set_meta("enemy_spawn_slot", spawn_slot)
 	level_root.add_child(enemy)
+	if source_kind == "auto_spawn":
+		enemy.set_meta("enemy_auto_spawn", true)
 	_register_enemy(enemy, room_path)
 	return enemy
 
@@ -383,7 +534,7 @@ func _get_room_enemies(level_root: Node2D) -> Array[Enemy]:
 	var enemies: Array[Enemy] = []
 	for node in get_tree().get_nodes_in_group("enemies"):
 		var enemy := node as Enemy
-		if enemy == null or not is_instance_valid(enemy) or not level_root.is_ancestor_of(enemy):
+		if enemy == null or not is_instance_valid(enemy) or enemy.is_queued_for_deletion() or not level_root.is_ancestor_of(enemy):
 			continue
 		enemies.append(enemy)
 	return enemies

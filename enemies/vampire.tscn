@@ -980,6 +980,10 @@ script = ExtResource("9_f18wb")
 
 [node name="chase" type="Node" parent="EnemyStateMachine" unique_id=312032475 node_paths=PackedStringArray("myvision", "attack_target_area", "next_state")]
 script = ExtResource("10_hrxou")
+attack_cooldown = 0.25
+attack_windup = 0.48
+attack_duration = 0.16
+attack_animation_duration = 0.75
 myvision = NodePath("../../Vision")
 attack_target_area = NodePath("../../Sprite2D/AttackHurtbox")
 next_state = NodePath("../idle")

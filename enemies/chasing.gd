@@ -5,9 +5,10 @@ class_name EnemyStateChasing extends EnemyState
 @export var attack_speed: float = 20.0
 @export var turn_rate : float = 0.25
 @export var attack_range: float = 28.0
-@export var attack_cooldown: float = 0.9
+@export var attack_cooldown: float = 0.25
 @export var attack_windup: float = 0.45
 @export var attack_duration: float = 0.18
+@export var attack_animation_duration: float = 0.9
 
 @export_category("AI")
 @export var state_agro_duration : float = 1.0
@@ -74,12 +75,14 @@ func process(_delta):
 		var target_distance := target_offset.length()
 		if _attack_in_progress:
 			enemy.velocity = Vector2.ZERO
+			enemy.setDirection(target_offset)
 		elif target_distance <= attack_range:
 			enemy.velocity = Vector2.ZERO
 			enemy.setDirection(target_offset)
-			_play_animation("idle")
 			if _attack_cooldown_timer <= 0.0:
 				_start_attack()
+			else:
+				_play_animation("idle")
 		else:
 			var new_direction: Vector2 = enemy.global_position.direction_to(target.global_position)
 			_direction = _direction.lerp(new_direction, turn_rate)
@@ -135,7 +138,6 @@ func _select_target() -> void:
 
 
 func _start_attack() -> void:
-	_attack_cooldown_timer = attack_cooldown
 	_attack_elapsed = 0.0
 	_attack_in_progress = true
 	_attack_hitbox_enabled = false
@@ -153,9 +155,20 @@ func _update_attack_window(delta: float) -> void:
 			attack_target_area.set_deferred("monitoring", true)
 	if _attack_hitbox_enabled and _attack_elapsed >= attack_windup + attack_duration:
 		_attack_hitbox_enabled = false
-		_attack_in_progress = false
 		if attack_target_area:
 			attack_target_area.set_deferred("monitoring", false)
+	if _attack_elapsed >= maxf(attack_animation_duration, attack_windup + attack_duration):
+		_finish_attack()
+
+
+func _finish_attack() -> void:
+	if not _attack_in_progress:
+		return
+	_attack_in_progress = false
+	_attack_hitbox_enabled = false
+	_attack_cooldown_timer = attack_cooldown
+	if attack_target_area:
+		attack_target_area.set_deferred("monitoring", false)
 
 
 func _play_animation(animation_name: String) -> void:
