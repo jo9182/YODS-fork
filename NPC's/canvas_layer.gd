@@ -4,7 +4,7 @@ extends CanvasLayer
 @onready var control: Control = $Control
 @onready var label: Label = $Control/Label
 @onready var secondary_control: Control = $"Control/Secondary control"
-@onready var speech: TextEdit = $"Control/Secondary control/Speech"
+@onready var speech: RichTextLabel = $"Control/Secondary control/SpeechPanel/Content/Speech"
 @onready var button: Button = $"Control/Secondary control/Button"
 @onready var button_2: Button = $"Control/Secondary control/Button2"
 @onready var exit: Button = $"Control/Secondary control/Exit"

@@ -16,6 +16,22 @@ radius = 11.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_hitbox"]
 radius = 9.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_status"]
+bg_color = Color(0.055, 0.04, 0.08, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.75, 0.66, 0.48, 0.85)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+content_margin_left = 5.0
+content_margin_top = 3.0
+content_margin_right = 5.0
+content_margin_bottom = 3.0
+
 [node name="DungeonExplorer" type="CharacterBody2D"]
 y_sort_enabled = true
 collision_layer = 16
@@ -43,24 +59,36 @@ hframes = 24
 vframes = 8
 
 [node name="NameLabel" type="Label" parent="."]
-offset_left = -30.0
-offset_top = -36.0
-offset_right = 30.0
-offset_bottom = -26.0
+z_index = 20
+offset_left = -36.0
+offset_top = -50.0
+offset_right = 36.0
+offset_bottom = -40.0
 theme_override_colors/font_outline_color = Color(0.08, 0.08, 0.08, 1)
 theme_override_constants/outline_size = 1
 theme_override_font_sizes/font_size = 8
 horizontal_alignment = 1
 
-[node name="StatusLabel" type="Label" parent="."]
-offset_left = -38.0
-offset_top = -48.0
-offset_right = 38.0
-offset_bottom = -38.0
+[node name="StatusBubble" type="PanelContainer" parent="."]
+z_index = 20
+offset_left = -56.0
+offset_top = -82.0
+offset_right = 56.0
+offset_bottom = -52.0
+custom_minimum_size = Vector2(112, 0)
+custom_maximum_size = Vector2(112, 96)
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_status")
+
+[node name="StatusLabel" type="Label" parent="StatusBubble"]
+custom_minimum_size = Vector2(102, 0)
+custom_maximum_size = Vector2(102, 88)
 theme_override_colors/font_outline_color = Color(0.08, 0.08, 0.08, 1)
 theme_override_constants/outline_size = 1
 theme_override_font_sizes/font_size = 8
 horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="AttackHurtBox" type="Area2D" parent="."]
 collision_layer = 0

@@ -28,7 +28,8 @@ const DIRECTION_ROWS := {
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var name_label: Label = $NameLabel
-@onready var status_label: Label = $StatusLabel
+@onready var status_bubble: PanelContainer = $StatusBubble
+@onready var status_label: Label = $StatusBubble/StatusLabel
 @onready var visit_timer: Timer = $VisitTimer
 @onready var buy_timer: Timer = $BuyTimer
 
@@ -291,7 +292,7 @@ func _start_exiting() -> void:
 	_target_position = _exit_point
 	buy_timer.stop()
 	visit_timer.stop()
-	if status_label.text.is_empty() or status_label.modulate.a <= 0.0:
+	if status_label.text.is_empty() or status_bubble.modulate.a <= 0.0:
 		_show_status(_dialogue_line("farewell", "Goodbye!"), Color(1.0, 1.0, 0.8), 1.2)
 
 
@@ -328,10 +329,10 @@ func _show_status(message: String, color: Color, duration: float) -> void:
 
 	status_label.text = message
 	status_label.add_theme_color_override("font_color", color)
-	status_label.modulate = Color.WHITE
-	status_label.show()
+	status_bubble.modulate = Color.WHITE
+	status_bubble.show()
 
 	_status_tween = create_tween()
 	_status_tween.tween_interval(duration)
-	_status_tween.tween_property(status_label, "modulate:a", 0.0, 0.35)
-	_status_tween.tween_callback(status_label.hide)
+	_status_tween.tween_property(status_bubble, "modulate:a", 0.0, 0.35)
+	_status_tween.tween_callback(status_bubble.hide)

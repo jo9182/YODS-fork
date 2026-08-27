@@ -52,7 +52,11 @@ func _spawn_customer_data(selected: CustomerData) -> bool:
 
 	var customer: Customer = CUSTOMER_SCENE.instantiate()
 	customer.customer_data = selected
-	add_child(customer)
+	var room_root := get_parent()
+	if room_root == null:
+		customer.queue_free()
+		return false
+	room_root.add_child(customer)
 	customer.init_spawn(entry_point.global_position, exit_point.global_position, spot.global_position)
 	customer.customer_left.connect(_on_customer_left)
 	_active_customers.append(customer)

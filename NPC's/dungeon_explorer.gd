@@ -16,6 +16,14 @@ const ATTACK_OFFSETS := {
 }
 const ATTACK_ANIMATION_DURATION := 0.32
 const PARTY_FOLLOW_DISTANCE := 30.0
+const PARTY_GUARD_DISTANCE := 38.0
+const PARTY_SCOUT_MAX_DISTANCE := 96.0
+const PARTY_TARGET_SHARE_DISTANCE := 190.0
+const SCOUT_SPEED_MULTIPLIER := 1.12
+const SCOUT_AGGRO_BONUS := 42.0
+const SCOUT_PICKUP_BONUS := 28.0
+const GUARD_HEALTH_BONUS := 2
+const GUARD_DAMAGE_BONUS := 1
 const PICKUP_SCENE := preload("res://items/item_pickup/item_pickup.tscn")
 const FLOOR_GEAR := {
 	1: [preload("res://items/stone.tres")],
@@ -55,16 +63,24 @@ var carried_items: Array[ItemData] = []
 var explorer_name := ""
 var party_title := ""
 var party_role := ""
+var party_slot := -1
 var party_leader: DungeonExplorer
+var current_combat_target: Node2D
 var patrol_route: PatrolRoute
 var patrol_waypoint_index := 0
 var patrol_route_direction := 1
 var patrol_wait_remaining := 0.0
 var patrol_route_finished := false
+var base_move_speed := 30.0
+var base_aggro_range := 150.0
+var base_pickup_range := 14.0
+var base_max_health := 5
+var base_attack_damage := 1
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var name_label: Label = $NameLabel
-@onready var status_label: Label = $StatusLabel
+@onready var status_bubble: PanelContainer = $StatusBubble
+@onready var status_label: Label = $StatusBubble/StatusLabel
 @onready var attack_hurt_box: HurtBox = $AttackHurtBox
 @onready var hitbox: HitBox = $Hitbox
 
@@ -89,11 +105,16 @@ func setup(spawn_position: Vector2, floor_number: int) -> void:
 	_choose_wander_target()
 
 
-func configure_party(leader: DungeonExplorer, party_slot: int, new_party_title: String) -> void:
+func configure_party(leader: DungeonExplorer, slot_index: int, new_party_title: String) -> void:
+	var was_unassigned := self.party_slot < 0
 	party_leader = leader
+	self.party_slot = slot_index
 	party_title = new_party_title
-	party_role = "Lead" if party_slot == 0 else "Scout" if party_slot == 1 else "Guard"
-	name_label.text = "%s %s" % [party_title, party_role]
+	party_role = "Lead" if slot_index == 0 else "Scout" if slot_index == 1 else "Guard"
+	_apply_party_role_stats()
+	_update_party_label()
+	if was_unassigned:
+		current_health = max_health
 
 
 func configure_patrol_route(route: PatrolRoute) -> void:
@@ -109,10 +130,11 @@ func configure_patrol_route(route: PatrolRoute) -> void:
 
 func configure_for_floor(floor_number: int) -> void:
 	current_floor = clampi(floor_number, 1, 4)
-	max_health = 3 + current_floor * 2
+	base_max_health = 3 + current_floor * 2
+	base_move_speed = 27.0 + current_floor * 3.0
+	base_attack_damage = 1 + floori(float(current_floor - 1) / 2.0)
+	_apply_party_role_stats()
 	current_health = max_health
-	move_speed = 27.0 + current_floor * 3.0
-	attack_hurt_box.damage = 1 + floori(float(current_floor - 1) / 2.0)
 	var gear: Array = FLOOR_GEAR.get(current_floor, [])
 	if not gear.is_empty():
 		carried_items.append(gear.pick_random())
@@ -124,7 +146,9 @@ func _physics_process(delta: float) -> void:
 	attack_time = maxf(attack_time - delta, 0.0)
 	attack_animation_time = maxf(attack_animation_time - delta, 0.0)
 	path_refresh_time = maxf(path_refresh_time - delta, 0.0)
+	_get_active_party_leader()
 	var combat_target := _find_combat_target()
+	current_combat_target = combat_target
 	if combat_target != null:
 		_handle_combat_target(combat_target, delta)
 	else:
@@ -168,7 +192,9 @@ func _handle_pickup(pickup: Node2D, delta: float) -> void:
 
 
 func _handle_wander(delta: float) -> void:
-	if _follow_party_leader(delta):
+	if party_role == "Guard" and _follow_party_leader(delta, PARTY_GUARD_DISTANCE):
+		return
+	if party_role == "Scout" and _keep_scout_in_range(delta):
 		return
 	if patrol_route != null and not patrol_route.get_waypoints().is_empty():
 		_handle_route_patrol(delta)
@@ -224,25 +250,64 @@ func _advance_patrol_waypoint() -> void:
 	navigation_target = Vector2.INF
 
 
-func _follow_party_leader(delta: float) -> bool:
-	if party_leader == null or party_leader == self or not is_instance_valid(party_leader) or party_leader.is_dead:
+func _follow_party_leader(delta: float, desired_distance: float = PARTY_FOLLOW_DISTANCE) -> bool:
+	var leader := _get_active_party_leader()
+	if leader == null or leader == self:
 		return false
-	var leader_distance := global_position.distance_to(party_leader.global_position)
+	var leader_distance := global_position.distance_to(leader.global_position)
 	status_label.text = "%s party" % party_title
-	if leader_distance <= PARTY_FOLLOW_DISTANCE:
+	if leader_distance <= desired_distance:
 		velocity = Vector2.ZERO
-		if party_leader.velocity.length_squared() > 0.001:
-			_face(party_leader.velocity)
+		if leader.velocity.length_squared() > 0.001:
+			_face(leader.velocity)
 		return true
-	_move_toward_target(party_leader.global_position, delta)
+	_move_toward_target(leader.global_position, delta)
+	return true
+
+
+func _keep_scout_in_range(delta: float) -> bool:
+	var leader := _get_active_party_leader()
+	if leader == null or leader == self:
+		return false
+	if global_position.distance_to(leader.global_position) <= PARTY_SCOUT_MAX_DISTANCE:
+		return false
+	status_label.text = "Returning to party"
+	_move_toward_target(leader.global_position, delta)
 	return true
 
 
 func _find_combat_target() -> Node2D:
+	var shared_target := _get_shared_party_target()
+	if shared_target != null:
+		return shared_target
 	var player := PlayerManager.player
 	if _actively_hostile_to_player() and player != null and global_position.distance_to(player.global_position) <= aggro_range:
 		return player
 	return _find_nearest_enemy()
+
+
+func _get_shared_party_target() -> Node2D:
+	var leader := _get_active_party_leader()
+	if leader == null or leader == self:
+		return null
+	var target := leader.current_combat_target
+	if not _is_valid_combat_target(target):
+		return null
+	if target is Player and not _actively_hostile_to_player():
+		return null
+	if global_position.distance_to(target.global_position) > PARTY_TARGET_SHARE_DISTANCE:
+		return null
+	return target
+
+
+func _is_valid_combat_target(target: Node2D) -> bool:
+	if target == null or not is_instance_valid(target) or target.is_queued_for_deletion():
+		return false
+	if target is Enemy:
+		return not target.is_dead
+	if target is Player:
+		return target.hp > 0
+	return false
 
 
 func _find_nearest_enemy() -> Enemy:
@@ -261,7 +326,7 @@ func _find_nearest_enemy() -> Enemy:
 
 func _find_nearest_pickup() -> Node2D:
 	var nearest: Node2D
-	var nearest_distance := 96.0
+	var nearest_distance := 96.0 + SCOUT_PICKUP_BONUS if party_role == "Scout" else 96.0
 	var player := PlayerManager.player
 	for node in get_tree().get_nodes_in_group("item_pickups"):
 		var pickup := node as Node2D
@@ -359,6 +424,7 @@ func _actively_hostile_to_player() -> bool:
 
 func _die() -> void:
 	is_dead = true
+	current_combat_target = null
 	velocity = Vector2.ZERO
 	attack_hurt_box.set_deferred("monitoring", false)
 	hitbox.set_deferred("monitorable", false)
@@ -385,6 +451,54 @@ func _choose_wander_target() -> void:
 	wander_time = randf_range(1.8, 4.0)
 	wander_target = DungeonPathfinder.get_wander_point(anchor_position, patrol_radius)
 	navigation_target = Vector2.INF
+
+
+func _apply_party_role_stats() -> void:
+	max_health = base_max_health
+	move_speed = base_move_speed
+	aggro_range = base_aggro_range
+	pickup_range = base_pickup_range
+	if is_instance_valid(attack_hurt_box):
+		attack_hurt_box.damage = base_attack_damage
+	if party_role == "Scout":
+		move_speed *= SCOUT_SPEED_MULTIPLIER
+		aggro_range += SCOUT_AGGRO_BONUS
+		pickup_range += SCOUT_PICKUP_BONUS * 0.15
+	elif party_role == "Guard":
+		max_health += GUARD_HEALTH_BONUS
+		if is_instance_valid(attack_hurt_box):
+			attack_hurt_box.damage += GUARD_DAMAGE_BONUS
+	current_health = mini(current_health, max_health)
+
+
+func _update_party_label() -> void:
+	if party_title.is_empty():
+		name_label.text = explorer_name
+		return
+	name_label.text = "%s %s" % [party_title, party_role]
+
+
+func _get_active_party_leader() -> DungeonExplorer:
+	if party_title.is_empty():
+		return party_leader if is_instance_valid(party_leader) and not party_leader.is_dead else null
+	if is_instance_valid(party_leader) and not party_leader.is_dead:
+		return party_leader
+	var candidates: Array[DungeonExplorer] = []
+	for node in get_tree().get_nodes_in_group("dungeon_explorers"):
+		var candidate := node as DungeonExplorer
+		if candidate == null or candidate.is_dead or candidate.party_title != party_title:
+			continue
+		candidates.append(candidate)
+	if candidates.is_empty():
+		party_leader = null
+		return null
+	candidates.sort_custom(func(first: DungeonExplorer, second: DungeonExplorer): return first.party_slot < second.party_slot)
+	party_leader = candidates[0]
+	if party_leader == self and party_role != "Lead":
+		party_role = "Lead"
+		_apply_party_role_stats()
+		_update_party_label()
+	return party_leader
 
 
 func _face(direction: Vector2) -> void:

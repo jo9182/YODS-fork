@@ -26,12 +26,12 @@ class_name priest extends CharacterBody2D
 @onready var control: Control = $CanvasLayer/Control
 @onready var label: Label = $CanvasLayer/Control/Label
 @onready var secondary_control: Control = $"CanvasLayer/Control/Secondary control"
-@onready var speech: TextEdit = $"CanvasLayer/Control/Secondary control/Speech"
+@onready var speech: RichTextLabel = $"CanvasLayer/Control/Secondary control/SpeechPanel/Content/Speech"
 @onready var button: Button = $"CanvasLayer/Control/Secondary control/Button"
 @onready var button_2: Button = $"CanvasLayer/Control/Secondary control/Button2"
 @onready var exit: Button = $"CanvasLayer/Control/Secondary control/Exit"
 @onready var sprite_2d: Sprite2D = $"CanvasLayer/Control/Secondary control/Sprite2D"
-@onready var char_name: Label = $"CanvasLayer/Control/Secondary control/Char_Name"
+@onready var char_name: Label = $"CanvasLayer/Control/Secondary control/SpeechPanel/Content/Char_Name"
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var color_rect: ColorRect = $CanvasLayer/ColorRect
 @onready var area_2d: Area2D = $Area2D
@@ -75,11 +75,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			_enter_shop_mode()
 
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+func _on_area_2d_body_entered(_body: Node2D) -> void:
 	control.visible = true
 
 
-func _on_area_2d_body_exited(body: Node2D) -> void:
+func _on_area_2d_body_exited(_body: Node2D) -> void:
 	control.visible = false
 	secondary_control.visible = false
 	label.visible = true

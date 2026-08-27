@@ -67,8 +67,11 @@ func _queue_register_current_room() -> void:
 	call_deferred("_register_current_room")
 
 
+func prepare_current_room() -> void:
+	_register_current_room()
+
+
 func _register_current_room() -> void:
-	await get_tree().physics_frame
 	var level_root := get_tree().current_scene as Node2D
 	if level_root == null:
 		return
@@ -96,6 +99,8 @@ func _register_static_enemies(level_root: Node2D, room_path: String, room_state:
 		_register_enemy(enemy, room_path)
 		registered_ids[enemy.persistence_id] = true
 		if room_state.get("dead_ids", []).has(enemy.persistence_id):
+			enemy.visible = false
+			enemy.process_mode = Node.PROCESS_MODE_DISABLED
 			enemy.call_deferred("queue_free")
 			continue
 		var active_states: Variant = room_state.get("active", {})
@@ -425,6 +430,7 @@ func _remove_static_scene_enemies(level_root: Node2D) -> void:
 	for enemy in _get_room_enemies(level_root):
 		if bool(enemy.get_meta("dungeon_enemy_runtime", false)):
 			continue
+		enemy.visible = false
 		enemy.process_mode = Node.PROCESS_MODE_DISABLED
 		enemy.queue_free()
 

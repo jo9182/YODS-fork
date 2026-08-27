@@ -12,8 +12,6 @@ skill_name = "Thick Skin"
 description = "Gain 2 max health and heal for the same amount."
 cost = 60
 icon = ExtResource("4_tooth")
-tree_column = 0
-tree_row = 0
 effect_type = "hp_max"
 effect_value = 2.0
 id = "hp_1"
@@ -25,7 +23,6 @@ description = "Gain another 3 max health and heal."
 cost = 145
 icon = ExtResource("4_tooth")
 tree_column = 1
-tree_row = 0
 prerequisite_ids = Array[String](["hp_1"])
 effect_type = "hp_max"
 effect_value = 3.0
@@ -35,9 +32,7 @@ id = "hp_2"
 script = ExtResource("2_skill")
 skill_name = "Move It"
 description = "Move 15 faster."
-cost = 50
 icon = ExtResource("3_arrow")
-tree_column = 0
 tree_row = 1
 effect_type = "speed"
 effect_value = 15.0
@@ -75,7 +70,6 @@ skill_name = "Lantern Lore"
 description = "Your carried light shines brighter and farther."
 cost = 65
 icon = ExtResource("5_coin")
-tree_column = 0
 tree_row = 2
 effect_type = "lantern"
 effect_value = 0.1
@@ -91,7 +85,6 @@ tree_column = 1
 tree_row = 2
 prerequisite_ids = Array[String](["speed_1"])
 effect_type = "damage"
-effect_value = 1.0
 id = "damage_1"
 
 [sub_resource type="Resource" id="Skill_damage_2"]
@@ -104,7 +97,6 @@ tree_column = 2
 tree_row = 2
 prerequisite_ids = Array[String](["damage_1"])
 effect_type = "damage"
-effect_value = 1.0
 id = "damage_2"
 
 [sub_resource type="Resource" id="Skill_torchwright"]
@@ -117,7 +109,6 @@ tree_column = 1
 tree_row = 3
 prerequisite_ids = Array[String](["lantern_1"])
 effect_type = "torch_yield"
-effect_value = 1.0
 id = "torchwright"
 
 [sub_resource type="Resource" id="Skill_beacon"]
@@ -143,7 +134,6 @@ tree_column = 3
 tree_row = 3
 prerequisite_ids = Array[String](["regulars"])
 effect_type = "renown"
-effect_value = 1.0
 id = "town_crier"
 
 [sub_resource type="Resource" id="Skill_guild_mark"]
@@ -156,19 +146,15 @@ tree_column = 4
 tree_row = 3
 prerequisite_ids = Array[String](["town_crier", "patronage"])
 effect_type = "explorer"
-effect_value = 1.0
 id = "guild_mark"
 
 [sub_resource type="Resource" id="Skill_slots_1"]
 script = ExtResource("2_skill")
 skill_name = "Stock Shelf"
 description = "Gain 1 more listed item slot in your shop."
-cost = 50
 icon = ExtResource("5_coin")
-tree_column = 0
 tree_row = 4
 effect_type = "shop_slots"
-effect_value = 1.0
 id = "1"
 
 [sub_resource type="Resource" id="Skill_slots_2"]

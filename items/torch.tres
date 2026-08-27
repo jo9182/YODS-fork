@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="TorchItemData" format=3]
+[gd_resource type="Resource" script_class="TorchItemData" format=3 uid="uid://bo8ksopvdiit2"]
 
-[ext_resource type="Script" path="res://items/scripts/torch_item_data.gd" id="1_torch_item"]
+[ext_resource type="Script" uid="uid://be7synskoaa18" path="res://items/item_effects/item_effects.gd" id="1_m4hga"]
+[ext_resource type="Script" uid="uid://ir4frg21mick" path="res://items/scripts/torch_item_data.gd" id="1_torch_item"]
 [ext_resource type="Texture2D" uid="uid://wtc5n0htp80g" path="res://Pack/2D Pixel Dungeon Asset Pack/items and trap_animation/Props.png" id="2_torch_icon"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_torch_icon"]

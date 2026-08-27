@@ -54,6 +54,24 @@ _data = {
 default_base_scale = 0.11
 default_font_size = 0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialogue"]
+bg_color = Color(0.055, 0.04, 0.08, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.66, 0.48, 0.95)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 3
+
 [node name="Priest" type="CharacterBody2D" unique_id=1924285380]
 y_sort_enabled = true
 texture_filter = 1
@@ -102,6 +120,7 @@ position = Vector2(24, -16)
 position = Vector2(0, -41)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1288938601]
+layer = 5
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1579377148]
 visible = false
@@ -141,17 +160,38 @@ offset_top = -112.0
 offset_right = 16.0
 offset_bottom = -72.0
 
-[node name="Speech" type="TextEdit" parent="CanvasLayer/Control/Secondary control" unique_id=789290181]
+[node name="SpeechPanel" type="PanelContainer" parent="CanvasLayer/Control/Secondary control"]
 layout_mode = 0
 offset_left = -120.0
 offset_top = 8.0
 offset_right = 167.0
-offset_bottom = 208.0
-theme = SubResource("Theme_bwx42")
+offset_bottom = 188.0
+mouse_filter = 2
+z_index = 5
+theme_override_styles/panel = SubResource("StyleBoxFlat_dialogue")
+
+[node name="Content" type="VBoxContainer" parent="CanvasLayer/Control/Secondary control/SpeechPanel"]
+custom_minimum_size = Vector2(267, 158)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Char_Name" type="Label" parent="CanvasLayer/Control/Secondary control/SpeechPanel/Content" unique_id=569403400]
+custom_minimum_size = Vector2(267, 22)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.58, 1)
 theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Speech" type="RichTextLabel" parent="CanvasLayer/Control/Secondary control/SpeechPanel/Content" unique_id=789290181]
+custom_minimum_size = Vector2(267, 132)
+layout_mode = 2
+theme = SubResource("Theme_bwx42")
+theme_override_colors/default_color = Color(0.95, 0.92, 0.85, 1)
+theme_override_font_sizes/normal_font_size = 14
 text = "Hello there are you new to this dungeon?"
-editable = false
-wrap_mode = 1
+autowrap_mode = 2
+scroll_active = false
 
 [node name="Button" type="Button" parent="CanvasLayer/Control/Secondary control" unique_id=1375749904]
 layout_mode = 0
@@ -183,20 +223,11 @@ text = "Exit"
 
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/Secondary control" unique_id=1591491928]
 texture_filter = 1
-position = Vector2(80, 184)
+position = Vector2(190, 215)
 scale = Vector2(2.0937498, 2.65625)
 texture = ExtResource("3_dsyl4")
 flip_h = true
 vframes = 2
-
-[node name="Char_Name" type="Label" parent="CanvasLayer/Control/Secondary control" unique_id=569403400]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 152.0
-offset_right = 104.0
-offset_bottom = 176.0
-theme_override_font_sizes/font_size = 16
-text = "Carl"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
